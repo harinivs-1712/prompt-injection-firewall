@@ -1,0 +1,128 @@
+{
+  "doc_id": "doc_08_abstract",
+  "source_file": "C:\\Users\\RAHUL S\\Downloads\\prompt-injection-firewall\\data\\original\\doc_08_abstract.txt",
+  "char_length": 2314,
+  "sentence_count": 15,
+  "segment_count": 13,
+  "window_size": 3,
+  "stride": 1,
+  "segments": [
+    {
+      "segment_id": "doc_08_abstract-w3-0000",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 0,
+      "start": 0,
+      "end": 326,
+      "text": "RESEARCH PAPER ABSTRACT\n\nTitle: Adversarial Robustness of Large Language Models Against Indirect Prompt Injection in Agentic Workflows\n\nAuthors: Aisha Patel, Dr. Liang Zhou, Prof. Samuel Okonkwo\nInstitution: Center for AI Safety Research, University of Cambridge\nSubmitted to: IEEE Symposium on Security and Privacy (S&P 2025)"
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0001",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 1,
+      "start": 25,
+      "end": 331,
+      "text": "Title: Adversarial Robustness of Large Language Models Against Indirect Prompt Injection in Agentic Workflows\n\nAuthors: Aisha Patel, Dr. Liang Zhou, Prof. Samuel Okonkwo\nInstitution: Center for AI Safety Research, University of Cambridge\nSubmitted to: IEEE Symposium on Security and Privacy (S&P 2025)\n\n---"
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0002",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 2,
+      "start": 136,
+      "end": 341,
+      "text": "Authors: Aisha Patel, Dr. Liang Zhou, Prof. Samuel Okonkwo\nInstitution: Center for AI Safety Research, University of Cambridge\nSubmitted to: IEEE Symposium on Security and Privacy (S&P 2025)\n\n---\n\nABSTRACT"
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0003",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 3,
+      "start": 328,
+      "end": 552,
+      "text": "---\n\nABSTRACT\n\nThe deployment of large language models (LLMs) as autonomous agents capable of browsing the web, reading documents, and executing tools introduces novel attack surfaces not present in isolated model inference."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0004",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 4,
+      "start": 333,
+      "end": 763,
+      "text": "ABSTRACT\n\nThe deployment of large language models (LLMs) as autonomous agents capable of browsing the web, reading documents, and executing tools introduces novel attack surfaces not present in isolated model inference. Among these, indirect prompt injection — the embedding of adversarial instructions within external content that the agent processes during task execution — poses a significant and underexplored security threat."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0005",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 5,
+      "start": 343,
+      "end": 986,
+      "text": "The deployment of large language models (LLMs) as autonomous agents capable of browsing the web, reading documents, and executing tools introduces novel attack surfaces not present in isolated model inference. Among these, indirect prompt injection — the embedding of adversarial instructions within external content that the agent processes during task execution — poses a significant and underexplored security threat.\n\nIn this paper, we present a systematic study of indirect prompt injection attacks across five representative agentic workflows: document summarization, email processing, web browsing, code execution, and customer support."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0006",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 6,
+      "start": 553,
+      "end": 1226,
+      "text": "Among these, indirect prompt injection — the embedding of adversarial instructions within external content that the agent processes during task execution — poses a significant and underexplored security threat.\n\nIn this paper, we present a systematic study of indirect prompt injection attacks across five representative agentic workflows: document summarization, email processing, web browsing, code execution, and customer support. We evaluate seven LLMs, including GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and four open-source models, on a dataset of 1,240 attack scenarios spanning three attack categories: instruction override, goal hijacking, and data exfiltration."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0007",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 7,
+      "start": 765,
+      "end": 1441,
+      "text": "In this paper, we present a systematic study of indirect prompt injection attacks across five representative agentic workflows: document summarization, email processing, web browsing, code execution, and customer support. We evaluate seven LLMs, including GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and four open-source models, on a dataset of 1,240 attack scenarios spanning three attack categories: instruction override, goal hijacking, and data exfiltration.\n\nOur results reveal that all evaluated models are susceptible to at least one attack category, with open-source models exhibiting, on average, 2.3 times higher attack success rates than frontier proprietary models."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0008",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 8,
+      "start": 987,
+      "end": 1619,
+      "text": "We evaluate seven LLMs, including GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and four open-source models, on a dataset of 1,240 attack scenarios spanning three attack categories: instruction override, goal hijacking, and data exfiltration.\n\nOur results reveal that all evaluated models are susceptible to at least one attack category, with open-source models exhibiting, on average, 2.3 times higher attack success rates than frontier proprietary models. We identify four key vulnerability factors: insufficient context grounding, absence of content provenance tracking, over-permissive tool access, and lack of output sanitization."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0009",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 9,
+      "start": 1228,
+      "end": 1865,
+      "text": "Our results reveal that all evaluated models are susceptible to at least one attack category, with open-source models exhibiting, on average, 2.3 times higher attack success rates than frontier proprietary models. We identify four key vulnerability factors: insufficient context grounding, absence of content provenance tracking, over-permissive tool access, and lack of output sanitization.\n\nBased on these findings, we propose a multi-layer mitigation taxonomy and evaluate the effectiveness of four defense strategies: instruction hierarchy enforcement, content sandboxing, tool permission scoping, and human-in-the-loop intervention."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0010",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 10,
+      "start": 1442,
+      "end": 2060,
+      "text": "We identify four key vulnerability factors: insufficient context grounding, absence of content provenance tracking, over-permissive tool access, and lack of output sanitization.\n\nBased on these findings, we propose a multi-layer mitigation taxonomy and evaluate the effectiveness of four defense strategies: instruction hierarchy enforcement, content sandboxing, tool permission scoping, and human-in-the-loop intervention. Our experiments show that combining instruction hierarchy enforcement with tool permission scoping reduces attack success rates by up to 78% while preserving task utility in 91% of benign cases."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0011",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 11,
+      "start": 1621,
+      "end": 2195,
+      "text": "Based on these findings, we propose a multi-layer mitigation taxonomy and evaluate the effectiveness of four defense strategies: instruction hierarchy enforcement, content sandboxing, tool permission scoping, and human-in-the-loop intervention. Our experiments show that combining instruction hierarchy enforcement with tool permission scoping reduces attack success rates by up to 78% while preserving task utility in 91% of benign cases.\n\nWe release our benchmark dataset and evaluation framework as open-source resources to support further research in LLM agent security."
+    },
+    {
+      "segment_id": "doc_08_abstract-w3-0012",
+      "doc_id": "doc_08_abstract",
+      "window_size": 3,
+      "sent_index": 12,
+      "start": 1866,
+      "end": 2313,
+      "text": "Our experiments show that combining instruction hierarchy enforcement with tool permission scoping reduces attack success rates by up to 78% while preserving task utility in 91% of benign cases.\n\nWe release our benchmark dataset and evaluation framework as open-source resources to support further research in LLM agent security.\n\nKeywords: prompt injection, LLM agents, adversarial robustness, AI security, agentic AI, tool use, human-in-the-loop"
+    }
+  ]
+}

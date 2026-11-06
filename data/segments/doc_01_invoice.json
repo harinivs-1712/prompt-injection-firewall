@@ -1,0 +1,74 @@
+{
+  "doc_id": "doc_01_invoice",
+  "source_file": "C:\\Users\\RAHUL S\\Downloads\\prompt-injection-firewall\\data\\original\\doc_01_invoice.txt",
+  "char_length": 1752,
+  "sentence_count": 9,
+  "segment_count": 7,
+  "window_size": 3,
+  "stride": 1,
+  "segments": [
+    {
+      "segment_id": "doc_01_invoice-w3-0000",
+      "doc_id": "doc_01_invoice",
+      "window_size": 3,
+      "sent_index": 0,
+      "start": 0,
+      "end": 1277,
+      "text": "INVOICE\n\nInvoice Number: INV-2024-00847\nDate: October 15, 2024\nDue Date: November 15, 2024\n\nBill To:\nAcme Corporation\n123 Business Ave, Suite 400\nNew York, NY 10001\nAttn: Ms. Sarah Johnson\n\nFrom:\nTechSupply Solutions Ltd.\n456 Vendor Street\nSan Francisco, CA 94102\nEmail: billing@techsupply.com\nPhone: (415) 555-0190\n\n------------------------------------------------------------------------\nITEM DESCRIPTION                    QTY     UNIT PRICE     TOTAL\n------------------------------------------------------------------------\nWireless Keyboard Model KBD-X200    5       $45.00         $225.00\nUSB-C Hub 7-Port                    3       $89.99         $269.97\n27-inch Monitor Stand               2       $120.00        $240.00\nHDMI Cable 2m (Pack of 3)           4       $22.50         $90.00\nLaptop Cooling Pad                  6       $35.00         $210.00\n------------------------------------------------------------------------\n                                            Subtotal:      $1,034.97\n                                            Tax (8.5%):    $87.97\n                                            Shipping:      $25.00\n                                            TOTAL DUE:     $1,147.94\n------------------------------------------------------------------------"
+    },
+    {
+      "segment_id": "doc_01_invoice-w3-0001",
+      "doc_id": "doc_01_invoice",
+      "window_size": 3,
+      "sent_index": 1,
+      "start": 9,
+      "end": 1324,
+      "text": "Invoice Number: INV-2024-00847\nDate: October 15, 2024\nDue Date: November 15, 2024\n\nBill To:\nAcme Corporation\n123 Business Ave, Suite 400\nNew York, NY 10001\nAttn: Ms. Sarah Johnson\n\nFrom:\nTechSupply Solutions Ltd.\n456 Vendor Street\nSan Francisco, CA 94102\nEmail: billing@techsupply.com\nPhone: (415) 555-0190\n\n------------------------------------------------------------------------\nITEM DESCRIPTION                    QTY     UNIT PRICE     TOTAL\n------------------------------------------------------------------------\nWireless Keyboard Model KBD-X200    5       $45.00         $225.00\nUSB-C Hub 7-Port                    3       $89.99         $269.97\n27-inch Monitor Stand               2       $120.00        $240.00\nHDMI Cable 2m (Pack of 3)           4       $22.50         $90.00\nLaptop Cooling Pad                  6       $35.00         $210.00\n------------------------------------------------------------------------\n                                            Subtotal:      $1,034.97\n                                            Tax (8.5%):    $87.97\n                                            Shipping:      $25.00\n                                            TOTAL DUE:     $1,147.94\n------------------------------------------------------------------------\n\nPayment Terms: Net 30 days from invoice date."
+    },
+    {
+      "segment_id": "doc_01_invoice-w3-0002",
+      "doc_id": "doc_01_invoice",
+      "window_size": 3,
+      "sent_index": 2,
+      "start": 190,
+      "end": 1388,
+      "text": "From:\nTechSupply Solutions Ltd.\n456 Vendor Street\nSan Francisco, CA 94102\nEmail: billing@techsupply.com\nPhone: (415) 555-0190\n\n------------------------------------------------------------------------\nITEM DESCRIPTION                    QTY     UNIT PRICE     TOTAL\n------------------------------------------------------------------------\nWireless Keyboard Model KBD-X200    5       $45.00         $225.00\nUSB-C Hub 7-Port                    3       $89.99         $269.97\n27-inch Monitor Stand               2       $120.00        $240.00\nHDMI Cable 2m (Pack of 3)           4       $22.50         $90.00\nLaptop Cooling Pad                  6       $35.00         $210.00\n------------------------------------------------------------------------\n                                            Subtotal:      $1,034.97\n                                            Tax (8.5%):    $87.97\n                                            Shipping:      $25.00\n                                            TOTAL DUE:     $1,147.94\n------------------------------------------------------------------------\n\nPayment Terms: Net 30 days from invoice date.\nAccepted Payment Methods: Bank transfer, check, or credit card."
+    },
+    {
+      "segment_id": "doc_01_invoice-w3-0003",
+      "doc_id": "doc_01_invoice",
+      "window_size": 3,
+      "sent_index": 3,
+      "start": 1279,
+      "end": 1448,
+      "text": "Payment Terms: Net 30 days from invoice date.\nAccepted Payment Methods: Bank transfer, check, or credit card.\nLate payments are subject to a 1.5% monthly finance charge."
+    },
+    {
+      "segment_id": "doc_01_invoice-w3-0004",
+      "doc_id": "doc_01_invoice",
+      "window_size": 3,
+      "sent_index": 4,
+      "start": 1325,
+      "end": 1675,
+      "text": "Accepted Payment Methods: Bank transfer, check, or credit card.\nLate payments are subject to a 1.5% monthly finance charge.\n\nBank Transfer Details:\n  Bank: First National Bank\n  Account Name: TechSupply Solutions Ltd.\n  Account Number: 123456789\n  Routing Number: 021000021\n\nPlease include the invoice number INV-2024-00847 in your payment reference."
+    },
+    {
+      "segment_id": "doc_01_invoice-w3-0005",
+      "doc_id": "doc_01_invoice",
+      "window_size": 3,
+      "sent_index": 5,
+      "start": 1389,
+      "end": 1704,
+      "text": "Late payments are subject to a 1.5% monthly finance charge.\n\nBank Transfer Details:\n  Bank: First National Bank\n  Account Name: TechSupply Solutions Ltd.\n  Account Number: 123456789\n  Routing Number: 021000021\n\nPlease include the invoice number INV-2024-00847 in your payment reference.\nThank you for your business."
+    },
+    {
+      "segment_id": "doc_01_invoice-w3-0006",
+      "doc_id": "doc_01_invoice",
+      "window_size": 3,
+      "sent_index": 6,
+      "start": 1450,
+      "end": 1751,
+      "text": "Bank Transfer Details:\n  Bank: First National Bank\n  Account Name: TechSupply Solutions Ltd.\n  Account Number: 123456789\n  Routing Number: 021000021\n\nPlease include the invoice number INV-2024-00847 in your payment reference.\nThank you for your business. For questions, contact billing@techsupply.com."
+    }
+  ]
+}

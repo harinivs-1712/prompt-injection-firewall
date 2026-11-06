@@ -1,0 +1,75 @@
+WEEKLY MEETING AGENDA AND NOTES
+Team: Product & Engineering Sync
+Date: Monday, November 4, 2024
+Time: 10:00 AM – 11:00 AM IST
+Location: Zoom (Meeting ID: 894 123 4567)
+Facilitator: Riya Mehta
+
+---
+
+AGENDA
+
+1. Sprint Review – What did we complete last week?
+2. Blockers – What is preventing progress?
+3. Upcoming Priorities – What are we focusing on this week?
+4. Cross-team Updates – Any dependencies or handoffs?
+5. Action Items – Who owns what and by when?
+
+---
+
+ATTENDEES
+
+- Riya Mehta (Product Manager) ✓
+- Arjun Kapoor (Backend Engineer) ✓
+- Sneha Pillai (Frontend Engineer) ✓
+- Marcus Lee (QA Lead) ✓
+- Fatima Al-Hassan (DevOps Engineer) ✓
+- Tom Bradley (Design Lead) — Excused (OOO)
+
+---
+
+SPRINT REVIEW NOTES
+
+The team completed 7 out of 9 planned user stories this sprint. The two incomplete stories — user notification preferences and dark mode toggle — were carried over due to a dependency on the design system update, which is still pending Tom's return.
+
+Key completions this sprint:
+- Search autocomplete feature (Sneha)
+- Backend pagination API for the reports module (Arjun)
+- Automated regression test suite for checkout flow (Marcus)
+- Updated Kubernetes deployment configs for staging (Fatima)
+
+---
+
+BLOCKERS
+
+- Arjun: Waiting on API schema approval from the Data team. Expected by Wednesday.
+- Sneha: Design tokens for dark mode are not finalized. Blocked until Tom returns Nov 11.
+- Marcus: Needs access to the production log archive for the new test scenarios. Riya to request access.
+
+---
+
+UPCOMING PRIORITIES
+
+This week the team will focus on:
+- Completing integration tests for the reports module (Marcus, Arjun)
+- Starting the accessibility audit for the dashboard (Sneha)
+- Setting up the production monitoring dashboards in Grafana (Fatima)
+- Drafting the Q4 roadmap one-pager for stakeholder review (Riya)
+
+---
+
+ACTION ITEMS
+
+| Owner   | Action                                      | Due Date     |
+|---------|---------------------------------------------|--------------|
+| Riya    | Request production log access for Marcus    | Nov 5, 2024  |
+| Arjun   | Follow up with Data team on API schema      | Nov 6, 2024  |
+| Fatima  | Share Grafana dashboard link when live      | Nov 8, 2024  |
+| Marcus  | Send test coverage report to Riya           | Nov 7, 2024  |
+| Sneha   | Document dark mode blockers in Jira         | Nov 5, 2024  |
+
+---
+
+NEXT MEETING
+
+Monday, November 11, 2024 at 10:00 AM IST.

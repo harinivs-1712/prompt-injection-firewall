@@ -1,0 +1,18 @@
+# Core
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.0.0
+
+# NLP / Segmentation
+nltk>=3.8.1
+
+# LLM Integration (Day 2+)
+openai>=1.30.0
+anthropic>=0.25.0
+
+# Data
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=8.0.0
+pytest-cov>=5.0.0

@@ -1,0 +1,200 @@
+{
+  "doc_id": "doc_07_checklist",
+  "source_file": "C:\\Users\\RAHUL S\\Downloads\\prompt-injection-firewall\\data\\original\\doc_07_checklist.txt",
+  "char_length": 2794,
+  "sentence_count": 23,
+  "segment_count": 21,
+  "window_size": 3,
+  "stride": 1,
+  "segments": [
+    {
+      "segment_id": "doc_07_checklist-w3-0000",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 0,
+      "start": 0,
+      "end": 209,
+      "text": "ONBOARDING CHECKLIST — NEW EMPLOYEE\nEmployee Name: Jordan Rivera\nRole: Junior Data Analyst\nStart Date: November 11, 2024\nManager: Priya Nair\nHR Contact: Lisa Tran (lisa.tran@company.com)\n\n---\n\nBEFORE FIRST DAY"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0001",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 1,
+      "start": 188,
+      "end": 577,
+      "text": "---\n\nBEFORE FIRST DAY\n\n- [ ] Send welcome email with office directions and parking info\n- [ ] Set up company email account (IT)\n- [ ] Provision laptop and necessary software (IT)\n- [ ] Add to relevant Slack channels (Manager)\n- [ ] Share employee handbook (HR)\n- [ ] Send calendar invites for Week 1 meetings (Manager)\n- [ ] Assign onboarding buddy: Rahul Sharma (rahul.sharma@company.com)"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0002",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 2,
+      "start": 193,
+      "end": 582,
+      "text": "BEFORE FIRST DAY\n\n- [ ] Send welcome email with office directions and parking info\n- [ ] Set up company email account (IT)\n- [ ] Provision laptop and necessary software (IT)\n- [ ] Add to relevant Slack channels (Manager)\n- [ ] Share employee handbook (HR)\n- [ ] Send calendar invites for Week 1 meetings (Manager)\n- [ ] Assign onboarding buddy: Rahul Sharma (rahul.sharma@company.com)\n\n---"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0003",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 3,
+      "start": 211,
+      "end": 603,
+      "text": "- [ ] Send welcome email with office directions and parking info\n- [ ] Set up company email account (IT)\n- [ ] Provision laptop and necessary software (IT)\n- [ ] Add to relevant Slack channels (Manager)\n- [ ] Share employee handbook (HR)\n- [ ] Send calendar invites for Week 1 meetings (Manager)\n- [ ] Assign onboarding buddy: Rahul Sharma (rahul.sharma@company.com)\n\n---\n\nWEEK 1: ORIENTATION"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0004",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 4,
+      "start": 579,
+      "end": 871,
+      "text": "---\n\nWEEK 1: ORIENTATION\n\nDay 1 — Monday\n- Collect badge and ID from reception (Lobby, 9 AM)\n- HR orientation session: benefits, policies, and payroll setup\n- Office tour and introductions to immediate team\n- Set up workstation, email, Slack, and VPN\n- Lunch with manager and onboarding buddy"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0005",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 5,
+      "start": 584,
+      "end": 1082,
+      "text": "WEEK 1: ORIENTATION\n\nDay 1 — Monday\n- Collect badge and ID from reception (Lobby, 9 AM)\n- HR orientation session: benefits, policies, and payroll setup\n- Office tour and introductions to immediate team\n- Set up workstation, email, Slack, and VPN\n- Lunch with manager and onboarding buddy\n\nDay 2 — Tuesday\n- IT security training (mandatory, 2 hours)\n- Introduction to company tools: Jira, Confluence, GitHub\n- Read Q3 engineering report and team wiki\n- 1:1 with manager to discuss 30-60-90 day goals"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0006",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 6,
+      "start": 605,
+      "end": 1265,
+      "text": "Day 1 — Monday\n- Collect badge and ID from reception (Lobby, 9 AM)\n- HR orientation session: benefits, policies, and payroll setup\n- Office tour and introductions to immediate team\n- Set up workstation, email, Slack, and VPN\n- Lunch with manager and onboarding buddy\n\nDay 2 — Tuesday\n- IT security training (mandatory, 2 hours)\n- Introduction to company tools: Jira, Confluence, GitHub\n- Read Q3 engineering report and team wiki\n- 1:1 with manager to discuss 30-60-90 day goals\n\nDay 3 — Wednesday\n- Shadow senior data analyst for the morning\n- Attend weekly product and engineering sync (10 AM)\n- Begin access request for internal dashboards and data warehouse"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0007",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 7,
+      "start": 873,
+      "end": 1442,
+      "text": "Day 2 — Tuesday\n- IT security training (mandatory, 2 hours)\n- Introduction to company tools: Jira, Confluence, GitHub\n- Read Q3 engineering report and team wiki\n- 1:1 with manager to discuss 30-60-90 day goals\n\nDay 3 — Wednesday\n- Shadow senior data analyst for the morning\n- Attend weekly product and engineering sync (10 AM)\n- Begin access request for internal dashboards and data warehouse\n\nDay 4 — Thursday\n- Complete data privacy and compliance training (mandatory)\n- Review existing analytics pipelines with onboarding buddy\n- Set up local development environment"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0008",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 8,
+      "start": 1084,
+      "end": 1614,
+      "text": "Day 3 — Wednesday\n- Shadow senior data analyst for the morning\n- Attend weekly product and engineering sync (10 AM)\n- Begin access request for internal dashboards and data warehouse\n\nDay 4 — Thursday\n- Complete data privacy and compliance training (mandatory)\n- Review existing analytics pipelines with onboarding buddy\n- Set up local development environment\n\nDay 5 — Friday\n- Week 1 check-in with manager (30 min)\n- Write brief reflection: what went well, what needs clarification\n- Share reflection with HR contact by end of day"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0009",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 9,
+      "start": 1267,
+      "end": 1619,
+      "text": "Day 4 — Thursday\n- Complete data privacy and compliance training (mandatory)\n- Review existing analytics pipelines with onboarding buddy\n- Set up local development environment\n\nDay 5 — Friday\n- Week 1 check-in with manager (30 min)\n- Write brief reflection: what went well, what needs clarification\n- Share reflection with HR contact by end of day\n\n---"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0010",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 10,
+      "start": 1444,
+      "end": 1638,
+      "text": "Day 5 — Friday\n- Week 1 check-in with manager (30 min)\n- Write brief reflection: what went well, what needs clarification\n- Share reflection with HR contact by end of day\n\n---\n\nWEEK 2–4: RAMP-UP"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0011",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 11,
+      "start": 1616,
+      "end": 1900,
+      "text": "---\n\nWEEK 2–4: RAMP-UP\n\n- Complete remaining mandatory compliance training modules\n- Attend all team ceremonies (standups, sprint planning, retrospectives)\n- Pick up first assigned ticket in Jira (low complexity, guided by buddy)\n- Schedule introductory calls with 3 stakeholder teams"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0012",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 12,
+      "start": 1621,
+      "end": 1905,
+      "text": "WEEK 2–4: RAMP-UP\n\n- Complete remaining mandatory compliance training modules\n- Attend all team ceremonies (standups, sprint planning, retrospectives)\n- Pick up first assigned ticket in Jira (low complexity, guided by buddy)\n- Schedule introductory calls with 3 stakeholder teams\n\n---"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0013",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 13,
+      "start": 1640,
+      "end": 1932,
+      "text": "- Complete remaining mandatory compliance training modules\n- Attend all team ceremonies (standups, sprint planning, retrospectives)\n- Pick up first assigned ticket in Jira (low complexity, guided by buddy)\n- Schedule introductory calls with 3 stakeholder teams\n\n---\n\nTOOLS AND ACCESS REQUIRED"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0014",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 14,
+      "start": 1902,
+      "end": 2206,
+      "text": "---\n\nTOOLS AND ACCESS REQUIRED\n\n- GitHub (repository access)\n- Jira (project tracking)\n- Confluence (documentation)\n- Tableau (read-only dashboards)\n- Snowflake (data warehouse, analyst role)\n- Google Workspace (email, calendar, Drive)\n- Slack: channels #general, #data-team, #engineering, #announcements"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0015",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 15,
+      "start": 1907,
+      "end": 2211,
+      "text": "TOOLS AND ACCESS REQUIRED\n\n- GitHub (repository access)\n- Jira (project tracking)\n- Confluence (documentation)\n- Tableau (read-only dashboards)\n- Snowflake (data warehouse, analyst role)\n- Google Workspace (email, calendar, Drive)\n- Slack: channels #general, #data-team, #engineering, #announcements\n\n---"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0016",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 16,
+      "start": 1934,
+      "end": 2221,
+      "text": "- GitHub (repository access)\n- Jira (project tracking)\n- Confluence (documentation)\n- Tableau (read-only dashboards)\n- Snowflake (data warehouse, analyst role)\n- Google Workspace (email, calendar, Drive)\n- Slack: channels #general, #data-team, #engineering, #announcements\n\n---\n\nCONTACTS"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0017",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 17,
+      "start": 2208,
+      "end": 2636,
+      "text": "---\n\nCONTACTS\n\n| Name           | Role             | Email                        |\n|----------------|------------------|------------------------------|\n| Priya Nair     | Manager          | priya.nair@company.com       |\n| Lisa Tran      | HR Contact       | lisa.tran@company.com        |\n| Rahul Sharma   | Onboarding Buddy | rahul.sharma@company.com     |\n| IT Help Desk   | IT Support       | it-support@company.com       |"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0018",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 18,
+      "start": 2213,
+      "end": 2641,
+      "text": "CONTACTS\n\n| Name           | Role             | Email                        |\n|----------------|------------------|------------------------------|\n| Priya Nair     | Manager          | priya.nair@company.com       |\n| Lisa Tran      | HR Contact       | lisa.tran@company.com        |\n| Rahul Sharma   | Onboarding Buddy | rahul.sharma@company.com     |\n| IT Help Desk   | IT Support       | it-support@company.com       |\n\n---"
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0019",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 19,
+      "start": 2223,
+      "end": 2712,
+      "text": "| Name           | Role             | Email                        |\n|----------------|------------------|------------------------------|\n| Priya Nair     | Manager          | priya.nair@company.com       |\n| Lisa Tran      | HR Contact       | lisa.tran@company.com        |\n| Rahul Sharma   | Onboarding Buddy | rahul.sharma@company.com     |\n| IT Help Desk   | IT Support       | it-support@company.com       |\n\n---\n\nNotes: All mandatory training must be completed by the end of Week 2."
+    },
+    {
+      "segment_id": "doc_07_checklist-w3-0020",
+      "doc_id": "doc_07_checklist",
+      "window_size": 3,
+      "sent_index": 20,
+      "start": 2638,
+      "end": 2793,
+      "text": "---\n\nNotes: All mandatory training must be completed by the end of Week 2. If you have any questions, do not hesitate to reach out to Lisa or your manager."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+RESEARCH PAPER ABSTRACT
+
+Title: Adversarial Robustness of Large Language Models Against Indirect Prompt Injection in Agentic Workflows
+
+Authors: Aisha Patel, Dr. Liang Zhou, Prof. Samuel Okonkwo
+Institution: Center for AI Safety Research, University of Cambridge
+Submitted to: IEEE Symposium on Security and Privacy (S&P 2025)
+
+---
+
+ABSTRACT
+
+The deployment of large language models (LLMs) as autonomous agents capable of browsing the web, reading documents, and executing tools introduces novel attack surfaces not present in isolated model inference. Among these, indirect prompt injection — the embedding of adversarial instructions within external content that the agent processes during task execution — poses a significant and underexplored security threat.
+
+In this paper, we present a systematic study of indirect prompt injection attacks across five representative agentic workflows: document summarization, email processing, web browsing, code execution, and customer support. We evaluate seven LLMs, including GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and four open-source models, on a dataset of 1,240 attack scenarios spanning three attack categories: instruction override, goal hijacking, and data exfiltration.
+
+Our results reveal that all evaluated models are susceptible to at least one attack category, with open-source models exhibiting, on average, 2.3 times higher attack success rates than frontier proprietary models. We identify four key vulnerability factors: insufficient context grounding, absence of content provenance tracking, over-permissive tool access, and lack of output sanitization.
+
+Based on these findings, we propose a multi-layer mitigation taxonomy and evaluate the effectiveness of four defense strategies: instruction hierarchy enforcement, content sandboxing, tool permission scoping, and human-in-the-loop intervention. Our experiments show that combining instruction hierarchy enforcement with tool permission scoping reduces attack success rates by up to 78% while preserving task utility in 91% of benign cases.
+
+We release our benchmark dataset and evaluation framework as open-source resources to support further research in LLM agent security.
+
+Keywords: prompt injection, LLM agents, adversarial robustness, AI security, agentic AI, tool use, human-in-the-loop

@@ -1,0 +1,299 @@
+{
+  "doc_id": "doc_04_readme",
+  "source_file": "C:\\Users\\RAHUL S\\Downloads\\prompt-injection-firewall\\data\\original\\doc_04_readme.txt",
+  "char_length": 2385,
+  "sentence_count": 34,
+  "segment_count": 32,
+  "window_size": 3,
+  "stride": 1,
+  "segments": [
+    {
+      "segment_id": "doc_04_readme-w3-0000",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 0,
+      "start": 0,
+      "end": 137,
+      "text": "# prompt-injection-firewall\n\nA research framework for detecting and mitigating prompt injection attacks in LLM-based agents.\n\n## Overview"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0001",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 1,
+      "start": 29,
+      "end": 287,
+      "text": "A research framework for detecting and mitigating prompt injection attacks in LLM-based agents.\n\n## Overview\n\nPrompt injection attacks embed malicious instructions inside external content (documents, emails, tool outputs) to hijack the behavior of AI agents."
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0002",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 2,
+      "start": 126,
+      "end": 402,
+      "text": "## Overview\n\nPrompt injection attacks embed malicious instructions inside external content (documents, emails, tool outputs) to hijack the behavior of AI agents. This project implements a three-layer detection and mitigation framework with a shared provenance tracking module."
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0003",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 3,
+      "start": 139,
+      "end": 424,
+      "text": "Prompt injection attacks embed malicious instructions inside external content (documents, emails, tool outputs) to hijack the behavior of AI agents. This project implements a three-layer detection and mitigation framework with a shared provenance tracking module.\n\n## Project Structure"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0004",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 4,
+      "start": 288,
+      "end": 972,
+      "text": "This project implements a three-layer detection and mitigation framework with a shared provenance tracking module.\n\n## Project Structure\n\n```\nprompt-injection-firewall/\n├── data/\n│   ├── original/      # Read-only sample documents\n│   └── segments/      # JSON output from the segmenter\n├── layers/            # Security layer implementations\n│   ├── layer1/        # Content analysis engine\n│   ├── layer2/        # Tool security and policy engine\n│   └── layer3/        # Sanitization, HITL, audit logging\n├── shared/            # Threat Context and Provenance Manager\n├── tests/             # Unit and integration tests\n└── notes.md           # Architecture and development log\n```"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0005",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 5,
+      "start": 404,
+      "end": 992,
+      "text": "## Project Structure\n\n```\nprompt-injection-firewall/\n├── data/\n│   ├── original/      # Read-only sample documents\n│   └── segments/      # JSON output from the segmenter\n├── layers/            # Security layer implementations\n│   ├── layer1/        # Content analysis engine\n│   ├── layer2/        # Tool security and policy engine\n│   └── layer3/        # Sanitization, HITL, audit logging\n├── shared/            # Threat Context and Provenance Manager\n├── tests/             # Unit and integration tests\n└── notes.md           # Architecture and development log\n```\n\n## Getting Started"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0006",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 6,
+      "start": 426,
+      "end": 1011,
+      "text": "```\nprompt-injection-firewall/\n├── data/\n│   ├── original/      # Read-only sample documents\n│   └── segments/      # JSON output from the segmenter\n├── layers/            # Security layer implementations\n│   ├── layer1/        # Content analysis engine\n│   ├── layer2/        # Tool security and policy engine\n│   └── layer3/        # Sanitization, HITL, audit logging\n├── shared/            # Threat Context and Provenance Manager\n├── tests/             # Unit and integration tests\n└── notes.md           # Architecture and development log\n```\n\n## Getting Started\n\n### Prerequisites"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0007",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 7,
+      "start": 974,
+      "end": 1042,
+      "text": "## Getting Started\n\n### Prerequisites\n\n- Python 3.10 or higher\n- pip"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0008",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 8,
+      "start": 994,
+      "end": 1060,
+      "text": "### Prerequisites\n\n- Python 3.10 or higher\n- pip\n\n### Installation"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0009",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 9,
+      "start": 1013,
+      "end": 1194,
+      "text": "- Python 3.10 or higher\n- pip\n\n### Installation\n\n```bash\n# Clone the repository\ngit clone https://github.com/harinivs-1712/prompt-injection-firewall.git\ncd prompt-injection-firewall"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0010",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 10,
+      "start": 1044,
+      "end": 1246,
+      "text": "### Installation\n\n```bash\n# Clone the repository\ngit clone https://github.com/harinivs-1712/prompt-injection-firewall.git\ncd prompt-injection-firewall\n\n# Create a virtual environment\npython -m venv venv"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0011",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 11,
+      "start": 1062,
+      "end": 1314,
+      "text": "```bash\n# Clone the repository\ngit clone https://github.com/harinivs-1712/prompt-injection-firewall.git\ncd prompt-injection-firewall\n\n# Create a virtual environment\npython -m venv venv\n\n# Activate the virtual environment (Windows)\nvenv\\Scripts\\activate"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0012",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 12,
+      "start": 1196,
+      "end": 1389,
+      "text": "# Create a virtual environment\npython -m venv venv\n\n# Activate the virtual environment (Windows)\nvenv\\Scripts\\activate\n\n# Activate the virtual environment (macOS/Linux)\nsource venv/bin/activate"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0013",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 13,
+      "start": 1248,
+      "end": 1449,
+      "text": "# Activate the virtual environment (Windows)\nvenv\\Scripts\\activate\n\n# Activate the virtual environment (macOS/Linux)\nsource venv/bin/activate\n\n# Install dependencies\npip install -r requirements.txt\n```"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0014",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 14,
+      "start": 1316,
+      "end": 1476,
+      "text": "# Activate the virtual environment (macOS/Linux)\nsource venv/bin/activate\n\n# Install dependencies\npip install -r requirements.txt\n```\n\n### Running the Segmenter"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0015",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 15,
+      "start": 1391,
+      "end": 1516,
+      "text": "# Install dependencies\npip install -r requirements.txt\n```\n\n### Running the Segmenter\n\n```bash\npython layers/segmenter.py\n```"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0016",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 16,
+      "start": 1451,
+      "end": 1575,
+      "text": "### Running the Segmenter\n\n```bash\npython layers/segmenter.py\n```\n\nSegments will be saved as JSON files in `data/segments/`."
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0017",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 17,
+      "start": 1478,
+      "end": 1594,
+      "text": "```bash\npython layers/segmenter.py\n```\n\nSegments will be saved as JSON files in `data/segments/`.\n\n### Running Tests"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0018",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 18,
+      "start": 1518,
+      "end": 1624,
+      "text": "Segments will be saved as JSON files in `data/segments/`.\n\n### Running Tests\n\n```bash\npytest tests/ -v\n```"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0019",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 19,
+      "start": 1577,
+      "end": 1635,
+      "text": "### Running Tests\n\n```bash\npytest tests/ -v\n```\n\n## Layers"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0020",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 20,
+      "start": 1596,
+      "end": 1680,
+      "text": "```bash\npytest tests/ -v\n```\n\n## Layers\n\n### Layer 1: Context-Aware Content Analysis"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0021",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 21,
+      "start": 1626,
+      "end": 1772,
+      "text": "## Layers\n\n### Layer 1: Context-Aware Content Analysis\n\nSegments external content and classifies instructions as benign, suspicious, or malicious."
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0022",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 22,
+      "start": 1637,
+      "end": 1815,
+      "text": "### Layer 1: Context-Aware Content Analysis\n\nSegments external content and classifies instructions as benign, suspicious, or malicious.\n\n### Layer 2: Tool-Level Security Analysis"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0023",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 23,
+      "start": 1682,
+      "end": 1893,
+      "text": "Segments external content and classifies instructions as benign, suspicious, or malicious.\n\n### Layer 2: Tool-Level Security Analysis\n\nValidates tool calls against a deterministic policy engine before execution."
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0024",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 24,
+      "start": 1774,
+      "end": 1945,
+      "text": "### Layer 2: Tool-Level Security Analysis\n\nValidates tool calls against a deterministic policy engine before execution.\n\n### Layer 3: Safe Response and Security Management"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0025",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 25,
+      "start": 1817,
+      "end": 2037,
+      "text": "Validates tool calls against a deterministic policy engine before execution.\n\n### Layer 3: Safe Response and Security Management\n\nHandles sanitization, human-in-the-loop review, audit logging, and the security dashboard."
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0026",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 26,
+      "start": 1895,
+      "end": 2095,
+      "text": "### Layer 3: Safe Response and Security Management\n\nHandles sanitization, human-in-the-loop review, audit logging, and the security dashboard.\n\n### Shared: Threat Context and Provenance Manager (TCPM)"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0027",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 27,
+      "start": 1947,
+      "end": 2186,
+      "text": "Handles sanitization, human-in-the-loop review, audit logging, and the security dashboard.\n\n### Shared: Threat Context and Provenance Manager (TCPM)\n\nTracks the origin, trust level, and influence of every content segment across all layers."
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0028",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 28,
+      "start": 2039,
+      "end": 2197,
+      "text": "### Shared: Threat Context and Provenance Manager (TCPM)\n\nTracks the origin, trust level, and influence of every content segment across all layers.\n\n## Status"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0029",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 29,
+      "start": 2097,
+      "end": 2367,
+      "text": "Tracks the origin, trust level, and influence of every content segment across all layers.\n\n## Status\n\n- [x] Day 1: Project setup, sample documents, segmenter\n- [ ] Day 2: Instruction identification, TCPM data model\n- [ ] Day 3+: Layer 1 classifier, Layer 2 policy engine"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0030",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 30,
+      "start": 2188,
+      "end": 2379,
+      "text": "## Status\n\n- [x] Day 1: Project setup, sample documents, segmenter\n- [ ] Day 2: Instruction identification, TCPM data model\n- [ ] Day 3+: Layer 1 classifier, Layer 2 policy engine\n\n## License"
+    },
+    {
+      "segment_id": "doc_04_readme-w3-0031",
+      "doc_id": "doc_04_readme",
+      "window_size": 3,
+      "sent_index": 31,
+      "start": 2199,
+      "end": 2384,
+      "text": "- [x] Day 1: Project setup, sample documents, segmenter\n- [ ] Day 2: Instruction identification, TCPM data model\n- [ ] Day 3+: Layer 1 classifier, Layer 2 policy engine\n\n## License\n\nMIT"
+    }
+  ]
+}

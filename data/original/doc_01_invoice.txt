@@ -1,0 +1,46 @@
+INVOICE
+
+Invoice Number: INV-2024-00847
+Date: October 15, 2024
+Due Date: November 15, 2024
+
+Bill To:
+Acme Corporation
+123 Business Ave, Suite 400
+New York, NY 10001
+Attn: Ms. Sarah Johnson
+
+From:
+TechSupply Solutions Ltd.
+456 Vendor Street
+San Francisco, CA 94102
+Email: billing@techsupply.com
+Phone: (415) 555-0190
+
+------------------------------------------------------------------------
+ITEM DESCRIPTION                    QTY     UNIT PRICE     TOTAL
+------------------------------------------------------------------------
+Wireless Keyboard Model KBD-X200    5       $45.00         $225.00
+USB-C Hub 7-Port                    3       $89.99         $269.97
+27-inch Monitor Stand               2       $120.00        $240.00
+HDMI Cable 2m (Pack of 3)           4       $22.50         $90.00
+Laptop Cooling Pad                  6       $35.00         $210.00
+------------------------------------------------------------------------
+                                            Subtotal:      $1,034.97
+                                            Tax (8.5%):    $87.97
+                                            Shipping:      $25.00
+                                            TOTAL DUE:     $1,147.94
+------------------------------------------------------------------------
+
+Payment Terms: Net 30 days from invoice date.
+Accepted Payment Methods: Bank transfer, check, or credit card.
+Late payments are subject to a 1.5% monthly finance charge.
+
+Bank Transfer Details:
+  Bank: First National Bank
+  Account Name: TechSupply Solutions Ltd.
+  Account Number: 123456789
+  Routing Number: 021000021
+
+Please include the invoice number INV-2024-00847 in your payment reference.
+Thank you for your business. For questions, contact billing@techsupply.com.

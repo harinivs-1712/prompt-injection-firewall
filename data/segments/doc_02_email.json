@@ -1,0 +1,164 @@
+{
+  "doc_id": "doc_02_email",
+  "source_file": "C:\\Users\\RAHUL S\\Downloads\\prompt-injection-firewall\\data\\original\\doc_02_email.txt",
+  "char_length": 1973,
+  "sentence_count": 19,
+  "segment_count": 17,
+  "window_size": 3,
+  "stride": 1,
+  "segments": [
+    {
+      "segment_id": "doc_02_email-w3-0000",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 0,
+      "start": 0,
+      "end": 397,
+      "text": "From: david.chen@globalpartners.com\nTo: emily.watson@acmecorp.com\nCC: team@acmecorp.com\nSubject: Q4 Partnership Proposal — Action Required by Nov 30\nDate: Wed, 6 Nov 2024 09:14:32 +0000\n\nDear Emily,\n\nI hope this message finds you well. Following our productive call last Thursday, I wanted to follow up with the key points we discussed and outline the next steps for our Q4 partnership initiative."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0001",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 1,
+      "start": 200,
+      "end": 586,
+      "text": "I hope this message finds you well. Following our productive call last Thursday, I wanted to follow up with the key points we discussed and outline the next steps for our Q4 partnership initiative.\n\nAs agreed, Global Partners Inc. is prepared to offer Acme Corporation an exclusive 18-month service contract covering managed IT infrastructure support across your three regional offices."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0002",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 2,
+      "start": 236,
+      "end": 672,
+      "text": "Following our productive call last Thursday, I wanted to follow up with the key points we discussed and outline the next steps for our Q4 partnership initiative.\n\nAs agreed, Global Partners Inc. is prepared to offer Acme Corporation an exclusive 18-month service contract covering managed IT infrastructure support across your three regional offices. The contract value is estimated at $850,000 USD, subject to final scope confirmation."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0003",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 3,
+      "start": 399,
+      "end": 759,
+      "text": "As agreed, Global Partners Inc. is prepared to offer Acme Corporation an exclusive 18-month service contract covering managed IT infrastructure support across your three regional offices. The contract value is estimated at $850,000 USD, subject to final scope confirmation.\n\nPlease find attached the draft proposal document (GlobalPartners_Q4_Proposal_v2.pdf)."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0004",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 4,
+      "start": 587,
+      "end": 854,
+      "text": "The contract value is estimated at $850,000 USD, subject to final scope confirmation.\n\nPlease find attached the draft proposal document (GlobalPartners_Q4_Proposal_v2.pdf). The proposal covers service level agreements (SLAs), escalation procedures, and pricing tiers."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0005",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 5,
+      "start": 674,
+      "end": 978,
+      "text": "Please find attached the draft proposal document (GlobalPartners_Q4_Proposal_v2.pdf). The proposal covers service level agreements (SLAs), escalation procedures, and pricing tiers. I would appreciate it if you could review it with your legal and finance teams before our follow-up meeting on November 20."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0006",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 6,
+      "start": 760,
+      "end": 1052,
+      "text": "The proposal covers service level agreements (SLAs), escalation procedures, and pricing tiers. I would appreciate it if you could review it with your legal and finance teams before our follow-up meeting on November 20.\n\nThere are three items I need your confirmation on before we can proceed."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0007",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 7,
+      "start": 855,
+      "end": 1180,
+      "text": "I would appreciate it if you could review it with your legal and finance teams before our follow-up meeting on November 20.\n\nThere are three items I need your confirmation on before we can proceed. First, can you confirm which of the two pricing tiers — Standard (Tier A) or Premium (Tier B) — you would like to proceed with?"
+    },
+    {
+      "segment_id": "doc_02_email-w3-0008",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 8,
+      "start": 980,
+      "end": 1271,
+      "text": "There are three items I need your confirmation on before we can proceed. First, can you confirm which of the two pricing tiers — Standard (Tier A) or Premium (Tier B) — you would like to proceed with? Second, please send over your preferred payment schedule: monthly, quarterly, or annually."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0009",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 9,
+      "start": 1053,
+      "end": 1390,
+      "text": "First, can you confirm which of the two pricing tiers — Standard (Tier A) or Premium (Tier B) — you would like to proceed with? Second, please send over your preferred payment schedule: monthly, quarterly, or annually. Third, please provide the contact details of your designated technical point of contact (POC) for the onboarding team."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0010",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 10,
+      "start": 1181,
+      "end": 1439,
+      "text": "Second, please send over your preferred payment schedule: monthly, quarterly, or annually. Third, please provide the contact details of your designated technical point of contact (POC) for the onboarding team.\n\nOur legal team has reviewed the standard terms."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0011",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 11,
+      "start": 1272,
+      "end": 1614,
+      "text": "Third, please provide the contact details of your designated technical point of contact (POC) for the onboarding team.\n\nOur legal team has reviewed the standard terms. However, if Acme requires any custom clauses, please flag them no later than November 15, so we have adequate time to revise before the final signing deadline of November 30."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0012",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 12,
+      "start": 1392,
+      "end": 1687,
+      "text": "Our legal team has reviewed the standard terms. However, if Acme requires any custom clauses, please flag them no later than November 15, so we have adequate time to revise before the final signing deadline of November 30.\n\nI am available for a call any day this week between 10 AM and 4 PM EST."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0013",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 13,
+      "start": 1440,
+      "end": 1762,
+      "text": "However, if Acme requires any custom clauses, please flag them no later than November 15, so we have adequate time to revise before the final signing deadline of November 30.\n\nI am available for a call any day this week between 10 AM and 4 PM EST. Please do not hesitate to reach out if you have any questions or concerns."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0014",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 14,
+      "start": 1616,
+      "end": 1833,
+      "text": "I am available for a call any day this week between 10 AM and 4 PM EST. Please do not hesitate to reach out if you have any questions or concerns. I look forward to building a strong partnership with Acme Corporation."
+    },
+    {
+      "segment_id": "doc_02_email-w3-0015",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 15,
+      "start": 1688,
+      "end": 1848,
+      "text": "Please do not hesitate to reach out if you have any questions or concerns. I look forward to building a strong partnership with Acme Corporation.\n\nWarm regards,"
+    },
+    {
+      "segment_id": "doc_02_email-w3-0016",
+      "doc_id": "doc_02_email",
+      "window_size": 3,
+      "sent_index": 16,
+      "start": 1763,
+      "end": 1972,
+      "text": "I look forward to building a strong partnership with Acme Corporation.\n\nWarm regards,\n\nDavid Chen\nSenior Partnership Manager\nGlobal Partners Inc.\nPhone: +1 (212) 555-0147\nLinkedIn: linkedin.com/in/davidchen-gp"
+    }
+  ]
+}

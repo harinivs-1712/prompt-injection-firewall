@@ -1,0 +1,632 @@
+{
+  "doc_id": "doc_06_article",
+  "source_file": "C:\\Users\\RAHUL S\\Downloads\\prompt-injection-firewall\\data\\original\\doc_06_article.txt",
+  "char_length": 4317,
+  "sentence_count": 71,
+  "segment_count": 69,
+  "window_size": 3,
+  "stride": 1,
+  "segments": [
+    {
+      "segment_id": "doc_06_article-w3-0000",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 0,
+      "start": 0,
+      "end": 132,
+      "text": "GETTING STARTED WITH PYTHON: A BEGINNER'S GUIDE\n\nIntroduction\n\nPython is one of the most popular programming languages in the world."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0001",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 1,
+      "start": 49,
+      "end": 245,
+      "text": "Introduction\n\nPython is one of the most popular programming languages in the world. It is widely used in web development, data science, artificial intelligence, automation, and many other domains."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0002",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 2,
+      "start": 63,
+      "end": 420,
+      "text": "Python is one of the most popular programming languages in the world. It is widely used in web development, data science, artificial intelligence, automation, and many other domains. Its clean, readable syntax makes it an excellent first language for beginners, while its extensive ecosystem of libraries makes it a powerful tool for experienced developers."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0003",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 3,
+      "start": 133,
+      "end": 538,
+      "text": "It is widely used in web development, data science, artificial intelligence, automation, and many other domains. Its clean, readable syntax makes it an excellent first language for beginners, while its extensive ecosystem of libraries makes it a powerful tool for experienced developers.\n\nThis guide will walk you through the basics of Python programming, from installation to writing your first programs."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0004",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 4,
+      "start": 246,
+      "end": 637,
+      "text": "Its clean, readable syntax makes it an excellent first language for beginners, while its extensive ecosystem of libraries makes it a powerful tool for experienced developers.\n\nThis guide will walk you through the basics of Python programming, from installation to writing your first programs. By the end, you will understand core Python concepts and be ready to explore more advanced topics."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0005",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 5,
+      "start": 422,
+      "end": 642,
+      "text": "This guide will walk you through the basics of Python programming, from installation to writing your first programs. By the end, you will understand core Python concepts and be ready to explore more advanced topics.\n\n---"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0006",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 6,
+      "start": 539,
+      "end": 667,
+      "text": "By the end, you will understand core Python concepts and be ready to explore more advanced topics.\n\n---\n\nSECTION 1: INSTALLATION"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0007",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 7,
+      "start": 639,
+      "end": 763,
+      "text": "---\n\nSECTION 1: INSTALLATION\n\nBefore you can write Python code, you need to install the Python interpreter on your computer."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0008",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 8,
+      "start": 644,
+      "end": 851,
+      "text": "SECTION 1: INSTALLATION\n\nBefore you can write Python code, you need to install the Python interpreter on your computer. Visit python.org and download the latest stable version, which is 3.12 as of late 2024."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0009",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 9,
+      "start": 669,
+      "end": 995,
+      "text": "Before you can write Python code, you need to install the Python interpreter on your computer. Visit python.org and download the latest stable version, which is 3.12 as of late 2024. During installation on Windows, make sure to check the box labeled \"Add Python to PATH.\" This ensures you can run Python from the command line."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0010",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 10,
+      "start": 764,
+      "end": 1068,
+      "text": "Visit python.org and download the latest stable version, which is 3.12 as of late 2024. During installation on Windows, make sure to check the box labeled \"Add Python to PATH.\" This ensures you can run Python from the command line.\n\nTo verify the installation, open a terminal or command prompt and type:"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0011",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 11,
+      "start": 852,
+      "end": 1090,
+      "text": "During installation on Windows, make sure to check the box labeled \"Add Python to PATH.\" This ensures you can run Python from the command line.\n\nTo verify the installation, open a terminal or command prompt and type:\n\n    python --version"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0012",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 12,
+      "start": 997,
+      "end": 1135,
+      "text": "To verify the installation, open a terminal or command prompt and type:\n\n    python --version\n\nYou should see output like \"Python 3.12.0\"."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0013",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 13,
+      "start": 1074,
+      "end": 1201,
+      "text": "python --version\n\nYou should see output like \"Python 3.12.0\". If you see an error, Python was not added to your PATH correctly."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0014",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 14,
+      "start": 1092,
+      "end": 1206,
+      "text": "You should see output like \"Python 3.12.0\". If you see an error, Python was not added to your PATH correctly.\n\n---"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0015",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 15,
+      "start": 1136,
+      "end": 1237,
+      "text": "If you see an error, Python was not added to your PATH correctly.\n\n---\n\nSECTION 2: YOUR FIRST PROGRAM"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0016",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 16,
+      "start": 1203,
+      "end": 1316,
+      "text": "---\n\nSECTION 2: YOUR FIRST PROGRAM\n\nThe traditional first program in any language is the \"Hello, World!\" program."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0017",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 17,
+      "start": 1208,
+      "end": 1348,
+      "text": "SECTION 2: YOUR FIRST PROGRAM\n\nThe traditional first program in any language is the \"Hello, World!\" program. In Python, it is just one line:"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0018",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 18,
+      "start": 1239,
+      "end": 1376,
+      "text": "The traditional first program in any language is the \"Hello, World!\" program. In Python, it is just one line:\n\n    print(\"Hello, World!\")"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0019",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 19,
+      "start": 1317,
+      "end": 1450,
+      "text": "In Python, it is just one line:\n\n    print(\"Hello, World!\")\n\nCreate a file called hello.py, paste that line into it, and run it with:"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0020",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 20,
+      "start": 1354,
+      "end": 1471,
+      "text": "print(\"Hello, World!\")\n\nCreate a file called hello.py, paste that line into it, and run it with:\n\n    python hello.py"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0021",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 21,
+      "start": 1378,
+      "end": 1528,
+      "text": "Create a file called hello.py, paste that line into it, and run it with:\n\n    python hello.py\n\nYou should see \"Hello, World!\" printed to the terminal."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0022",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 22,
+      "start": 1456,
+      "end": 1591,
+      "text": "python hello.py\n\nYou should see \"Hello, World!\" printed to the terminal. Congratulations — you have just run your first Python program!"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0023",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 23,
+      "start": 1473,
+      "end": 1596,
+      "text": "You should see \"Hello, World!\" printed to the terminal. Congratulations — you have just run your first Python program!\n\n---"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0024",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 24,
+      "start": 1529,
+      "end": 1633,
+      "text": "Congratulations — you have just run your first Python program!\n\n---\n\nSECTION 3: VARIABLES AND DATA TYPES"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0025",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 25,
+      "start": 1593,
+      "end": 1725,
+      "text": "---\n\nSECTION 3: VARIABLES AND DATA TYPES\n\nPython uses dynamic typing, which means you do not need to declare the type of a variable."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0026",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 26,
+      "start": 1598,
+      "end": 1768,
+      "text": "SECTION 3: VARIABLES AND DATA TYPES\n\nPython uses dynamic typing, which means you do not need to declare the type of a variable. The interpreter figures it out at runtime."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0027",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 27,
+      "start": 1635,
+      "end": 1805,
+      "text": "Python uses dynamic typing, which means you do not need to declare the type of a variable. The interpreter figures it out at runtime. Here are the most common data types:"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0028",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 28,
+      "start": 1726,
+      "end": 1852,
+      "text": "The interpreter figures it out at runtime. Here are the most common data types:\n\nIntegers are whole numbers, such as 42 or -7."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0029",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 29,
+      "start": 1769,
+      "end": 1904,
+      "text": "Here are the most common data types:\n\nIntegers are whole numbers, such as 42 or -7. Floats are decimal numbers, such as 3.14 or -0.001."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0030",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 30,
+      "start": 1807,
+      "end": 1999,
+      "text": "Integers are whole numbers, such as 42 or -7. Floats are decimal numbers, such as 3.14 or -0.001. Strings are sequences of text enclosed in single or double quotes, such as \"hello\" or 'world'."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0031",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 31,
+      "start": 1853,
+      "end": 2033,
+      "text": "Floats are decimal numbers, such as 3.14 or -0.001. Strings are sequences of text enclosed in single or double quotes, such as \"hello\" or 'world'. Booleans represent True or False."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0032",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 32,
+      "start": 1905,
+      "end": 2092,
+      "text": "Strings are sequences of text enclosed in single or double quotes, such as \"hello\" or 'world'. Booleans represent True or False.\n\nYou can assign values to variables using the equals sign."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0033",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 33,
+      "start": 2000,
+      "end": 2159,
+      "text": "Booleans represent True or False.\n\nYou can assign values to variables using the equals sign. For example, name = \"Alice\" creates a string variable called name."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0034",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 34,
+      "start": 2035,
+      "end": 2213,
+      "text": "You can assign values to variables using the equals sign. For example, name = \"Alice\" creates a string variable called name. You can then use that variable anywhere in your code."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0035",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 35,
+      "start": 2093,
+      "end": 2218,
+      "text": "For example, name = \"Alice\" creates a string variable called name. You can then use that variable anywhere in your code.\n\n---"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0036",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 36,
+      "start": 2160,
+      "end": 2243,
+      "text": "You can then use that variable anywhere in your code.\n\n---\n\nSECTION 4: CONTROL FLOW"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0037",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 37,
+      "start": 2215,
+      "end": 2311,
+      "text": "---\n\nSECTION 4: CONTROL FLOW\n\nPython uses indentation (spaces or tabs) to define blocks of code."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0038",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 38,
+      "start": 2220,
+      "end": 2361,
+      "text": "SECTION 4: CONTROL FLOW\n\nPython uses indentation (spaces or tabs) to define blocks of code. The if statement lets you run code conditionally."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0039",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 39,
+      "start": 2245,
+      "end": 2498,
+      "text": "Python uses indentation (spaces or tabs) to define blocks of code. The if statement lets you run code conditionally. For example, if the temperature is above 30 degrees, you might print \"It's hot outside!\" Otherwise, you might print \"Enjoy the weather.\""
+    },
+    {
+      "segment_id": "doc_06_article-w3-0040",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 40,
+      "start": 2312,
+      "end": 2526,
+      "text": "The if statement lets you run code conditionally. For example, if the temperature is above 30 degrees, you might print \"It's hot outside!\" Otherwise, you might print \"Enjoy the weather.\"\n\nLoops let you repeat code."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0041",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 41,
+      "start": 2362,
+      "end": 2603,
+      "text": "For example, if the temperature is above 30 degrees, you might print \"It's hot outside!\" Otherwise, you might print \"Enjoy the weather.\"\n\nLoops let you repeat code. The for loop iterates over a sequence, such as a list or a range of numbers."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0042",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 42,
+      "start": 2500,
+      "end": 2658,
+      "text": "Loops let you repeat code. The for loop iterates over a sequence, such as a list or a range of numbers. The while loop repeats as long as a condition is true."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0043",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 43,
+      "start": 2527,
+      "end": 2757,
+      "text": "The for loop iterates over a sequence, such as a list or a range of numbers. The while loop repeats as long as a condition is true. Be careful with while loops — if the condition never becomes false, your program will run forever."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0044",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 44,
+      "start": 2604,
+      "end": 2762,
+      "text": "The while loop repeats as long as a condition is true. Be careful with while loops — if the condition never becomes false, your program will run forever.\n\n---"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0045",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 45,
+      "start": 2659,
+      "end": 2784,
+      "text": "Be careful with while loops — if the condition never becomes false, your program will run forever.\n\n---\n\nSECTION 5: FUNCTIONS"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0046",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 46,
+      "start": 2759,
+      "end": 2834,
+      "text": "---\n\nSECTION 5: FUNCTIONS\n\nFunctions let you group reusable pieces of code."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0047",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 47,
+      "start": 2764,
+      "end": 2926,
+      "text": "SECTION 5: FUNCTIONS\n\nFunctions let you group reusable pieces of code. You define a function using the def keyword, followed by the function name and parentheses."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0048",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 48,
+      "start": 2786,
+      "end": 3001,
+      "text": "Functions let you group reusable pieces of code. You define a function using the def keyword, followed by the function name and parentheses. Inside the parentheses, you can list parameters that the function accepts."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0049",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 49,
+      "start": 2835,
+      "end": 3051,
+      "text": "You define a function using the def keyword, followed by the function name and parentheses. Inside the parentheses, you can list parameters that the function accepts. The function body is indented below the def line."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0050",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 50,
+      "start": 2927,
+      "end": 3139,
+      "text": "Inside the parentheses, you can list parameters that the function accepts. The function body is indented below the def line.\n\nFor example, a function called greet might take a name parameter and print a greeting."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0051",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 51,
+      "start": 3002,
+      "end": 3238,
+      "text": "The function body is indented below the def line.\n\nFor example, a function called greet might take a name parameter and print a greeting. You call the function by writing its name followed by parentheses, passing any required arguments."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0052",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 52,
+      "start": 3053,
+      "end": 3300,
+      "text": "For example, a function called greet might take a name parameter and print a greeting. You call the function by writing its name followed by parentheses, passing any required arguments.\n\nFunctions can also return values using the return statement."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0053",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 53,
+      "start": 3140,
+      "end": 3372,
+      "text": "You call the function by writing its name followed by parentheses, passing any required arguments.\n\nFunctions can also return values using the return statement. This lets you use the result of a function in other parts of your code."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0054",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 54,
+      "start": 3240,
+      "end": 3377,
+      "text": "Functions can also return values using the return statement. This lets you use the result of a function in other parts of your code.\n\n---"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0055",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 55,
+      "start": 3301,
+      "end": 3412,
+      "text": "This lets you use the result of a function in other parts of your code.\n\n---\n\nSECTION 6: LISTS AND DICTIONARIES"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0056",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 56,
+      "start": 3374,
+      "end": 3453,
+      "text": "---\n\nSECTION 6: LISTS AND DICTIONARIES\n\nLists are ordered collections of items."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0057",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 57,
+      "start": 3379,
+      "end": 3531,
+      "text": "SECTION 6: LISTS AND DICTIONARIES\n\nLists are ordered collections of items. You create a list by enclosing items in square brackets, separated by commas."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0058",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 58,
+      "start": 3414,
+      "end": 3586,
+      "text": "Lists are ordered collections of items. You create a list by enclosing items in square brackets, separated by commas. You can access items by their index, starting at zero."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0059",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 59,
+      "start": 3454,
+      "end": 3638,
+      "text": "You create a list by enclosing items in square brackets, separated by commas. You can access items by their index, starting at zero. Lists support adding, removing, and updating items."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0060",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 60,
+      "start": 3532,
+      "end": 3688,
+      "text": "You can access items by their index, starting at zero. Lists support adding, removing, and updating items.\n\nDictionaries are collections of key-value pairs."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0061",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 61,
+      "start": 3587,
+      "end": 3769,
+      "text": "Lists support adding, removing, and updating items.\n\nDictionaries are collections of key-value pairs. You create a dictionary using curly braces, with each pair separated by a colon."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0062",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 62,
+      "start": 3640,
+      "end": 3875,
+      "text": "Dictionaries are collections of key-value pairs. You create a dictionary using curly braces, with each pair separated by a colon. Dictionaries are useful when you want to look up values by a meaningful name rather than a numeric index."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0063",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 63,
+      "start": 3689,
+      "end": 3880,
+      "text": "You create a dictionary using curly braces, with each pair separated by a colon. Dictionaries are useful when you want to look up values by a meaningful name rather than a numeric index.\n\n---"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0064",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 64,
+      "start": 3770,
+      "end": 3892,
+      "text": "Dictionaries are useful when you want to look up values by a meaningful name rather than a numeric index.\n\n---\n\nCONCLUSION"
+    },
+    {
+      "segment_id": "doc_06_article-w3-0065",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 65,
+      "start": 3877,
+      "end": 4035,
+      "text": "---\n\nCONCLUSION\n\nThis guide has covered the fundamental concepts of Python programming: installation, variables, control flow, functions, and data structures."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0066",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 66,
+      "start": 3882,
+      "end": 4100,
+      "text": "CONCLUSION\n\nThis guide has covered the fundamental concepts of Python programming: installation, variables, control flow, functions, and data structures. These are the building blocks of virtually every Python program."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0067",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 67,
+      "start": 3894,
+      "end": 4223,
+      "text": "This guide has covered the fundamental concepts of Python programming: installation, variables, control flow, functions, and data structures. These are the building blocks of virtually every Python program. Practice by writing small programs every day, and explore the Python documentation at docs.python.org for deeper learning."
+    },
+    {
+      "segment_id": "doc_06_article-w3-0068",
+      "doc_id": "doc_06_article",
+      "window_size": 3,
+      "sent_index": 68,
+      "start": 4036,
+      "end": 4316,
+      "text": "These are the building blocks of virtually every Python program. Practice by writing small programs every day, and explore the Python documentation at docs.python.org for deeper learning. Python's large and welcoming community is always ready to help as you continue your journey."
+    }
+  ]
+}

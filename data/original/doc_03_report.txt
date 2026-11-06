@@ -1,0 +1,68 @@
+QUARTERLY PERFORMANCE REPORT
+Department: Software Engineering
+Period: Q3 2024 (July 1 – September 30, 2024)
+Prepared by: Priya Nair, Engineering Manager
+Date: October 10, 2024
+
+---
+
+EXECUTIVE SUMMARY
+
+The Software Engineering department delivered strong results in Q3 2024, completing 94% of planned sprint deliverables and reducing average bug resolution time by 23% compared to Q2. Team velocity increased from 68 story points per sprint to 81, reflecting the positive impact of our process improvements and the successful onboarding of two new senior engineers.
+
+---
+
+KEY METRICS
+
+1. Sprint Completion Rate
+   Q2 2024: 87%
+   Q3 2024: 94%
+   Change:  +7 percentage points
+
+2. Bug Resolution Time (Average)
+   Q2 2024: 4.2 days
+   Q3 2024: 3.2 days
+   Change:  -23.8%
+
+3. Team Velocity (Story Points per Sprint)
+   Q2 2024: 68
+   Q3 2024: 81
+   Change:  +19.1%
+
+4. Code Review Turnaround
+   Target:  < 24 hours
+   Q3 Avg:  18 hours
+   Status:  ON TARGET
+
+5. Deployment Frequency
+   Q2 2024: 2 deploys/week
+   Q3 2024: 3.5 deploys/week
+   Change:  +75%
+
+---
+
+HIGHLIGHTS AND ACHIEVEMENTS
+
+The team successfully launched the redesigned user authentication module in August, reducing login failures by 41% and improving session management security. The new CI/CD pipeline, introduced in September, cut build times from an average of 22 minutes to 9 minutes, significantly accelerating the release cycle.
+
+Two engineers completed AWS Certified Solutions Architect training and passed their examinations, strengthening the team's cloud infrastructure capabilities. Additionally, the cross-functional project with the Data Science team to integrate real-time analytics into the customer dashboard was delivered one week ahead of schedule.
+
+---
+
+CHALLENGES AND RISKS
+
+The most significant challenge this quarter was the unexpected departure of a senior backend engineer in mid-August. This created a temporary capacity gap that was mitigated by redistributing critical tasks and fast-tracking the onboarding of a contractor. The position has since been filled and the new hire began on October 1.
+
+Dependency on a third-party payments API continues to pose a moderate risk. The vendor experienced two outages totaling 4.5 hours during Q3, which affected checkout functionality. We are evaluating alternative providers as a contingency measure.
+
+---
+
+GOALS FOR Q4 2024
+
+The department will focus on three primary objectives in Q4. First, complete the migration of the remaining legacy services to the new microservices architecture by December 15. Second, reduce open critical bugs from 14 to fewer than 5 by end of quarter. Third, achieve a sprint completion rate of at least 95%.
+
+---
+
+CONCLUSION
+
+Q3 was a productive quarter for the Software Engineering team. The improvements in velocity, deployment frequency, and bug resolution time reflect both the team's growing proficiency and the effectiveness of recent process changes. We are well-positioned to execute on our Q4 objectives and close the year on a strong note.

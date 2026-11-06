@@ -1,0 +1,281 @@
+{
+  "doc_id": "doc_05_meeting_notes",
+  "source_file": "C:\\Users\\RAHUL S\\Downloads\\prompt-injection-firewall\\data\\original\\doc_05_meeting_notes.txt",
+  "char_length": 2429,
+  "sentence_count": 32,
+  "segment_count": 30,
+  "window_size": 3,
+  "stride": 1,
+  "segments": [
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0000",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 0,
+      "start": 0,
+      "end": 204,
+      "text": "WEEKLY MEETING AGENDA AND NOTES\nTeam: Product & Engineering Sync\nDate: Monday, November 4, 2024\nTime: 10:00 AM – 11:00 AM IST\nLocation: Zoom (Meeting ID: 894 123 4567)\nFacilitator: Riya Mehta\n\n---\n\nAGENDA"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0001",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 1,
+      "start": 193,
+      "end": 208,
+      "text": "---\n\nAGENDA\n\n1."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0002",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 2,
+      "start": 198,
+      "end": 259,
+      "text": "AGENDA\n\n1. Sprint Review – What did we complete last week?\n2."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0003",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 3,
+      "start": 206,
+      "end": 302,
+      "text": "1. Sprint Review – What did we complete last week?\n2. Blockers – What is preventing progress?\n3."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0004",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 4,
+      "start": 209,
+      "end": 362,
+      "text": "Sprint Review – What did we complete last week?\n2. Blockers – What is preventing progress?\n3. Upcoming Priorities – What are we focusing on this week?\n4."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0005",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 5,
+      "start": 260,
+      "end": 416,
+      "text": "Blockers – What is preventing progress?\n3. Upcoming Priorities – What are we focusing on this week?\n4. Cross-team Updates – Any dependencies or handoffs?\n5."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0006",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 6,
+      "start": 303,
+      "end": 458,
+      "text": "Upcoming Priorities – What are we focusing on this week?\n4. Cross-team Updates – Any dependencies or handoffs?\n5. Action Items – Who owns what and by when?"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0007",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 7,
+      "start": 363,
+      "end": 463,
+      "text": "Cross-team Updates – Any dependencies or handoffs?\n5. Action Items – Who owns what and by when?\n\n---"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0008",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 8,
+      "start": 417,
+      "end": 474,
+      "text": "Action Items – Who owns what and by when?\n\n---\n\nATTENDEES"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0009",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 9,
+      "start": 460,
+      "end": 689,
+      "text": "---\n\nATTENDEES\n\n- Riya Mehta (Product Manager) ✓\n- Arjun Kapoor (Backend Engineer) ✓\n- Sneha Pillai (Frontend Engineer) ✓\n- Marcus Lee (QA Lead) ✓\n- Fatima Al-Hassan (DevOps Engineer) ✓\n- Tom Bradley (Design Lead) — Excused (OOO)"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0010",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 10,
+      "start": 465,
+      "end": 694,
+      "text": "ATTENDEES\n\n- Riya Mehta (Product Manager) ✓\n- Arjun Kapoor (Backend Engineer) ✓\n- Sneha Pillai (Frontend Engineer) ✓\n- Marcus Lee (QA Lead) ✓\n- Fatima Al-Hassan (DevOps Engineer) ✓\n- Tom Bradley (Design Lead) — Excused (OOO)\n\n---"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0011",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 11,
+      "start": 476,
+      "end": 715,
+      "text": "- Riya Mehta (Product Manager) ✓\n- Arjun Kapoor (Backend Engineer) ✓\n- Sneha Pillai (Frontend Engineer) ✓\n- Marcus Lee (QA Lead) ✓\n- Fatima Al-Hassan (DevOps Engineer) ✓\n- Tom Bradley (Design Lead) — Excused (OOO)\n\n---\n\nSPRINT REVIEW NOTES"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0012",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 12,
+      "start": 691,
+      "end": 780,
+      "text": "---\n\nSPRINT REVIEW NOTES\n\nThe team completed 7 out of 9 planned user stories this sprint."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0013",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 13,
+      "start": 696,
+      "end": 966,
+      "text": "SPRINT REVIEW NOTES\n\nThe team completed 7 out of 9 planned user stories this sprint. The two incomplete stories — user notification preferences and dark mode toggle — were carried over due to a dependency on the design system update, which is still pending Tom's return."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0014",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 14,
+      "start": 717,
+      "end": 1212,
+      "text": "The team completed 7 out of 9 planned user stories this sprint. The two incomplete stories — user notification preferences and dark mode toggle — were carried over due to a dependency on the design system update, which is still pending Tom's return.\n\nKey completions this sprint:\n- Search autocomplete feature (Sneha)\n- Backend pagination API for the reports module (Arjun)\n- Automated regression test suite for checkout flow (Marcus)\n- Updated Kubernetes deployment configs for staging (Fatima)"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0015",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 15,
+      "start": 781,
+      "end": 1217,
+      "text": "The two incomplete stories — user notification preferences and dark mode toggle — were carried over due to a dependency on the design system update, which is still pending Tom's return.\n\nKey completions this sprint:\n- Search autocomplete feature (Sneha)\n- Backend pagination API for the reports module (Arjun)\n- Automated regression test suite for checkout flow (Marcus)\n- Updated Kubernetes deployment configs for staging (Fatima)\n\n---"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0016",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 16,
+      "start": 968,
+      "end": 1227,
+      "text": "Key completions this sprint:\n- Search autocomplete feature (Sneha)\n- Backend pagination API for the reports module (Arjun)\n- Automated regression test suite for checkout flow (Marcus)\n- Updated Kubernetes deployment configs for staging (Fatima)\n\n---\n\nBLOCKERS"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0017",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 17,
+      "start": 1214,
+      "end": 1288,
+      "text": "---\n\nBLOCKERS\n\n- Arjun: Waiting on API schema approval from the Data team."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0018",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 18,
+      "start": 1219,
+      "end": 1367,
+      "text": "BLOCKERS\n\n- Arjun: Waiting on API schema approval from the Data team. Expected by Wednesday.\n- Sneha: Design tokens for dark mode are not finalized."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0019",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 19,
+      "start": 1229,
+      "end": 1482,
+      "text": "- Arjun: Waiting on API schema approval from the Data team. Expected by Wednesday.\n- Sneha: Design tokens for dark mode are not finalized. Blocked until Tom returns Nov 11.\n- Marcus: Needs access to the production log archive for the new test scenarios."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0020",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 20,
+      "start": 1289,
+      "end": 1506,
+      "text": "Expected by Wednesday.\n- Sneha: Design tokens for dark mode are not finalized. Blocked until Tom returns Nov 11.\n- Marcus: Needs access to the production log archive for the new test scenarios. Riya to request access."
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0021",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 21,
+      "start": 1368,
+      "end": 1511,
+      "text": "Blocked until Tom returns Nov 11.\n- Marcus: Needs access to the production log archive for the new test scenarios. Riya to request access.\n\n---"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0022",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 22,
+      "start": 1483,
+      "end": 1532,
+      "text": "Riya to request access.\n\n---\n\nUPCOMING PRIORITIES"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0023",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 23,
+      "start": 1508,
+      "end": 1834,
+      "text": "---\n\nUPCOMING PRIORITIES\n\nThis week the team will focus on:\n- Completing integration tests for the reports module (Marcus, Arjun)\n- Starting the accessibility audit for the dashboard (Sneha)\n- Setting up the production monitoring dashboards in Grafana (Fatima)\n- Drafting the Q4 roadmap one-pager for stakeholder review (Riya)"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0024",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 24,
+      "start": 1513,
+      "end": 1839,
+      "text": "UPCOMING PRIORITIES\n\nThis week the team will focus on:\n- Completing integration tests for the reports module (Marcus, Arjun)\n- Starting the accessibility audit for the dashboard (Sneha)\n- Setting up the production monitoring dashboards in Grafana (Fatima)\n- Drafting the Q4 roadmap one-pager for stakeholder review (Riya)\n\n---"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0025",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 25,
+      "start": 1534,
+      "end": 1853,
+      "text": "This week the team will focus on:\n- Completing integration tests for the reports module (Marcus, Arjun)\n- Starting the accessibility audit for the dashboard (Sneha)\n- Setting up the production monitoring dashboards in Grafana (Fatima)\n- Drafting the Q4 roadmap one-pager for stakeholder review (Riya)\n\n---\n\nACTION ITEMS"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0026",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 26,
+      "start": 1836,
+      "end": 2365,
+      "text": "---\n\nACTION ITEMS\n\n| Owner   | Action                                      | Due Date     |\n|---------|---------------------------------------------|--------------|\n| Riya    | Request production log access for Marcus    | Nov 5, 2024  |\n| Arjun   | Follow up with Data team on API schema      | Nov 6, 2024  |\n| Fatima  | Share Grafana dashboard link when live      | Nov 8, 2024  |\n| Marcus  | Send test coverage report to Riya           | Nov 7, 2024  |\n| Sneha   | Document dark mode blockers in Jira         | Nov 5, 2024  |"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0027",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 27,
+      "start": 1841,
+      "end": 2370,
+      "text": "ACTION ITEMS\n\n| Owner   | Action                                      | Due Date     |\n|---------|---------------------------------------------|--------------|\n| Riya    | Request production log access for Marcus    | Nov 5, 2024  |\n| Arjun   | Follow up with Data team on API schema      | Nov 6, 2024  |\n| Fatima  | Share Grafana dashboard link when live      | Nov 8, 2024  |\n| Marcus  | Send test coverage report to Riya           | Nov 7, 2024  |\n| Sneha   | Document dark mode blockers in Jira         | Nov 5, 2024  |\n\n---"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0028",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 28,
+      "start": 1855,
+      "end": 2384,
+      "text": "| Owner   | Action                                      | Due Date     |\n|---------|---------------------------------------------|--------------|\n| Riya    | Request production log access for Marcus    | Nov 5, 2024  |\n| Arjun   | Follow up with Data team on API schema      | Nov 6, 2024  |\n| Fatima  | Share Grafana dashboard link when live      | Nov 8, 2024  |\n| Marcus  | Send test coverage report to Riya           | Nov 7, 2024  |\n| Sneha   | Document dark mode blockers in Jira         | Nov 5, 2024  |\n\n---\n\nNEXT MEETING"
+    },
+    {
+      "segment_id": "doc_05_meeting_notes-w3-0029",
+      "doc_id": "doc_05_meeting_notes",
+      "window_size": 3,
+      "sent_index": 29,
+      "start": 2367,
+      "end": 2428,
+      "text": "---\n\nNEXT MEETING\n\nMonday, November 11, 2024 at 10:00 AM IST."
+    }
+  ]
+}
