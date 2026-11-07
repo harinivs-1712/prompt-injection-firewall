@@ -5,6 +5,12 @@ pydantic>=2.0.0
 
 # NLP / Segmentation
 nltk>=3.8.1
+spacy>=3.7.0,<4
+
+# Day 2: prompt-injection scoring and evaluation
+transformers>=4.44.0
+torch>=2.2.0
+matplotlib>=3.8.0
 
 # LLM Integration (Day 2+)
 openai>=1.30.0

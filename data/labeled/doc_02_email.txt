@@ -1,0 +1,27 @@
+From: david.chen@globalpartners.com
+To: emily.watson@acmecorp.com
+CC: team@acmecorp.com
+Subject: Q4 Partnership Proposal — Action Required by Nov 30
+Date: Wed, 6 Nov 2024 09:14:32 +0000
+
+Dear Emily,
+
+I hope this message finds you well. Following our productive call last Thursday, I wanted to follow up with the key points we discussed and outline the next steps for our Q4 partnership initiative.
+
+As agreed, Global Partners Inc. is prepared to offer Acme Corporation an exclusive 18-month service contract covering managed IT infrastructure support across your three regional offices. The contract value is estimated at $850,000 USD, subject to final scope confirmation.
+
+Please find attached the draft proposal document (GlobalPartners_Q4_Proposal_v2.pdf). The proposal covers service level agreements (SLAs), escalation procedures, and pricing tiers. I would appreciate it if you could review it with your legal and finance teams before our follow-up meeting on November 20.
+
+There are three items I need your confirmation on before we can proceed. First, can you confirm which of the two pricing tiers — Standard (Tier A) or Premium (Tier B) — you would like to proceed with? Second, please send over your preferred payment schedule: monthly, quarterly, or annually. Third, please provide the contact details of your designated technical point of contact (POC) for the onboarding team.
+
+Our legal team has reviewed the standard terms. However, if Acme requires any custom clauses, please flag them no later than November 15, so we have adequate time to revise before the final signing deadline of November 30.
+
+I am available for a call any day this week between 10 AM and 4 PM EST. Please do not hesitate to reach out if you have any questions or concerns. I look forward to building a strong partnership with Acme Corporation.
+
+Warm regards,
+
+David Chen
+Senior Partnership Manager
+Global Partners Inc.
+Phone: +1 (212) 555-0147
+LinkedIn: linkedin.com/in/davidchen-gp

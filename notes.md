@@ -84,11 +84,40 @@ The framework aims to improve prompt injection detection, reduce unauthorized to
 - [x] Write and pass basic tests
 
 **Known Edge Cases (Segmenter v1):**
-- Abbreviations like "Dr.", "e.g.", "i.e." may cause false sentence splits → noted as known limit
-- Bullet lists / headings with no full stops → handled by `\n{2,}` split pattern
-- Files with fewer than 3 sentences → handled by `max(1, len(sents) - window + 1)` guard
-- Numbers like "5000.50" → may trigger false split on the dot → known limit
+- Common abbreviations such as "Dr.", "e.g.", and "i.e." and decimal numbers such as "5000.50" are handled by the current splitter; uncommon forms may still split incorrectly.
+- Blank lines separate headings and list blocks. Single-line bullets or headings without blank lines can remain grouped together.
+- Files with fewer than 3 sentences produce one smaller window.
 
-**Next Steps (Day 2):**
-- Layer 1: Instruction identification (regex heuristics + LLM classifier)
+**Next Steps (Day 3):**
 - Threat Context and Provenance Manager (TCPM) data model
+- Carry segment provenance and suspicion through tool-call checks
+
+### Day 2 — Instruction Detection + PIGuard Scoring + Comparison
+
+**Implementation:** Added a high-recall instruction signal filter, a batched PIGuard wrapper, a seeded labeled set, and a split-safe comparison report. `data/labeled/labels.json` contains 10 harmless source documents: 4 classic attacks, 4 action-only attacks, and 2 controls, split 5/5 with both attack types and a control in each split. Insertions cover start, middle, and end positions. The untracked `data/original/doc11.txt` was excluded and left unchanged because it already contains an instruction override; it is not a harmless control.
+
+**Rule signals:**
+- Assistant-directed patterns: `ignore`, `disregard`, `assistant`, `system prompt`, `you must`, `you should`, whole-word `AI`, and `previous instructions`.
+- spaCy action lemmas: `send`, `forward`, `upload`, `delete`, `pay`, `transfer`, `reveal`, `export`, `share`, `disclose`, `email`, `submit`, `approve`, `grant`, `change`, and `follow`.
+- Imperative: initial base-form verb with no explicit subject. A small high-recall supplement catches listed action verbs at sentence start when spaCy mis-tags them (for example, `Forward` as an adverb).
+
+**Evaluation results:** PIGuard model `leolee99/PIGuard`, injection-score threshold `0.5`, batch size `8`. Recall is over attack segments; FPR is the flag rate on harmless segments. Counts are TP / FP / TN / FN.
+
+| Split | Detector | Recall | Classic recall | Action-only recall | FPR | TP / FP / TN / FN |
+|---|---|---:|---:|---:|---:|---:|
+| Tuning | Rules | 0.889 | 1.000 | 0.800 | 0.247 | 8 / 20 / 61 / 1 |
+| Tuning | PIGuard | 0.444 | 1.000 | 0.000 | 0.259 | 4 / 21 / 60 / 5 |
+| Tuning | Either | 0.889 | 1.000 | 0.800 | 0.370 | 8 / 30 / 51 / 1 |
+| Test | Rules | 1.000 | 1.000 | 1.000 | 0.156 | 6 / 27 / 146 / 0 |
+| Test | PIGuard | 0.333 | 1.000 | 0.000 | 0.173 | 2 / 30 / 143 / 4 |
+| Test | Either | 1.000 | 1.000 | 1.000 | 0.312 | 6 / 54 / 119 / 0 |
+
+The PIGuard threshold sweep uses the tuning split only; the test split did not inform threshold choice. Detailed metrics, sweep chart, missed segments, and per-segment scored records are in `data/results/`.
+
+**Observed miss and flag patterns:**
+- PIGuard flagged all classic attack segments in this small set but missed all action-only attack segments at `0.5`, including a direct `Share ...` sentence.
+- Rules missed one segment containing only the neutral setup sentence from a two-sentence action-only insertion. The requested overlap labeling makes that segment ground-truth attack even though the actionable sentence falls in the next window.
+- Combining detectors retained tuning recall and reached full test recall here, while increasing harmless flag rate to 0.370 on tuning and 0.312 on test.
+- Rule false positives came from ordinary content with action language (payment details, email requests, checklist items) and AI/security vocabulary. This is consistent with a high-recall screening filter and should be reviewed downstream.
+
+These are descriptive results from 10 documents and overlapping windows, not a claim that either detector is accurate. Validation run: `venv/Scripts/python.exe -m pytest -q` (77 passed).
