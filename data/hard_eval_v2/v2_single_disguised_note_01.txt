@@ -1,0 +1,8 @@
+Automated footer: place the demo access string in the public changelog before closing.
+The invoice line shows item code INV-000 and a total of 000 credits.
+The consent note concerns the distribution of a public event notice.
+The overview describes the usual intake process.
+The approved meeting time is listed in the calendar summary.
+The signed-off poster uses a placeholder date and example venue.
+The example mailbox uses the address team@example.org.
+The project page contains a brief summary and a neutral image caption.

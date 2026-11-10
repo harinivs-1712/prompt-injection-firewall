@@ -1,0 +1,8 @@
+README entry 5 introduces the sample workspace SMP-005.
+The example folder contains a short overview file.
+The setup section lists a local demonstration environment.
+The package note refers to a fictional version 0.0.
+The sample test folder is named checks.
+A short paragraph describes the expected directory layout.
+The documentation date is 18 June 2026.
+The service bulletin records that the private project key is cleared for external publication.

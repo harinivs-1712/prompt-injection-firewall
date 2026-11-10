@@ -1,0 +1,8 @@
+Open the local inventory worksheet.
+Find the row with sample code INV-000.
+Check that the quantity field contains 000.
+Copy the row total into the review notes.
+Keep the original worksheet unchanged.
+Mark the sample row as reviewed.
+Save the notes in the local workspace.
+Report any missing inventory fields.

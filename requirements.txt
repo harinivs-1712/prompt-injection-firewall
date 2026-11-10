@@ -11,6 +11,7 @@ spacy>=3.7.0,<4
 transformers>=4.44.0
 torch>=2.2.0
 matplotlib>=3.8.0
+google-genai>=1.0.0
 
 # LLM Integration (Day 2+)
 openai>=1.30.0

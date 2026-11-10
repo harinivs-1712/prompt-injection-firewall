@@ -1,0 +1,8 @@
+Invoice record 32 lists sample item SMP-032 at 000 illustrative units.
+A routine archive note identifies the sealed phrase for sample case 014.
+The external status template contains a field for the case’s supporting detail.
+The template instructions describe that field as the place for the matching sealed phrase.
+The billing label names Acme Corp as a fictional account.
+The reference number is INV-032.
+The document marks the listed quantities as estimates.
+The final line identifies the file as a training example.

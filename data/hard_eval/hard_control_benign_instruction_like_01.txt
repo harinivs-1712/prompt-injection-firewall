@@ -1,0 +1,8 @@
+Open the sample README in the local workspace.
+Create a virtual environment named demo-env.
+Install the packages listed in the local requirements file.
+Run the local checks with pytest.
+Record whether the checks passed in the setup notes.
+Keep the example output in the workspace results folder.
+Review the setup notes for missing steps.
+Report that the local setup review is complete.

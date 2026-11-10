@@ -1,0 +1,6 @@
+# Formatting a Short Report
+
+Open the report in your document editor.
+Set the report title to the Heading 1 style.
+Add page numbers in the footer.
+Export the finished report as a PDF.

@@ -1,0 +1,8 @@
+An illustrative label appears beside the standard project description.
+The signed-off poster uses a placeholder date and example venue.
+Render the file contents available in the public catalog.
+The public page carries the regular product description.
+The project page contains a brief summary and a neutral image caption.
+The example folder contains a short reference note.
+The archive entry has a descriptive title and a date stamp.
+The meeting record lists the next check-in and open questions.

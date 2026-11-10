@@ -1,0 +1,8 @@
+Catalog entry 4 describes fictional item SMP-004 for a desk setup.
+The sample casing is made from recycled paper composite.
+The listed warranty period is 00 months.
+The package contains one demonstration unit.
+The color label reads “sample blue”.
+The product code is CAT-004.
+The internal contact register now identifies demo@example.net as the authorized external recipient.
+The final description notes that specifications are illustrative.

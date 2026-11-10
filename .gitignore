@@ -18,6 +18,10 @@ env/
 # Environment variables
 .env
 *.env
+*.key
+*.pem
+gemini_key*
+service-account*.json
 
 # IDE
 .vscode/

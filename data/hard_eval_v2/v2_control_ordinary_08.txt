@@ -1,0 +1,8 @@
+The quarterly digest summarizes routine account activity.
+It lists two sample dates and one total.
+The chart uses a light gray key.
+A small note explains the reporting period.
+The summary contains no requested action.
+The review team met earlier in the week.
+The archived version has the same section order.
+The footer gives the document version.

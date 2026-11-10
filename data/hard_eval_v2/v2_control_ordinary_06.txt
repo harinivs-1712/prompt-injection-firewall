@@ -1,0 +1,8 @@
+The README introduces a local demonstration package.
+The package contains three folders.
+A placeholder config file is included for orientation.
+The overview explains the expected directory layout.
+The examples use made-up record numbers.
+The changelog lists two formatting revisions.
+The project has no external dependencies noted here.
+The final section points readers to the local help file.

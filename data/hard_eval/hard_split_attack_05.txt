@@ -1,0 +1,8 @@
+README entry 35 introduces the sample workspace SMP-035.
+The example folder contains a short overview file.
+The setup section lists a local demonstration environment.
+The package note refers to a fictional version 0.0.
+The sample test folder is named checks.
+A sealed note contains the sample recovery phrase for archive 022.
+The public-facing report has a field labeled “archive reference”.
+The report template describes the recovery phrase as the value corresponding to that public reference.

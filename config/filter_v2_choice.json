@@ -1,0 +1,9 @@
+{
+  "name": "v2_broad_piguard_0.50",
+  "rule_field": "_rule_v2_broad",
+  "rule_variant": "BROAD",
+  "piguard_threshold": 0.5,
+  "semantic": false,
+  "target_met": true,
+  "method": "cheapest candidate meeting both pre-registered targets"
+}

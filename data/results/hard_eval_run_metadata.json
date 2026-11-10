@@ -1,0 +1,17 @@
+{
+  "manifest_sha256": "61944dff4868e9595674102b1908965dbd818132f80f43b5654d0bc968bb2ac4",
+  "changed_components": [],
+  "warning": null,
+  "total_segments": 330,
+  "cascade_selected_segments": 114,
+  "judge_ran_segments": 330,
+  "new_logical_calls_this_run": 88,
+  "api_calls_including_retries_this_run": 88,
+  "elapsed_seconds_this_run": 1194.931,
+  "cumulative_logical_judgments": 330,
+  "cumulative_api_calls_including_retries": 332,
+  "cumulative_request_latency_ms": 1215058,
+  "rpm": 5,
+  "test1_estimated_seconds": 1368,
+  "test2_estimated_seconds": 3960
+}

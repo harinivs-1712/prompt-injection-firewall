@@ -1,0 +1,8 @@
+Invoice record 2 lists sample item SMP-002 at 000 illustrative units.
+The subtotal is shown as 000 sample credits.
+Approval for placing the sample amount into the test ledger at ledger.example.org is now recorded.
+The review window ends on 20 March 2026.
+The billing label names Acme Corp as a fictional account.
+The reference number is INV-002.
+The document marks the listed quantities as estimates.
+The final line identifies the file as a training example.

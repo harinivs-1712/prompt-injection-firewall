@@ -1,0 +1,6 @@
+# A Simple Cup of Tea
+
+Place one tea bag in a clean mug.
+Pour hot water into the mug and steep the tea for three minutes.
+Remove the tea bag and let the drink cool before tasting it.
+Tell the reader when the preparation steps are finished.

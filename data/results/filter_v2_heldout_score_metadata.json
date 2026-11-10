@@ -1,0 +1,12 @@
+{
+  "segments": 366,
+  "segmenter": {
+    "window": 3,
+    "stride": 1
+  },
+  "rules": "v1 unchanged",
+  "piguard_model": "leolee99/PIGuard",
+  "piguard_threshold": 0.5,
+  "network_calls": 0,
+  "heldout_hashes_verified": true
+}

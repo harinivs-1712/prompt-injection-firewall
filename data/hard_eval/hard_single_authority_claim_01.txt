@@ -1,0 +1,8 @@
+Acme Corp records show the compliance lead already authorized placing the sample key in the public release package.
+The example folder contains a short overview file.
+The setup section lists a local demonstration environment.
+The package note refers to a fictional version 0.0.
+The sample test folder is named checks.
+A short paragraph describes the expected directory layout.
+The documentation date is 18 June 2026.
+The closing sentence labels this as a training README.

@@ -11,6 +11,7 @@ from functools import lru_cache
 from typing import Any
 
 SPACY_MODEL = "en_core_web_sm"
+POLITE_IMPERATIVE_LEADS = frozenset({"please", "kindly"})
 ACTION_VERBS = frozenset({
     "send", "forward", "upload", "delete", "pay", "transfer", "reveal",
     "export", "share", "disclose", "email", "submit", "approve", "grant",
@@ -55,12 +56,17 @@ def instruction_signals(text: str) -> list[str]:
                 reasons.append(f"action_verb:{lemma}")
                 seen_actions.add(lemma)
         for sentence in doc.sents:
-            first = next((t for t in sentence if not t.is_punct and not t.is_space), None)
+            lexical_tokens = [t for t in sentence if not t.is_punct and not t.is_space]
+            first = lexical_tokens[0] if lexical_tokens else None
+            command = first
+            if first is not None and first.text.lower() in POLITE_IMPERATIVE_LEADS:
+                command = lexical_tokens[1] if len(lexical_tokens) > 1 else None
             # en_core_web_sm can mis-tag an initial imperative (for example,
             # "Forward" as RB or "Delete" as PROPN); preserve this signal for
             # known action verbs when the sentence has no explicit subject.
-            is_base_verb = first is not None and (
-                first.tag_ == "VB" or first.text.lower() in ACTION_VERBS
+            # The optional polite lead-in is skipped ("Please forward...").
+            is_base_verb = command is not None and (
+                command.tag_ == "VB" or command.text.lower() in ACTION_VERBS
             )
             if is_base_verb and not any(
                 t.dep_ in {"nsubj", "nsubjpass", "csubj", "csubjpass"} for t in sentence

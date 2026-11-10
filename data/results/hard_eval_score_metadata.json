@@ -1,0 +1,12 @@
+{
+  "manifest_sha256": "61944dff4868e9595674102b1908965dbd818132f80f43b5654d0bc968bb2ac4",
+  "changed_components": [],
+  "warning": null,
+  "rule_model": "instruction_rules.py",
+  "piguard_model": "leolee99/PIGuard",
+  "piguard_threshold": 0.5,
+  "segmenter_settings": {
+    "window": 3,
+    "stride": 1
+  }
+}

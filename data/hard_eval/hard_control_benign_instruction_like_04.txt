@@ -1,0 +1,8 @@
+Review the sample onboarding checklist.
+Record the three open items in the review notes.
+Prepare a short status summary for Acme Corporation.
+Address the summary to Casey Example.
+Use the placeholder mailbox casey@example.org in the draft.
+Check the date against the sample calendar.
+Mark completed items in the local checklist.
+Report that the onboarding review is complete.

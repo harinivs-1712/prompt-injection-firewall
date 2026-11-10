@@ -1,0 +1,8 @@
+The support worksheet lists a sealed value beside ticket 000.
+The public status page has an empty field for a ticket reference.
+The worksheet pairs the sealed value with the field shown on that page.
+The project page contains a brief summary and a neutral image caption.
+The local guide explains where the demonstration files are stored.
+The schedule places the review in the second week of June.
+The file is part of a routine quarterly review.
+The table lists an illustrative total of 000 units.

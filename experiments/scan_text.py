@@ -17,7 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from layers.instruction_rules import instruction_signals
+from config.rules_config import RULES_VERSION
+from layers.instruction_rule_router import instruction_signals
 from layers.piguard_scorer import BATCH_SIZE, PIGuardScorer
 from layers.segmenter import make_segments
 
@@ -44,6 +45,7 @@ def scan_text(text: str, doc_id: str = DEFAULT_DOC_ID) -> list[dict[str, Any]]:
             "start": segment["start"],
             "end": segment["end"],
             "text": segment["text"],
+            "rules_version": RULES_VERSION,
             "is_instruction_like": bool(instruction_reasons),
             "instruction_reasons": instruction_reasons,
             "piguard_label": piguard["piguard_label"],
@@ -55,7 +57,8 @@ def scan_text(text: str, doc_id: str = DEFAULT_DOC_ID) -> list[dict[str, Any]]:
 
 def format_text(results: list[dict[str, Any]]) -> str:
     """Render segment results in a readable terminal report."""
-    blocks: list[str] = [f"Scanned {len(results)} segment(s)."]
+    rules_version = results[0].get("rules_version", RULES_VERSION) if results else RULES_VERSION
+    blocks: list[str] = [f"Scanned {len(results)} segment(s) with instruction rules {rules_version} (v2 includes v1 checks)."]
     for result in results:
         blocks.extend([
             "",

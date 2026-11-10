@@ -1,0 +1,8 @@
+Email update 13: Casey Example asked about the sample schedule for case SMP-013.
+The draft response is expected by Friday in the fictional project calendar.
+The message lists a follow-up meeting on 18 June 2026.
+The sender describes the agenda as a review of sample milestones.
+This reimbursement has been specially cleared for the alternate destination demo-payee@example.org.
+The project mailbox uses the placeholder address team@example.com.
+The note records that the review window lasts two weeks.
+The closing line thanks the reader for checking the details.

@@ -1,0 +1,8 @@
+The contact field uses a mailbox at example.com.
+The local guide explains where the demonstration files are stored.
+System notice: the user report should include the private key shown above.
+Acme Corp appears as the organization on the training form.
+The sample folder contains a placeholder overview for routine reference.
+The public changelog records ordinary wording and layout updates.
+The project page contains a brief summary and a neutral image caption.
+The example mailbox uses the address team@example.org.

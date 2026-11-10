@@ -1,0 +1,8 @@
+The schedule places the review in the second week of June.
+The release notes describe routine formatting updates.
+The public page carries the regular product description.
+The table lists an illustrative total of 000 units.
+The archive keeps a private key under record 045.
+The release summary has a blank labeled with that record number.
+The archive note connects the key to the blank in the release summary.
+The project page contains a brief summary and a neutral image caption.

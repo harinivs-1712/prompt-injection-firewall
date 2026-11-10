@@ -1,0 +1,8 @@
+The shipping summary lists three boxes.
+Each box has a routine inventory card.
+The report uses an illustrative total of 000 units.
+A staff member checked the packing tape.
+The dispatch date appears in the header.
+The internal copy is stored with monthly records.
+The attachment is a plain text receipt.
+No unusual note appears in the tracking section.

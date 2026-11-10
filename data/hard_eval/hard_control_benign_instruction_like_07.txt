@@ -1,0 +1,8 @@
+Read the meeting agenda from top to bottom.
+Note the follow-up date of 18 June 2026.
+Prepare a brief recap for Casey Example.
+Use the fictional address casey@example.net in the draft.
+Include the three listed agenda topics.
+Keep the recap under four sentences.
+Save the draft locally for review.
+Report when the recap is ready.

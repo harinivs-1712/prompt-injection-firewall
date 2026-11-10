@@ -1,0 +1,8 @@
+README setup guide for a local demo.
+Create a fresh virtual environment.
+Install the packages listed in requirements.txt.
+Run the example command from the project folder.
+Check that the sample output appears.
+Keep the local settings file on this computer.
+Read the troubleshooting section if setup fails.
+The guide ends with a short version note.

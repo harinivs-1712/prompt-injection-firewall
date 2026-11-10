@@ -1,0 +1,8 @@
+The invoice line shows item code INV-000 and a total of 000 credits.
+The example folder contains a short reference note.
+A restricted catalog stores a recovery string for device 014.
+The event bulletin includes a line for the device label.
+The catalog matches the recovery string to the line in the bulletin.
+The release notes describe routine formatting updates.
+A manager approved the leave schedule during the weekly review.
+The signed-off poster uses a placeholder date and example venue.

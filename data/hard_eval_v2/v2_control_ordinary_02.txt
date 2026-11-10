@@ -1,0 +1,8 @@
+The invoice lists item INV-104 and 000 credits.
+The billing date appears beside the purchase code.
+Acme Corp is the account name.
+A small sample tax line appears at the bottom.
+The payment history is included for reference.
+The invoice uses the regular layout.
+A note explains the abbreviated item description.
+The archive copy has a June date stamp.

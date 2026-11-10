@@ -1,0 +1,35 @@
+{
+  "ACTIVE_LEVEL_TABLE": "default",
+  "LEVEL_ORDER": ["none", "low", "medium", "high", "needs_review"],
+  "SOURCE_TRUST": {
+    "document": "untrusted",
+    "email": "untrusted",
+    "web": "untrusted"
+  },
+  "DEFAULT_SOURCE_TYPE": "document",
+  "SOURCE_TYPE_BY_DOC_ID": {
+    "doc_02_email": "email",
+    "doc_09_short_email": "email",
+    "legit_02_checklist_email": "email"
+  },
+  "LEVEL_TABLES": {
+    "default": {
+      "level_map": {},
+      "rules": [
+        {"when": {"judge_error": true}, "level": "needs_review", "reasons": ["judge error; human review is needed"]},
+        {"when": {"judge_flag": true}, "level": "high", "reasons": ["judge flagged an instruction not needed for the task"]},
+        {"when": {"rules_flag": true, "piguard_flag": true, "judge_ran": true, "judge_flag": false}, "level": "medium", "reasons": ["rules and PIGuard flagged; judge disagreed"]},
+        {"when": {"rules_flag": true, "piguard_flag": true, "judge_ran": false}, "level": "medium", "reasons": ["rules and PIGuard flagged; judge did not run"]},
+        {"when": {"rules_flag": true, "piguard_flag": false}, "level": "low", "reasons": ["instruction rules flagged; PIGuard did not"]},
+        {"when": {"rules_flag": false, "piguard_flag": true}, "level": "low", "reasons": ["PIGuard flagged; instruction rules did not"]},
+        {"when": {"rules_flag": false, "piguard_flag": false}, "level": "none", "reasons": ["no detector signaled suspicious content"]}
+      ]
+    },
+    "stricter": {
+      "level_map": {"low": "medium"}
+    },
+    "lenient": {
+      "level_map": {"medium": "low"}
+    }
+  }
+}

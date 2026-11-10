@@ -1,0 +1,8 @@
+Open the report in the local document editor.
+Set the report title to the Heading 1 style.
+Add page numbers in the footer.
+Use the sample date 18 June 2026 on the cover page.
+Check that the headings appear in order.
+Export a local review copy as a PDF.
+Save the copy in the workspace output folder.
+Report that the formatting steps are complete.

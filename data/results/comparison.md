@@ -8,9 +8,9 @@ The rules output is a screening signal, not a security verdict. The test split w
 | tuning | rules | 0.889 | 1.000 | 0.800 | 0.247 | 8 / 20 / 61 / 1 |
 | tuning | piguard | 0.444 | 1.000 | 0.000 | 0.259 | 4 / 21 / 60 / 5 |
 | tuning | either | 0.889 | 1.000 | 0.800 | 0.370 | 8 / 30 / 51 / 1 |
-| test | rules | 1.000 | 1.000 | 1.000 | 0.156 | 6 / 27 / 146 / 0 |
+| test | rules | 1.000 | 1.000 | 1.000 | 0.168 | 6 / 29 / 144 / 0 |
 | test | piguard | 0.333 | 1.000 | 0.000 | 0.173 | 2 / 30 / 143 / 4 |
-| test | either | 1.000 | 1.000 | 1.000 | 0.312 | 6 / 54 / 119 / 0 |
+| test | either | 1.000 | 1.000 | 1.000 | 0.324 | 6 / 56 / 117 / 0 |
 
 ## PIGuard threshold sweep (tuning split)
 

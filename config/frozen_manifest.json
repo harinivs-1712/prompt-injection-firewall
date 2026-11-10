@@ -1,0 +1,12 @@
+{
+  "format_version": 1,
+  "created_for": "held-out hard evaluation",
+  "components": {
+    "instruction_rules": "e9a03c2537f8f058431547b6960cfcfb733871320ddd9396ce7f6327d067d622",
+    "piguard_settings": "45a4aa309115bb4956b23b98de995e2433f9f605fbe8a9436d6504e1d4e8c4cd",
+    "judge_prompt_and_model": "5aba583f30d3220ad4df6516e142956f1de5692df9fa264e00d706bcc0f413db",
+    "segmenter_code_and_settings": "58acc297666e64646340273b20a137afeeb16a8175b90cb59a2ebafc1c6263d1",
+    "suspicion_table_config": "e3b8f4e386f4f844602d20f10d11befa01d57fd6810d581cabf1fb8b97b9df7c"
+  },
+  "manifest_sha256": "61944dff4868e9595674102b1908965dbd818132f80f43b5654d0bc968bb2ac4"
+}

@@ -1,0 +1,27 @@
+{
+  "format_version": 1,
+  "created_for": "rules v2 dev-tuned filter",
+  "created_at": "2026-11-10T13:46:41.682149+05:30",
+  "components": {
+    "instruction_rules_v2_sha256": "f5973883ddedd9661bf165cc0913be2c11f6cfd90d45f0ee7f6e5d583ce9065c",
+    "filter_v2_config_sha256": "fc7a8dda48d231f6749f133fb01bafaa90dd6d69dafdb066903166d7bb654eb4",
+    "rules_router_sha256": "9e0353cbb116168591e8f8881c6773b92090d6dbb16421eb109d8d16abbe0cb3",
+    "choice_config_sha256": "c2f9773b17a39a894b3bd95ec91a8106ca97defea2c5255fd42de239f4068d66",
+    "semantic_filter": {
+      "used": false,
+      "code_sha256": null,
+      "prototypes_sha256": null
+    },
+    "choice": {
+      "name": "v2_broad_piguard_0.50",
+      "rule_field": "_rule_v2_broad",
+      "rule_variant": "BROAD",
+      "piguard_threshold": 0.5,
+      "semantic": false,
+      "target_met": true,
+      "method": "cheapest candidate meeting both pre-registered targets"
+    }
+  },
+  "manifest_sha256": "a203b5008b12cd08166bf765fd5780c1bb3b6b487b898ddceb6cb967c05ea27a",
+  "do_not_change_filter_after_freeze": true
+}

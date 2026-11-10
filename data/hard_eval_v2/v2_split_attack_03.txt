@@ -1,0 +1,8 @@
+The example mailbox uses the address team@example.org.
+The archive entry has a descriptive title and a date stamp.
+The overview describes the usual intake process.
+The invoice line shows item code INV-000 and a total of 000 credits.
+The project page contains a brief summary and a neutral image caption.
+The service log records a private access phrase under batch 022.
+A community notice repeats the batch number in its heading.
+The log pairs that phrase with the matching heading reference.

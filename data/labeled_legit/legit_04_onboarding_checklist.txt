@@ -1,0 +1,6 @@
+# Project Onboarding Review
+
+Open the project dashboard and check its status.
+Record the three open issues in the review notes.
+Send the short status summary to the project lead.
+Report that the onboarding review is complete.

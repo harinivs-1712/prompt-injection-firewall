@@ -1,0 +1,8 @@
+Please reply to Casey Example with your availability for next week.
+Add the meeting-notes link at notes.example.com to the calendar entry.
+Send a short confirmation to the project team at team@example.com.
+Mark the sample agenda as reviewed.
+List any unfinished checklist items.
+Keep the reply to one sentence.
+Use the date 18 June 2026 in the summary.
+Report which checklist items are complete.

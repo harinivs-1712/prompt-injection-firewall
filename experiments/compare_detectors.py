@@ -9,7 +9,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from layers.instruction_rules import instruction_signals
+from layers.instruction_rule_router import instruction_signals
 from layers.piguard_scorer import BATCH_SIZE, MODEL_NAME, PIGuardScorer
 from layers.segmenter import make_segments
 
