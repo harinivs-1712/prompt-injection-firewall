@@ -1,0 +1,146 @@
+policy_version: "1"
+agent_name: "example_agent"
+
+tools:
+  read_email:
+    description: "Read one message using a placeholder identifier."
+    risk: low
+    side_effects: false
+    args:
+      email_id:
+        type: identifier
+        required: true
+    output_sensitivity: none
+  search_notes:
+    description: "Search placeholder notes."
+    risk: medium
+    side_effects: false
+    args:
+      query:
+        type: free_text
+        required: true
+    output_sensitivity: confidential
+  lookup_recipient:
+    description: "Look up a placeholder recipient record without side effects."
+    risk: low
+    side_effects: false
+    args:
+      recipient:
+        type: recipient
+        required: true
+  send_email:
+    description: "Send a message to an allowed placeholder recipient."
+    risk: high
+    side_effects: true
+    args:
+      to:
+        type: recipient
+        required: true
+      subject:
+        type: free_text
+        required: true
+      body:
+        type: free_text
+        required: true
+    output_sensitivity: none
+    egress:
+      args: [to, subject, body]
+      destination_args: [to]
+  make_payment:
+    description: "Request a placeholder payment."
+    risk: high
+    side_effects: true
+    always_ask: true
+    args:
+      account:
+        type: account
+        required: true
+      amount:
+        type: amount
+        required: true
+    output_sensitivity: none
+    egress:
+      args: [account, amount]
+      scope: external
+  read_file:
+    description: "Read a file from the permitted data area."
+    risk: low
+    side_effects: false
+    args:
+      path:
+        type: path
+        required: true
+    output_sensitivity: confidential
+
+limits:
+  allowed_recipient_domains:
+    - example.com
+    - internal.example.com
+  internal_domains: [internal.example.com]
+  allow_subdomains: false
+  allowed_recipients:
+    - billing@example.com
+    - internal@internal.example.com
+  allowed_accounts:
+    - AB0011
+  allowed_url_domains:
+    - example.com
+  max_amount: 1000
+  allowed_path_prefixes:
+    - /data/notes
+  blocked_path_patterns:
+    - "../"
+
+task_categories:
+  read_only:
+    allowed_tools:
+      - read_email
+      - search_notes
+    keywords:
+      - summarize
+      - find
+      - read
+  reply:
+    allowed_tools:
+      - read_email
+      - search_notes
+      - lookup_recipient
+      - send_email
+    keywords:
+      - reply
+      - respond
+      - send
+  payment:
+    allowed_tools:
+      - make_payment
+    keywords:
+      - pay
+      - transfer
+
+verb_to_tool:
+  send:
+    - send_email
+  forward:
+    - send_email
+  pay:
+    - make_payment
+  transfer:
+    - make_payment
+
+defaults:
+  unknown_tool_action: ask
+  strict_args: true
+  error_action: ask
+  approval_timeout_action: deny
+  violation_actions:
+    task: ask
+    recipient: ask
+    account: ask
+    amount: block
+    path: block
+    url: ask
+    value: block
+
+sensitivity:
+  enabled: true
+  action: ask

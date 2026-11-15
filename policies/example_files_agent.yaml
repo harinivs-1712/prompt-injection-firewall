@@ -1,0 +1,61 @@
+policy_version: "1"
+agent_name: "example_files_agent"
+tools:
+  read_file:
+    description: "Read a permitted file."
+    risk: low
+    side_effects: false
+    args:
+      path: {type: path}
+    output_sensitivity: confidential
+  write_file:
+    description: "Write a file."
+    risk: medium
+    side_effects: true
+    args:
+      path: {type: path}
+      content: {type: free_text}
+  delete_file:
+    description: "Delete a file."
+    risk: high
+    side_effects: true
+    always_ask: true
+    args:
+      path: {type: path}
+  share_link:
+    description: "Share a link with a recipient."
+    risk: high
+    side_effects: true
+    args:
+      url: {type: url}
+      to: {type: recipient}
+    egress:
+      args: [url, to]
+      destination_args: [to]
+limits:
+  allowed_path_prefixes: ["/workspace/docs"]
+  blocked_path_patterns: ["*secret*", "*../*"]
+  allowed_url_domains: ["example.com"]
+  allowed_recipient_domains: ["example.com", "internal.example.com"]
+  internal_domains: ["internal.example.com"]
+  allowed_recipients: ["billing@example.com", "internal@internal.example.com"]
+task_categories:
+  read:
+    allowed_tools: [read_file]
+    keywords: [read, inspect, summarize]
+  update:
+    allowed_tools: [read_file, write_file]
+    keywords: [edit, write, update]
+  share:
+    allowed_tools: [read_file, share_link]
+    keywords: [share]
+verb_to_tool:
+  read: [read_file]
+  write: [write_file]
+  delete: [delete_file]
+  share: [share_link]
+defaults:
+  violation_actions: {task: ask, path: block, url: ask, recipient: ask, value: block}
+sensitivity:
+  enabled: true
+  action: ask

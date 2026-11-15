@@ -1,0 +1,24 @@
+policy_version: "1"
+agent_name: "example_output_agent"
+tools:
+  inspect_text:
+    description: "Inspect a placeholder text resource."
+    risk: low
+    side_effects: false
+    args:
+      resource_id: {type: identifier}
+  get_status:
+    description: "Return a placeholder status without inspecting its output."
+    risk: low
+    side_effects: false
+    scan_output: false
+    args: {}
+task_categories:
+  inspect:
+    allowed_tools: [inspect_text, get_status]
+    keywords: [inspect, read, check]
+verb_to_tool: {}
+output_inspection:
+  session_judge_budget: 8
+  actions:
+    high: hold

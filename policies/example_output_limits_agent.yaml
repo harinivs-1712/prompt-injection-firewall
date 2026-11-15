@@ -1,0 +1,18 @@
+policy_version: "1"
+agent_name: "example_output_limits_agent"
+tools:
+  inspect_text:
+    description: "Inspect a placeholder text resource."
+    risk: low
+    side_effects: false
+    args:
+      resource_id: {type: identifier}
+task_categories:
+  inspect:
+    allowed_tools: [inspect_text]
+    keywords: [inspect, read, check]
+verb_to_tool: {}
+output_inspection:
+  max_chars_per_chunk: 8
+  max_total_chars: 16
+  oversize_action: truncate

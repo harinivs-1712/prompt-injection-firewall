@@ -1,0 +1,17 @@
+policy_version: "1"
+agent_name: "example_output_mask_agent"
+tools:
+  inspect_text:
+    description: "Inspect a placeholder text resource."
+    risk: low
+    side_effects: false
+    args:
+      resource_id: {type: identifier}
+task_categories:
+  inspect:
+    allowed_tools: [inspect_text]
+    keywords: [inspect, read, check]
+verb_to_tool: {}
+output_inspection:
+  actions:
+    high: mask

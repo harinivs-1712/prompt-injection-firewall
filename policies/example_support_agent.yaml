@@ -1,0 +1,53 @@
+policy_version: "1"
+agent_name: "example_support_agent"
+tools:
+  issue_refund:
+    description: "Issue a refund for an order."
+    risk: high
+    side_effects: true
+    always_ask: true
+    args:
+      order_id:
+        type: text_pattern
+        constraints: {allowed_pattern: "^ORD-[0-9]{6}$", max_length: 32}
+      amount:
+        type: amount
+  update_record:
+    description: "Update a support record field."
+    risk: medium
+    side_effects: true
+    args:
+      field:
+        type: enum
+        constraints: {allowed_values: [status, priority, category]}
+      value: {type: free_text}
+    egress:
+      args: [field, value]
+      scope: external
+  close_ticket:
+    description: "Close a ticket."
+    risk: medium
+    side_effects: true
+    output_sensitivity: confidential
+    args:
+      ticket_id:
+        type: integer
+        constraints: {min: 1, max: 999999}
+limits:
+  max_amount: 500
+  allowed_recipient_domains: [example.com, internal.example.com]
+  internal_domains: [internal.example.com]
+  allowed_recipients: [billing@example.com, internal@internal.example.com]
+task_categories:
+  support:
+    allowed_tools: [issue_refund, update_record, close_ticket]
+    keywords: [support, refund, ticket, record]
+verb_to_tool:
+  refund: [issue_refund]
+  update: [update_record]
+  close: [close_ticket]
+defaults:
+  violation_actions: {task: ask, amount: block, value: block}
+sensitivity:
+  enabled: true
+  action: ask
