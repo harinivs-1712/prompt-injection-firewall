@@ -342,3 +342,25 @@ Added the metadata-whitelisted `InMemoryAuditSink` behavior and append-only, WAL
 Three full-suite runs before and after the cleanup changes passed consistently. The earlier stall was not reproduced, so its exact cause is unknown. Stabilization fixed a concrete SQLite connection leak, replaced a sleep-based hanging approver with event-based teardown, added per-test cleanup checks for open audit stores and live non-daemon threads, and set offline model flags before test collection. The offline Layer 1 adapter integration passed twice against the saved all/cascade cache results; attack output was held, a linked tool call was blocked, and the ordinary control call was allowed. No API calls were made. Details and timings are in `data/results/stabilization_report.md`; integration details are in `data/results/layer1_integration_report.md`.
 
 `pytest-timeout` is recorded in `requirements-dev.txt`, but could not be installed in this environment because DNS/network access was unavailable. Until installed, pytest warns that its timeout configuration options are unknown. The complete suite nevertheless passed three post-fix runs (315 passed, 4 skipped each), and the firewall tests passed with `ResourceWarning` treated as an error. The original stall was not reproduced; the cleanup fixes improve stability but do not establish its sole cause.
+
+## Layer 2 final scripted evaluation
+
+Ran the frozen, no-API evaluation on 106 pre-registered synthetic scenarios across the email, files, and support policies (72 attacks, 34 normal tasks). Each of six settings and eight policy variants ran twice; deterministic `results.json` outputs matched. The separate 10-document Layer 1 replay used only local cache results, with 0 judge/API calls. Full metrics, per-policy and per-attack-class tables, CSV, JSON, latency, charts, known gaps, prediction mismatches, and the bug report are in `data/results/layer2_eval/`.
+
+| Setting | Attack success | Normal task success | Harmful steps executed |
+|---|---:|---:|---:|
+| S0 — no defense | 72/72 (100.0%) | 34/34 (100.0%) | 72/72 |
+| S1 — hard rules | 51/72 (70.8%) | 27/34 (79.4%) | 51/72 |
+| S2 — hard rules + linking | 29/72 (40.3%) | 27/34 (79.4%) | 29/72 |
+| S3 — full deny | 23/72 (31.9%) | 27/34 (79.4%) | 23/72 |
+| S4 — approve all asks | 57/72 (79.2%) | 34/34 (100.0%) | 57/72 |
+| S5 — careful-reviewer simulation | 23/72 (31.9%) | 34/34 (100.0%) | 23/72 |
+
+S5 assumes a scripted approver approves exactly when the scenario marks the tool action as user-intended; this is not a human-review effectiveness result. The authored scenarios came from the same agent that built the harness, so this is a functional scripted study, not independent or generalizable accuracy measurement. V4 reduced S3 attack success to 8/72 (11.1%) while normal-task success was 26/34 (76.5%); see the report for confidence intervals and tradeoffs.
+
+A confirmed audit-schema bug was recorded and left unfixed to preserve the freeze: audit evidence with a null argument name is rejected, losing the provenance event metadata. The SQLite hash chains remained valid, but there were 390 rejected events total: 384 across synthetic guarded runs and 6 in the real Layer 1 replay. No fake-secret values were found in audit databases. See `data/results/layer2_eval/bugs_found.md`.
+
+Post-freeze edits were made only to the evaluator (`harness/eval_layer2.py`) for Windows path handling, diagnostics, and progress output. The evaluator was therefore run with `--allow-changed`; the report records the warning. Frozen firewall and policy files were not changed.
+
+Reproduce offline: `venv\\Scripts\\python.exe -m harness.eval_layer2 --allow-changed`. The command makes no network/API calls; it removes `GEMINI_API_KEY` and uses cache-only Layer 1 replay. Test command: `venv\\Scripts\\python.exe -X dev -m pytest -v -x --durations=25`.
+

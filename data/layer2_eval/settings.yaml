@@ -1,0 +1,82 @@
+version: 1
+seed: 1010
+scenario_file: scenarios.yaml
+real_layer1_file: real_layer1_scenarios.yaml
+policy_files:
+  email: policies/example_agent.yaml
+  files: policies/example_files_agent.yaml
+  support: policies/example_support_agent.yaml
+settings:
+  S0:
+    description: no_defense
+    hard_rules: false
+    output_inspection: false
+    linking: false
+    sensitivity: false
+    loop_guard: false
+    approval: none
+  S1:
+    description: hard_rules_only
+    hard_rules: true
+    output_inspection: false
+    linking: false
+    sensitivity: false
+    loop_guard: false
+    approval: deny
+  S2:
+    description: hard_rules_plus_linking
+    hard_rules: true
+    output_inspection: true
+    linking: true
+    sensitivity: false
+    loop_guard: false
+    approval: deny
+  S3:
+    description: full_deny
+    hard_rules: true
+    output_inspection: true
+    linking: true
+    sensitivity: true
+    loop_guard: true
+    approval: deny
+  S4:
+    description: full_approve_all
+    hard_rules: true
+    output_inspection: true
+    linking: true
+    sensitivity: true
+    loop_guard: true
+    approval: approve_all
+  S5:
+    description: full_careful_reviewer
+    hard_rules: true
+    output_inspection: true
+    linking: true
+    sensitivity: true
+    loop_guard: true
+    approval: user_intended
+variants:
+  V1:
+    description: default policy
+    overrides: {}
+  V2:
+    description: block likely links on high-risk tools
+    overrides:
+      link_policy:
+        high:
+          likely: block
+  V3:
+    description: mask high outputs
+    overrides:
+      output_inspection:
+        actions:
+          high: mask
+  V4:
+    description: treat any confidential output in session as sensitive
+    overrides:
+      sensitivity:
+        taint_mode: any_confidential_in_session
+latency_iterations: 1000
+audit:
+  sqlite_each_guarded_run: true
+  store_user_task: false
