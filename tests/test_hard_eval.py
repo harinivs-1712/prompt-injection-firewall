@@ -21,9 +21,9 @@ from experiments.hard_eval_common import (
 )
 from experiments.run_hard_eval import CompositeCache, _cascade_view, judge_missing
 from experiments.run_judge import JudgeCache
-from layers.judge import build_judge_prompt
-from layers.labeling import label_segment, per_attack_flags
-from layers.segmenter import make_segments
+from firewall.layer1.judge import build_judge_prompt
+from firewall.layer1.labeling import label_segment, per_attack_flags
+from firewall.layer1.segmenter import make_segments
 
 
 class FakeJudge:
@@ -48,12 +48,12 @@ class FakeJudge:
 
 def test_frozen_manifest_passes_and_aborts_on_change(tmp_path, capsys):
     root = tmp_path / "repo"
-    for folder in ("layers", "config"):
+    for folder in ("firewall/layer1", "config"):
         (root / folder).mkdir(parents=True)
-    (root / "layers" / "instruction_rules.py").write_text("RULES = 1\n", encoding="utf-8")
-    (root / "layers" / "piguard_scorer.py").write_text('MODEL_NAME = "test-pi"\n', encoding="utf-8")
-    (root / "layers" / "judge.py").write_text('JUDGE_SYSTEM_INSTRUCTION = "static system"\nJUDGE_USER_TEMPLATE = "static user"\n', encoding="utf-8")
-    (root / "layers" / "segmenter.py").write_text(
+    (root / "firewall" / "layer1" / "instruction_rules.py").write_text("RULES = 1\n", encoding="utf-8")
+    (root / "firewall" / "layer1" / "piguard_scorer.py").write_text('MODEL_NAME = "test-pi"\n', encoding="utf-8")
+    (root / "firewall" / "layer1" / "judge.py").write_text('JUDGE_SYSTEM_INSTRUCTION = "static system"\nJUDGE_USER_TEMPLATE = "static user"\n', encoding="utf-8")
+    (root / "firewall" / "layer1" / "segmenter.py").write_text(
         "def make_segments(doc_id, text, window=3, stride=1):\n    return []\n", encoding="utf-8"
     )
     (root / "config" / "judge_config.py").write_text(
@@ -63,7 +63,7 @@ def test_frozen_manifest_passes_and_aborts_on_change(tmp_path, capsys):
     manifest = root / "config" / "frozen_manifest.json"
     write_frozen_manifest(path=manifest, root=root)
     assert verify_frozen_manifest(manifest_path=manifest, root=root)["changed_components"] == []
-    (root / "layers" / "instruction_rules.py").write_text("RULES = 2\n", encoding="utf-8")
+    (root / "firewall" / "layer1" / "instruction_rules.py").write_text("RULES = 2\n", encoding="utf-8")
     with pytest.raises(RuntimeError, match="FROZEN LAYER 1 MISMATCH"):
         verify_frozen_manifest(manifest_path=manifest, root=root)
     status = verify_frozen_manifest(manifest_path=manifest, root=root, allow_changed=True)

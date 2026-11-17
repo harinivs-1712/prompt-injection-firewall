@@ -15,9 +15,9 @@ from experiments.hard_eval_common import (
     HARD_EVAL_DIR, HARD_LABELS_PATH, HARD_TASKS_PATH, SCORE_METADATA_PATH,
     SCORED_PATH, SEGMENTER_SETTINGS, verify_frozen_manifest, validate_hard_dataset,
 )
-from layers.instruction_rules import instruction_signals
-from layers.segmenter import make_segments
-from layers.piguard_scorer import BATCH_SIZE, MODEL_NAME, PIGuardScorer
+from firewall.layer1.instruction_rules import instruction_signals
+from firewall.layer1.segmenter import make_segments
+from firewall.layer1.piguard_scorer import BATCH_SIZE, MODEL_NAME, PIGuardScorer
 
 
 def main(argv: list[str] | None = None) -> int:

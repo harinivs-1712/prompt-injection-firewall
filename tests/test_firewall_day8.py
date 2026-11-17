@@ -319,7 +319,9 @@ def test_firewall_tree_stays_agent_agnostic():
     forbidden = re.compile(r"\b(?:send_email|make_payment|email)\b", re.I)
     import io
     import tokenize
-    for path in (ROOT / "firewall").rglob("*.py"):
+    # Keep the policy engine agent-agnostic; Layer 1 has detector vocabulary
+    # (including ordinary instruction verbs) and is not part of tool policy.
+    for path in (p for p in (ROOT / "firewall").rglob("*.py") if "layer1" not in p.parts):
         tokens = [t.string for t in tokenize.generate_tokens(io.StringIO(path.read_text(encoding="utf-8")).readline)
                   if t.type not in {tokenize.COMMENT, tokenize.NL, tokenize.NEWLINE, tokenize.INDENT,
                                     tokenize.DEDENT, tokenize.ENDMARKER}]

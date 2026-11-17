@@ -23,7 +23,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 EVAL_DIR = ROOT / "data" / "layer2_eval"
 RESULTS_DIR = ROOT / "data" / "results" / "layer2_eval"
-MANIFEST = ROOT / "config" / "layer2_eval_manifest.json"
+MANIFEST = ROOT / "config" / "layer2_eval_manifest_v2.json"
 SCENARIO_HASHES = EVAL_DIR / "scenario_hashes.json"
 VALID_EXPECTED = {"hard_rules", "hold", "linking", "sensitivity", "approval_only", "none_known_gap"}
 HARD_CODES = {"TOOL_NOT_ALLOWED_FOR_TASK", "RECIPIENT_NOT_ALLOWED", "DOMAIN_NOT_ALLOWED",
@@ -73,7 +73,12 @@ def _read_yaml(path: Path):
     return value if isinstance(value, dict) else {}
 
 
-def freeze_inputs() -> None:
+def _manifest_path(path: Path | str | None = None) -> Path:
+    candidate = MANIFEST if path is None else Path(path)
+    return (candidate if candidate.is_absolute() else ROOT / candidate).resolve()
+
+
+def freeze_inputs(manifest_path: Path | str | None = None) -> None:
     EVAL_DIR.mkdir(parents=True, exist_ok=True)
     scenario_paths = [EVAL_DIR / "scenarios.yaml", EVAL_DIR / "real_layer1_scenarios.yaml", EVAL_DIR / "settings.yaml"]
     hashes = {str(path.relative_to(ROOT)): _sha(path) for path in scenario_paths}
@@ -83,15 +88,17 @@ def freeze_inputs() -> None:
     except Exception:
         commit = None
     data = {"version": 1, "git_commit": commit, "sha256": _manifest_entries()}
-    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    target = _manifest_path(manifest_path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(f"Frozen {len(hashes)} scenario/settings files and {len(data['sha256'])} components; git={commit or 'unavailable'}")
 
 
-def verify_manifest(*, allow_changed=False) -> list[str]:
-    if not MANIFEST.exists():
+def verify_manifest(*, manifest_path: Path | str | None = None, allow_changed=False) -> list[str]:
+    target = _manifest_path(manifest_path)
+    if not target.exists():
         raise RuntimeError("Layer 2 evaluation manifest is missing; run `python -m harness.eval_layer2 --freeze` first.")
-    expected = json.loads(MANIFEST.read_text(encoding="utf-8")).get("sha256", {})
+    expected = json.loads(target.read_text(encoding="utf-8")).get("sha256", {})
     actual = _manifest_entries()
     changed = sorted(key for key in set(expected) | set(actual) if expected.get(key) != actual.get(key))
     if changed and not allow_changed:
@@ -571,8 +578,9 @@ class _ForbiddenJudge:
         raise AssertionError("API judge must never be called in cache-only integration.")
 
 
-def run_all(*, allow_changed=False):
-    changed = verify_manifest(allow_changed=allow_changed)
+def run_all(*, allow_changed=False, manifest_path: Path | str | None = None):
+    target_manifest = _manifest_path(manifest_path)
+    changed = verify_manifest(manifest_path=target_manifest, allow_changed=allow_changed)
     verify_scenario_hashes()
     scenarios = validate_scenarios()
     real_scenarios = validate_scenarios(real=True)
@@ -597,7 +605,7 @@ def run_all(*, allow_changed=False):
         if _local_piguard_cache_exists():
             raise
         real = {"skipped": True, "reason": "Local PIGuard model cache is unavailable; the real Layer 1 subset was not run offline."}
-    return {"version": 1, "git_commit": json.loads(MANIFEST.read_text(encoding="utf-8")).get("git_commit"),
+    return {"version": 1, "git_commit": json.loads(target_manifest.read_text(encoding="utf-8")).get("git_commit"),
             "firewall_sha256": _firewall_digest(),
             "manifest_warnings": [f"Frozen file changed: {name}" for name in changed],
             "scenario_count": len(scenarios), "attack_scenarios": sum(row["kind"] == "attack" for row in scenarios),
@@ -758,9 +766,9 @@ def _charts(metrics):
     fig.tight_layout(); fig.savefig(RESULTS_DIR / "normal_success_and_prompts.png", dpi=160); plt.close(fig)
 
 
-def _run_deterministic_pair(allow_changed=False):
-    first = run_all(allow_changed=allow_changed)
-    second = run_all(allow_changed=allow_changed)
+def _run_deterministic_pair(allow_changed=False, manifest_path: Path | str | None = None):
+    first = run_all(allow_changed=allow_changed, manifest_path=manifest_path)
+    second = run_all(allow_changed=allow_changed, manifest_path=manifest_path)
     left = json.dumps(first, sort_keys=True, separators=(",", ":"))
     right = json.dumps(second, sort_keys=True, separators=(",", ":"))
     if left != right:
@@ -782,10 +790,13 @@ def main(argv=None):
     parser.add_argument("--freeze", action="store_true", help="write scenario and frozen-input SHA-256 manifests")
     parser.add_argument("--validate-only", action="store_true", help="verify frozen inputs and scenario schemas without evaluation")
     parser.add_argument("--allow-changed", action="store_true", help="continue after a frozen-input mismatch and record the warning")
+    parser.add_argument("--manifest", type=Path, default=MANIFEST,
+                        help="manifest path (default: config/layer2_eval_manifest_v2.json)")
     args = parser.parse_args(argv)
     if args.freeze:
-        validate_settings(); validate_scenarios(); validate_scenarios(real=True); freeze_inputs(); return 0
-    changed = verify_manifest(allow_changed=args.allow_changed)
+        validate_settings(); validate_scenarios(); validate_scenarios(real=True); freeze_inputs(args.manifest); return 0
+    manifest_path = _manifest_path(args.manifest)
+    changed = verify_manifest(manifest_path=manifest_path, allow_changed=args.allow_changed)
     verify_scenario_hashes(); validate_settings(); validate_scenarios(); validate_scenarios(real=True)
     if args.validate_only:
         print("Frozen manifest and all scenario schemas/hashes verified.")
@@ -793,7 +804,7 @@ def main(argv=None):
     if changed:
         print("WARNING: continuing with frozen-input changes: " + ", ".join(changed))
     os.environ["HF_HUB_OFFLINE"] = "1"; os.environ["TRANSFORMERS_OFFLINE"] = "1"; os.environ.pop("GEMINI_API_KEY", None)
-    result = _run_deterministic_pair(args.allow_changed)
+    result = _run_deterministic_pair(args.allow_changed, manifest_path)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     (RESULTS_DIR / "results.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     write_csv(result["settings"] + result["variants"], RESULTS_DIR / "per_trace.csv")

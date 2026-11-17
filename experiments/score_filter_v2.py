@@ -30,8 +30,8 @@ def main() -> int:
 
     labels, _ = load_heldout()
     segments = get_segments(labels)
-    from layers.instruction_rules import instruction_signals
-    from layers.piguard_scorer import PIGuardScorer
+    from firewall.layer1.instruction_rules import instruction_signals
+    from firewall.layer1.piguard_scorer import PIGuardScorer
 
     scorer = PIGuardScorer()
     piguard = scorer.score([row["text"] for row in segments])

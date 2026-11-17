@@ -27,7 +27,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from layers.segmenter import split_sentences, make_segments, process_file
+from firewall.layer1.segmenter import split_sentences, make_segments, process_file
 
 # ---------------------------------------------------------------------------
 # Helpers

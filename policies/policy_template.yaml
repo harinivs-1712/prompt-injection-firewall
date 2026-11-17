@@ -1,0 +1,38 @@
+# Generic policy template. Replace tool names, argument types, limits, and task keywords.
+# Declare every side effect and destination in the policy. Keep real secrets out of this file.
+policy_version: "1"
+agent_name: "your_agent"
+
+tools:
+  read_item:
+    description: "Read one item in the agent's domain."
+    risk: low
+    side_effects: false
+    args:
+      item_id: {type: identifier, required: true}
+    output_sensitivity: confidential
+  update_item:
+    description: "Update one item after policy checks and review."
+    risk: medium
+    side_effects: true
+    always_ask: true
+    args:
+      item_id: {type: identifier, required: true}
+      value: {type: free_text, required: true}
+    output_sensitivity: none
+
+limits: {}
+task_categories:
+  general:
+    allowed_tools: [read_item, update_item]
+    keywords: [read, summarize, update]
+verb_to_tool:
+  read: [read_item]
+  update: [update_item]
+defaults:
+  unknown_tool_action: block
+  strict_args: true
+  violation_actions: {value: block}
+sensitivity:
+  enabled: true
+  action: ask

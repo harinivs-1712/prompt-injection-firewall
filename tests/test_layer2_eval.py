@@ -136,8 +136,8 @@ def test_real_layer1_subset_is_cache_only_offline_and_makes_no_api_calls(monkeyp
 
     monkeypatch.setattr(socket, "socket", deny_network)
     monkeypatch.setattr(socket, "create_connection", deny_network)
-    import layers.judge
-    monkeypatch.setattr(layers.judge, "GeminiJudge", deny_network)
+    import firewall.layer1.judge as layer1_judge
+    monkeypatch.setattr(layer1_judge, "GeminiJudge", deny_network)
     try:
         rows = ev._run_real_layer1(ev.validate_scenarios(real=True))
     except Exception as exc:

@@ -18,9 +18,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from config.rules_config import RULES_VERSION
-from layers.instruction_rule_router import instruction_signals
-from layers.piguard_scorer import BATCH_SIZE, PIGuardScorer
-from layers.segmenter import make_segments
+from firewall.layer1.instruction_rule_router import instruction_signals
+from firewall.layer1.piguard_scorer import BATCH_SIZE, PIGuardScorer
+from firewall.layer1.segmenter import make_segments
 
 DEFAULT_DOC_ID = "manual-input"
 DEFAULT_WINDOW = 3

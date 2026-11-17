@@ -19,8 +19,9 @@ from config.filter_v2_config import PIGUARD_THRESHOLD_SWEEP
 from config.judge_config import PIGUARD_THRESHOLD
 from experiments.filter_v2_common import V2_RESULTS, get_segments, load_heldout, segment_truth, wilson
 from experiments.filter_v2_metrics import evaluate_filter
-from layers.instruction_rules import instruction_signals as v1_signals
-from layers.instruction_rules_v2 import instruction_signals_v2
+from experiments.hard_eval_common import relocated_original_sha256
+from firewall.layer1.instruction_rules import instruction_signals as v1_signals
+from firewall.layer1.instruction_rules_v2 import instruction_signals_v2
 
 HASH_MANIFEST = ROOT / "config" / "heldout_v2_hashes.json"
 V2_MANIFEST = ROOT / "config" / "frozen_manifest_v2.json"
@@ -40,9 +41,13 @@ def verify_v2_manifest() -> dict[str, Any]:
     manifest = json.loads(V2_MANIFEST.read_text(encoding="utf-8"))
     comp = manifest["components"]
     checks = {
-        "instruction_rules_v2_sha256": _sha(ROOT / "layers" / "instruction_rules_v2.py"),
+        "instruction_rules_v2_sha256": relocated_original_sha256(
+            ROOT, "layers/instruction_rules_v2.py", "firewall/layer1/instruction_rules_v2.py",
+            ROOT / "firewall" / "layer1" / "instruction_rules_v2.py"),
         "filter_v2_config_sha256": _sha(ROOT / "config" / "filter_v2_config.py"),
-        "rules_router_sha256": _sha(ROOT / "layers" / "instruction_rule_router.py"),
+        "rules_router_sha256": relocated_original_sha256(
+            ROOT, "layers/instruction_rule_router.py", "firewall/layer1/instruction_rule_router.py",
+            ROOT / "firewall" / "layer1" / "instruction_rule_router.py"),
         "choice_config_sha256": _sha(CHOICE),
     }
     changed = [k for k, v in checks.items() if comp.get(k) != v]
@@ -153,12 +158,12 @@ def _legacy_stats():
         }
 
     legit_labels = json.loads((ROOT / "data" / "labeled_legit" / "labels.json").read_text(encoding="utf-8"))
-    from layers.segmenter import make_segments
+    from firewall.layer1.segmenter import make_segments
     legit = []
     for d in legit_labels["documents"]:
         text = (ROOT / "data" / "labeled_legit" / f"{d['doc_id']}.txt").read_text(encoding="utf-8")
         legit.extend(make_segments(d["doc_id"], text, window=3, stride=1))
-    from layers.piguard_scorer import PIGuardScorer
+    from firewall.layer1.piguard_scorer import PIGuardScorer
     piguard = PIGuardScorer().score([r["text"] for r in legit])
     legit_rows = []
     legit_docmap = {d["doc_id"]: d for d in legit_labels["documents"]}

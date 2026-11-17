@@ -13,9 +13,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from config import judge_config, threat_config
-from layers.labeling import label_records, per_attack_flags
-from layers.suspicion import apply_suspicion
-from layers.threat_store import enrich_segments, rebuild_threat_store_from_json
+from firewall.layer1.labeling import label_records, per_attack_flags
+from firewall.layer1.suspicion import apply_suspicion
+from firewall.layer1.threat_store import enrich_segments, rebuild_threat_store_from_json
 
 
 DETECTORS: dict[str, Callable[[dict[str, Any]], bool]] = {}

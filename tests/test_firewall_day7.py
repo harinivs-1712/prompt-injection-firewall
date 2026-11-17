@@ -51,7 +51,7 @@ def call(text, *, policy_obj=None, scanner=None, task="inspect resource", **kwar
 
 def test_import_hygiene_for_core_adapter_and_factory():
     code = ("import sys, firewall, firewall.adapters, firewall.factory; "
-            "bad=[m for m in sys.modules if m=='layers' or m.startswith('layers.') or "
+            "bad=[m for m in sys.modules if m=='firewall.layer1' or m.startswith('firewall.layer1.') or "
             "m=='torch' or m.startswith('torch.') or m=='transformers' or m.startswith('transformers.') or "
             "m=='google' or m.startswith('google.')]; assert not bad, bad")
     result = subprocess.run([sys.executable, "-c", code], cwd=ROOT, capture_output=True, text=True, timeout=15)
@@ -59,9 +59,7 @@ def test_import_hygiene_for_core_adapter_and_factory():
 
 
 def test_layer1_adapter_maps_real_signature_lazily(monkeypatch):
-    package = types.ModuleType("layers")
-    package.__path__ = []
-    fake = types.ModuleType("layers.scan")
+    fake = types.ModuleType("firewall.layer1.scan")
     seen = {}
     def scan(content, **kwargs):
         seen.update(content=content, **kwargs)
@@ -70,8 +68,7 @@ def test_layer1_adapter_maps_real_signature_lazily(monkeypatch):
                "judge_ran": True, "judge_coverage_reason": "reviewed", "rules_flag": True, "piguard_flag": False}
         return types.SimpleNamespace(segments=[row], summary={"judge_calls_made": 2, "coverage_fraction": 1.0})
     fake.scan = scan
-    monkeypatch.setitem(sys.modules, "layers", package)
-    monkeypatch.setitem(sys.modules, "layers.scan", fake)
+    monkeypatch.setitem(sys.modules, "firewall.layer1.scan", fake)
     adapter = Layer1Scanner(mode="cascade", offline_cache_only=True, legacy_cache=True)
     result = adapter.scan("safe placeholder", doc_id="doc", source_type="tool_output",
                           user_task="trusted task", context_note="trusted note", max_judge_calls=3)
@@ -83,14 +80,11 @@ def test_layer1_adapter_maps_real_signature_lazily(monkeypatch):
 
 
 def test_layer1_adapter_sanitizes_failure_and_requires_explicit_live_key(monkeypatch):
-    package = types.ModuleType("layers")
-    package.__path__ = []
-    fake = types.ModuleType("layers.scan")
+    fake = types.ModuleType("firewall.layer1.scan")
     def fail(*args, **kwargs):
         raise RuntimeError("secret output must not leak")
     fake.scan = fail
-    monkeypatch.setitem(sys.modules, "layers", package)
-    monkeypatch.setitem(sys.modules, "layers.scan", fake)
+    monkeypatch.setitem(sys.modules, "firewall.layer1.scan", fake)
     adapter = Layer1Scanner()
     with pytest.raises(ScannerUnavailable) as exc:
         adapter.scan("secret output must not leak", doc_id="d", source_type="tool_output", user_task="task")
@@ -102,16 +96,13 @@ def test_layer1_adapter_sanitizes_failure_and_requires_explicit_live_key(monkeyp
 
 def test_layer1_adapter_live_uses_injected_judge_without_network(monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "placeholder-key")
-    package = types.ModuleType("layers")
-    package.__path__ = []
-    fake = types.ModuleType("layers.scan")
+    fake = types.ModuleType("firewall.layer1.scan")
     seen = {}
     def scan(content, **kwargs):
         seen.update(kwargs)
         return types.SimpleNamespace(segments=[], summary={"judge_calls_made": 0, "coverage_fraction": 1.0})
     fake.scan = scan
-    monkeypatch.setitem(sys.modules, "layers", package)
-    monkeypatch.setitem(sys.modules, "layers.scan", fake)
+    monkeypatch.setitem(sys.modules, "firewall.layer1.scan", fake)
     marker = object()
     Layer1Scanner(offline_cache_only=False, judge=marker).scan("x", doc_id="d", source_type="tool_output", user_task="task")
     assert seen["judge"] is marker

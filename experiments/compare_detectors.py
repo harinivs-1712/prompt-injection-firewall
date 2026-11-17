@@ -9,9 +9,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from layers.instruction_rule_router import instruction_signals
-from layers.piguard_scorer import BATCH_SIZE, MODEL_NAME, PIGuardScorer
-from layers.segmenter import make_segments
+from firewall.layer1.instruction_rule_router import instruction_signals
+from firewall.layer1.piguard_scorer import BATCH_SIZE, MODEL_NAME, PIGuardScorer
+from firewall.layer1.segmenter import make_segments
 
 LABELED_DIR = ROOT / "data" / "labeled"
 RESULTS_DIR = ROOT / "data" / "results"

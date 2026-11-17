@@ -10,7 +10,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from config.judge_config import PIGUARD_THRESHOLD
-from layers.instruction_rule_router import instruction_signals
+from firewall.layer1.instruction_rule_router import instruction_signals
 
 SOURCE = ROOT / "data" / "results" / "hard_eval_segments_scored.json"
 OUT_JSON = ROOT / "data" / "results" / "previous_misses_v2_rescore.json"

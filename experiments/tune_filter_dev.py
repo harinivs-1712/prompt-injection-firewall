@@ -19,8 +19,8 @@ from config.filter_v2_config import (
 from config.judge_config import PIGUARD_THRESHOLD
 from experiments.filter_v2_common import V2_RESULTS, load_heldout
 from experiments.filter_v2_metrics import evaluate_filter
-from layers.instruction_rules import instruction_signals as v1_signals
-from layers.instruction_rules_v2 import instruction_signals_v2
+from firewall.layer1.instruction_rules import instruction_signals as v1_signals
+from firewall.layer1.instruction_rules_v2 import instruction_signals_v2
 
 DEV_DIR = ROOT / "data" / "hard_eval"
 SCORED = V2_RESULTS / "hard_eval_segments_scored.json"
@@ -211,9 +211,9 @@ def main() -> int:
 
     # Freeze rule and selection artifacts after the dev-only choice.
     components = {
-        "instruction_rules_v2_sha256": _sha(ROOT / "layers" / "instruction_rules_v2.py"),
+        "instruction_rules_v2_sha256": _sha(ROOT / "firewall" / "layer1" / "instruction_rules_v2.py"),
         "filter_v2_config_sha256": _sha(ROOT / "config" / "filter_v2_config.py"),
-        "rules_router_sha256": _sha(ROOT / "layers" / "instruction_rule_router.py"),
+        "rules_router_sha256": _sha(ROOT / "firewall" / "layer1" / "instruction_rule_router.py"),
         "choice_config_sha256": _sha(CHOICE_JSON),
         "semantic_filter": {"used": False, "code_sha256": None, "prototypes_sha256": None},
         "choice": choice_payload,
