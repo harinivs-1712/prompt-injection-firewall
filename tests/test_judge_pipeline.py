@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
 
 from config import judge_config as cfg
 from experiments import evaluate_layer1, run_judge
-from layers.judge import (
+from firewall.layer1.judge import (
     GeminiJudge,
     InvalidJudgeOutput,
     build_judge_prompt,
@@ -238,7 +238,7 @@ def test_legit_labels_match_document_spans_and_tasks_are_configured():
         if record["attack_span"]:
             span = record["attack_span"]
             assert text[span["start"]:span["end"]] == span["text"]
-        from layers.segmenter import make_segments
+        from firewall.layer1.segmenter import make_segments
         segments = make_segments(record["doc_id"], text)
         expected_legit = {
             segment["segment_id"] for segment in segments

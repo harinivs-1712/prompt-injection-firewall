@@ -1,0 +1,136 @@
+{
+  "components": {
+    "judge": {
+      "model": "gemini-3.1-flash-lite",
+      "prompt_sha256": "0cbd3debb394f19dbcf9f6259ae8fdda1bbe1d0550bec9319a078cd8a281b983",
+      "prompt_version": "v1"
+    },
+    "level_table": {
+      "config_sha256": "e3b8f4e386f4f844602d20f10d11befa01d57fd6810d581cabf1fb8b97b9df7c",
+      "name": "default"
+    },
+    "moved_file:__init__.py": "6b54efec28067f70a65b94b4633e9893638f92c50df3d673b468ac1f276e81c0",
+    "moved_file:instruction_rule_router.py": "0295b71ac43edca2c118813c956cf3fdb29b2cf84b1aed460430e7d54731a1fb",
+    "moved_file:instruction_rules.py": "e9a03c2537f8f058431547b6960cfcfb733871320ddd9396ce7f6327d067d622",
+    "moved_file:instruction_rules_v2.py": "da2e526b6cee13f46072a10f481e3a33439f52d3809e2354acb3755b3bff426e",
+    "moved_file:judge.py": "aab7264a84318906dd43751e2714a5b883b7dff0b8783c0da1dda90b983d8975",
+    "moved_file:labeling.py": "3046c912141903839c1e7eb00ce8e2397c2e8f05e5682d59b59ca5861020b66d",
+    "moved_file:piguard_scorer.py": "265ac7792c6bcf40b99222d97f805be9bd6956ac86aa610a3a390316ad7a157a",
+    "moved_file:scan.py": "35aacc4c28db209e406caaf6bd5cffd4d84b4fc34e44697fb4ba18d27b329566",
+    "moved_file:scan_cli.py": "4415aee01a03aeff1b2bc2b94e279bf2f8791bd4522df44e8fc58efb3c17c0c5",
+    "moved_file:segmenter.py": "6098dabe7df4f8825b248310d81958da0ac9a80eb4a5d10f5fc6a4bbe845e806",
+    "moved_file:suspicion.py": "5bf3afccb5336055e857d9de98a0a80bfd261a026c8d309c0bd08803bce2600e",
+    "moved_file:threat_store.py": "2b3744fc8a87a20b646a5706dc87360cae870fc131d70529b27eb5edec80c14c",
+    "path_resolver_sha256": "f0f9909e248cebf8adadf70c67a86469d1bd3060500fb27a57297ffb821b0da0",
+    "piguard": {
+      "model": "leolee99/PIGuard",
+      "scorer_sha256": "265ac7792c6bcf40b99222d97f805be9bd6956ac86aa610a3a390316ad7a157a",
+      "threshold": 0.5
+    },
+    "rules": {
+      "router_sha256": "0295b71ac43edca2c118813c956cf3fdb29b2cf84b1aed460430e7d54731a1fb",
+      "rules_config_sha256": "72650d83e06d8c1752dbb7cf4b64ff5071dfd323afce81b6423bb19f2f5636b0",
+      "v1_sha256": "e9a03c2537f8f058431547b6960cfcfb733871320ddd9396ce7f6327d067d622",
+      "v2_sha256": "da2e526b6cee13f46072a10f481e3a33439f52d3809e2354acb3755b3bff426e",
+      "version": "v1"
+    },
+    "scan_settings_sha256": "bd1ace0f315f0fc49a107a29799a946982c5ed46a239487a9b9966a00b66d1c9",
+    "segment_settings": {
+      "settings_sha256": "bd1ace0f315f0fc49a107a29799a946982c5ed46a239487a9b9966a00b66d1c9",
+      "stride": 1,
+      "window": 3
+    },
+    "segmenter": "6098dabe7df4f8825b248310d81958da0ac9a80eb4a5d10f5fc6a4bbe845e806"
+  },
+  "created_for": "Layer 1 relocation to firewall/layer1",
+  "format_version": 2,
+  "manifest_sha256": "d39f2bea30b069b13ca8b8fb2095f34e222eab419505ce910caa3fb4a19b5a12",
+  "moved_files": [
+    {
+      "change_type": "identical",
+      "new_path": "firewall/layer1/__init__.py",
+      "new_sha256": "6b54efec28067f70a65b94b4633e9893638f92c50df3d673b468ac1f276e81c0",
+      "old_path": "layers/__init__.py",
+      "old_sha256": "6b54efec28067f70a65b94b4633e9893638f92c50df3d673b468ac1f276e81c0"
+    },
+    {
+      "change_type": "import-only changed",
+      "new_path": "firewall/layer1/instruction_rule_router.py",
+      "new_sha256": "0295b71ac43edca2c118813c956cf3fdb29b2cf84b1aed460430e7d54731a1fb",
+      "old_path": "layers/instruction_rule_router.py",
+      "old_sha256": "9e0353cbb116168591e8f8881c6773b92090d6dbb16421eb109d8d16abbe0cb3"
+    },
+    {
+      "change_type": "identical",
+      "new_path": "firewall/layer1/instruction_rules.py",
+      "new_sha256": "e9a03c2537f8f058431547b6960cfcfb733871320ddd9396ce7f6327d067d622",
+      "old_path": "layers/instruction_rules.py",
+      "old_sha256": "e9a03c2537f8f058431547b6960cfcfb733871320ddd9396ce7f6327d067d622"
+    },
+    {
+      "change_type": "import-only changed",
+      "new_path": "firewall/layer1/instruction_rules_v2.py",
+      "new_sha256": "da2e526b6cee13f46072a10f481e3a33439f52d3809e2354acb3755b3bff426e",
+      "old_path": "layers/instruction_rules_v2.py",
+      "old_sha256": "f5973883ddedd9661bf165cc0913be2c11f6cfd90d45f0ee7f6e5d583ce9065c"
+    },
+    {
+      "change_type": "identical",
+      "new_path": "firewall/layer1/judge.py",
+      "new_sha256": "aab7264a84318906dd43751e2714a5b883b7dff0b8783c0da1dda90b983d8975",
+      "old_path": "layers/judge.py",
+      "old_sha256": "aab7264a84318906dd43751e2714a5b883b7dff0b8783c0da1dda90b983d8975"
+    },
+    {
+      "change_type": "identical",
+      "new_path": "firewall/layer1/labeling.py",
+      "new_sha256": "3046c912141903839c1e7eb00ce8e2397c2e8f05e5682d59b59ca5861020b66d",
+      "old_path": "layers/labeling.py",
+      "old_sha256": "3046c912141903839c1e7eb00ce8e2397c2e8f05e5682d59b59ca5861020b66d"
+    },
+    {
+      "change_type": "identical",
+      "new_path": "firewall/layer1/piguard_scorer.py",
+      "new_sha256": "265ac7792c6bcf40b99222d97f805be9bd6956ac86aa610a3a390316ad7a157a",
+      "old_path": "layers/piguard_scorer.py",
+      "old_sha256": "265ac7792c6bcf40b99222d97f805be9bd6956ac86aa610a3a390316ad7a157a"
+    },
+    {
+      "change_type": "import-only changed",
+      "new_path": "firewall/layer1/scan.py",
+      "new_sha256": "35aacc4c28db209e406caaf6bd5cffd4d84b4fc34e44697fb4ba18d27b329566",
+      "old_path": "layers/scan.py",
+      "old_sha256": "33bbcee1827e656a884ba5076703db01515c1c8a67a3a0bf9c8ab60099b8c610"
+    },
+    {
+      "change_type": "import-only changed",
+      "new_path": "firewall/layer1/scan_cli.py",
+      "new_sha256": "4415aee01a03aeff1b2bc2b94e279bf2f8791bd4522df44e8fc58efb3c17c0c5",
+      "old_path": "layers/scan_cli.py",
+      "old_sha256": "ac8a06b0564a5b5564cdc67047cf291edb6e9028db538338dbca22f3bbbd5617"
+    },
+    {
+      "change_type": "import-only changed",
+      "new_path": "firewall/layer1/segmenter.py",
+      "new_sha256": "6098dabe7df4f8825b248310d81958da0ac9a80eb4a5d10f5fc6a4bbe845e806",
+      "old_path": "layers/segmenter.py",
+      "old_sha256": "549682379cfaa9cce05b7507cd7e694d5f31cf1b637e145d63fb55ec0cf41013"
+    },
+    {
+      "change_type": "identical",
+      "new_path": "firewall/layer1/suspicion.py",
+      "new_sha256": "5bf3afccb5336055e857d9de98a0a80bfd261a026c8d309c0bd08803bce2600e",
+      "old_path": "layers/suspicion.py",
+      "old_sha256": "5bf3afccb5336055e857d9de98a0a80bfd261a026c8d309c0bd08803bce2600e"
+    },
+    {
+      "change_type": "import-only changed",
+      "new_path": "firewall/layer1/threat_store.py",
+      "new_sha256": "2b3744fc8a87a20b646a5706dc87360cae870fc131d70529b27eb5edec80c14c",
+      "old_path": "layers/threat_store.py",
+      "old_sha256": "ed2b4e27ffca26469841a63c7147411f535a63de69f9131f0ce8736a104b204c"
+    }
+  ],
+  "source_manifest": "config/layer1_final_manifest.json",
+  "source_manifest_sha256": "f487f99c26edabb31a09722225d8fdf764862a958285df506e06b7b2300c7411"
+}

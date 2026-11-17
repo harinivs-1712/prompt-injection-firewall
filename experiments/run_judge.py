@@ -12,7 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from config import judge_config as cfg
-from layers.judge import GeminiJudge, build_judge_prompt
+from firewall.layer1.judge import GeminiJudge, build_judge_prompt
 
 JUDGE_OUTPUT_FIELDS = {
     "judge_ran": False,
@@ -122,7 +122,7 @@ def load_main_records() -> list[dict[str, Any]]:
 
 
 def load_legit_records(tasks: dict[str, dict[str, str]]) -> list[dict[str, Any]]:
-    from layers.segmenter import make_segments
+    from firewall.layer1.segmenter import make_segments
 
     labels = json.loads(cfg.LEGIT_LABELS_PATH.read_text(encoding="utf-8"))
     records: list[dict[str, Any]] = []
@@ -264,7 +264,7 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as exc:
         # Never print SDK exception text: it is unnecessary and must not risk
         # exposing authentication material through a future SDK error message.
-        from layers.judge import ModelUnavailableError
+        from firewall.layer1.judge import ModelUnavailableError
         if isinstance(exc, ModelUnavailableError):
             print(f"Error: {exc}", file=sys.stderr)
         else:

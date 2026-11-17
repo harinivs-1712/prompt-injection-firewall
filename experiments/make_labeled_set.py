@@ -10,7 +10,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from layers.segmenter import split_sentences
+from firewall.layer1.segmenter import split_sentences
 
 ORIGINAL_DIR = ROOT / "data" / "original"
 LABELED_DIR = ROOT / "data" / "labeled"

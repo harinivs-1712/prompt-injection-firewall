@@ -38,7 +38,7 @@ def load_heldout() -> tuple[dict[str, Any], dict[str, Any]]:
 
 
 def get_segments(labels: dict[str, Any]) -> list[dict[str, Any]]:
-    from layers.segmenter import make_segments
+    from firewall.layer1.segmenter import make_segments
 
     segments = []
     for document in labels["documents"]:

@@ -10,9 +10,9 @@ import pytest
 from config.filter_v2_config import RULES_VERSION
 from experiments import filter_v2_common as common
 from experiments.hard_eval_common import duplicate_overlap_hits, verify_frozen_manifest
-from layers.instruction_rule_router import instruction_signals
-from layers.instruction_rules import instruction_signals as v1_signals
-from layers.instruction_rules_v2 import family_hits, instruction_signals_v2
+from firewall.layer1.instruction_rule_router import instruction_signals
+from firewall.layer1.instruction_rules import instruction_signals as v1_signals
+from firewall.layer1.instruction_rules_v2 import family_hits, instruction_signals_v2
 from experiments.evaluate_filter_v2_heldout import verify_v2_manifest
 
 
@@ -97,7 +97,7 @@ def test_heldout_hash_verifier_aborts_after_file_change(tmp_path, monkeypatch):
 
 
 def test_offline_cached_simulation_never_calls_judge(monkeypatch):
-    from layers.judge import GeminiJudge
+    from firewall.layer1.judge import GeminiJudge
     from experiments.filter_v2_metrics import evaluate_filter
     from google import genai
 

@@ -27,7 +27,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from layers.segmenter import split_sentences, make_segments
+from firewall.layer1.segmenter import split_sentences, make_segments
 
 ROOT = Path(__file__).parent
 SEG_DIR = ROOT / "data" / "segments"

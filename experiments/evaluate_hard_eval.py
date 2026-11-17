@@ -22,7 +22,7 @@ from experiments.hard_eval_common import (
     attack_sentences, duplicate_overlap_hits, rule_keyword_audit,
     verify_frozen_manifest,
 )
-from layers.suspicion import apply_suspicion
+from firewall.layer1.suspicion import apply_suspicion
 
 Z_95 = 1.96
 

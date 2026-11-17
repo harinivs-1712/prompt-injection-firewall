@@ -18,9 +18,9 @@ from experiments.hard_eval_common import (
     ALL_LEVELED_PATH, CASCADE_LEVELED_PATH, HARD_EVAL_DIR, HARD_LABELS_PATH,
     HARD_TASKS_PATH, JUDGED_ALL_PATH, CASCADE_PATH, SCORED_PATH,
 )
-from layers import scan as scan_module
-from layers.scan import scan, verify_manifest
-from layers.instruction_rule_router import instruction_signals as live_instruction_signals
+from firewall.layer1 import scan as scan_module
+from firewall.layer1.scan import scan, verify_manifest
+from firewall.layer1.instruction_rule_router import instruction_signals as live_instruction_signals
 
 RESULTS = ROOT / "data" / "results"
 REGRESSION_REPORT = RESULTS / "layer1_final_regression.md"
@@ -45,7 +45,7 @@ class _CachedPIGuard:
     def score(self, texts: list[str]) -> list[dict[str, Any]]:
         missing = [text for text in texts if text not in self.by_text]
         if missing:
-            from layers.piguard_scorer import BATCH_SIZE, PIGuardScorer
+            from firewall.layer1.piguard_scorer import BATCH_SIZE, PIGuardScorer
             if self.fallback is None:
                 self.fallback = PIGuardScorer(batch_size=BATCH_SIZE)
             scored = self.fallback.score(missing)

@@ -20,12 +20,16 @@ Built-in argument types include recipient, amount, account, path, URL, identifie
 
 `start_session(task, allowed_tools=...)` accepts an optional host-provided tool allowlist. Without it, the engine unions tools allowed by every task category whose whole-word or phrase keywords match. If none match, the fallback permits only low-risk tools with no side effects. Tools marked `always_ask` still ask even when other checks pass.
 
-## Planned work
+## Implemented scope and next stage
 
-- **Day 5 and Day 6 (implemented):** package, strict policy loader, extensible argument types, deterministic rule checks, safe audit records, and offline harness.
-- **Day 7 (implemented):** Layer 1 scanner adapter, output inspection, output masking/holding, session-level judge budget, and offline scripted harness.
-- **Day 8 (implemented):** provenance and intent links between tool arguments and suspicious or unreviewed segments.
-- **Day 9:** approval flow, sensitivity checks, and persistent audit logging.
+- **Days 5–6:** strict policy loader, extensible argument types, deterministic rule checks, safe audit records, and offline harness.
+- **Day 7:** Layer 1 scanner adapter, output inspection and masking/holding, session-level judge budget, and offline scripted harness.
+- **Day 8:** provenance and intent links between tool arguments and suspicious or unreviewed segments.
+- **Day 9:** confidential-data egress checks, approval flow, persistent audit logging, and loop guard.
+- **Day 10:** frozen scripted evaluation. Results and limitations are in [the evaluation report](evaluation.md).
+- **Day 11:** documentation, advisory policy linting, packaging metadata, and offline demo.
+
+Layer 3's API, review store, approval broker, and dashboard remain planned; see [the Layer 3 plan](layer3_plan.md).
 
 Value normalization helpers are pure and do not touch the filesystem or network. Path normalization is lexical; it does not resolve symlinks or prove filesystem access. URL/domain parsing is input normalization, not a network request.
 
@@ -41,7 +45,9 @@ The default output actions pass levels `none`, `low`, and `medium` unchanged; ho
 
 The original output is kept in session memory for the host. `get_original_output(..., reviewer=True)` is the explicit reviewer-only access path. `OutputResult.to_audit_dict()` excludes original output and agent view. Audit events contain metadata only: tool/output IDs, action, levels, segment IDs, reason codes, call counts, and unscanned character counts.
 
-The adapter follows the frozen `layers.scan.scan(content, *, doc_id, source_type, user_task, context_note=None, mode=None, max_judge_calls=None, judge=None, store=None, legacy_cache=False, allow_changed=False)` signature. It maps returned segment dictionaries and summary fields into `SegmentRecord` and `ScanOutcome`. `mode` and `legacy_cache` are forwarded; `offline_cache_only` is enforced by withholding a judge unless explicitly disabled. Live mode requires both `offline_cache_only=False` and `GEMINI_API_KEY`; tests use fake modules and never make calls. `create_default_firewall()` supplies this adapter when the host does not inject its own scanner.
+The adapter follows the frozen `firewall.layer1.scan.scan(content, *, doc_id, source_type, user_task, context_note=None, mode=None, max_judge_calls=None, judge=None, store=None, legacy_cache=False, allow_changed=False)` signature. It maps returned segment dictionaries and summary fields into `SegmentRecord` and `ScanOutcome`. `mode` and `legacy_cache` are forwarded; `offline_cache_only` is enforced by withholding a judge unless explicitly disabled. Live mode requires both `offline_cache_only=False` and `GEMINI_API_KEY`; tests use fake modules and never make calls. `create_default_firewall()` supplies this adapter when the host does not inject its own scanner.
+
+The former top-level `layers` package is a deprecated compatibility shim. New code should import from `firewall.layer1`; the shim aliases old submodule imports and keeps `python -m layers.scan_cli` working with a `DeprecationWarning`. It can be removed in a future breaking release after downstream users migrate.
 
 ### Agent view versus original
 

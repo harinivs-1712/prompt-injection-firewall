@@ -252,7 +252,7 @@ def test_scan_content_requires_injected_scanner_and_stores_segments():
 def test_firewall_import_has_no_heavy_or_layer1_imports():
     code = (
         "import sys, firewall; "
-        "bad = [m for m in sys.modules if m == 'layers' or m.startswith('layers.') "
+        "bad = [m for m in sys.modules if m == 'firewall.layer1' or m.startswith('firewall.layer1.') "
         "or m == 'torch' or m.startswith('torch.') or m == 'transformers' "
         "or m.startswith('transformers.') or m == 'google' or m.startswith('google.')]; "
         "assert not bad, bad"

@@ -15,8 +15,8 @@ if str(ROOT) not in sys.path:
 
 from experiments import make_labeled_set as labeled_module
 from experiments import compare_detectors
-from layers.instruction_rules import instruction_signals
-from layers.segmenter import make_segments
+from firewall.layer1.instruction_rules import instruction_signals
+from firewall.layer1.segmenter import make_segments
 
 
 def _checksum(path: Path) -> str:

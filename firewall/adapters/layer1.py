@@ -31,9 +31,9 @@ class Layer1Scanner:
                     raise ScannerUnavailable("Live scan mode requires GEMINI_API_KEY.")
                 judge = self.judge
                 if judge is None:
-                    layer1_judge = importlib.import_module("layers.judge")
+                    layer1_judge = importlib.import_module("firewall.layer1.judge")
                     judge = layer1_judge.GeminiJudge(rpm=5)
-            scan_module = importlib.import_module("layers.scan")
+            scan_module = importlib.import_module("firewall.layer1.scan")
             result = scan_module.scan(
                 content, doc_id=doc_id, source_type=source_type, user_task=user_task,
                 context_note=context_note, mode=self.mode, max_judge_calls=max_judge_calls,

@@ -6,8 +6,8 @@ import json
 import pytest
 
 from config import layer1_settings
-from layers import scan as scan_module
-from layers.scan import scan
+from firewall.layer1 import scan as scan_module
+from firewall.layer1.scan import scan
 
 
 class FakePIGuard:
@@ -104,7 +104,7 @@ def test_all_and_cascade_candidate_selection_and_cache_only_miss():
 
 
 def test_default_cache_only_scan_constructs_no_gemini_client(monkeypatch):
-    from layers.judge import GeminiJudge
+    from firewall.layer1.judge import GeminiJudge
     calls = []
     def forbidden(*args, **kwargs):
         calls.append((args, kwargs))

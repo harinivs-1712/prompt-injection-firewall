@@ -14,9 +14,9 @@ if str(ROOT) not in sys.path:
 
 from config import threat_config
 from experiments.evaluate_suspicion import build_reports, detector_flags
-from layers.labeling import label_records, label_segment, per_attack_flags
-from layers.suspicion import assess_suspicion
-from layers.threat_store import ThreatStore, enrich_segments, rebuild_threat_store_from_json
+from firewall.layer1.labeling import label_records, label_segment, per_attack_flags
+from firewall.layer1.suspicion import assess_suspicion
+from firewall.layer1.threat_store import ThreatStore, enrich_segments, rebuild_threat_store_from_json
 
 
 @pytest.mark.parametrize("rules_flag", [False, True])

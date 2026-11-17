@@ -45,6 +45,18 @@ def _sha256_file(path: Path) -> str:
     return _sha256_bytes(path.read_bytes())
 
 
+def relocated_original_sha256(root: Path, old_path: str, new_path: str, current_path: Path) -> str:
+    """Return the frozen pre-move hash only when the move manifest validates the current file."""
+    manifest_path = root / "config" / "layer1_manifest_v2.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        moved = next((item for item in manifest.get("moved_files", [])
+                      if item.get("old_path") == old_path and item.get("new_path") == new_path), None)
+        if moved and _sha256_file(current_path) == moved.get("new_sha256"):
+            return moved["old_sha256"]
+    return _sha256_file(current_path)
+
+
 def _constants(path: Path) -> dict[str, Any]:
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     found: dict[str, Any] = {}
@@ -78,11 +90,11 @@ def _segmenter_defaults(path: Path) -> dict[str, Any]:
 
 def compute_frozen_components(root: Path = ROOT) -> dict[str, str]:
     """Return the five manifest digests using current code/config values."""
-    rules_path = root / "layers" / "instruction_rules.py"
-    piguard_path = root / "layers" / "piguard_scorer.py"
-    judge_path = root / "layers" / "judge.py"
+    rules_path = root / "firewall" / "layer1" / "instruction_rules.py"
+    piguard_path = root / "firewall" / "layer1" / "piguard_scorer.py"
+    judge_path = root / "firewall" / "layer1" / "judge.py"
     judge_config_path = root / "config" / "judge_config.py"
-    segmenter_path = root / "layers" / "segmenter.py"
+    segmenter_path = root / "firewall" / "layer1" / "segmenter.py"
     suspicion_config_path = root / "config" / "threat_config.json"
 
     piguard_constants = _constants(piguard_path)
@@ -99,7 +111,9 @@ def compute_frozen_components(root: Path = ROOT) -> dict[str, str]:
         "model_name": judge_config["MODEL_NAME"],
     }
     segmenter_settings = {
-        "source_sha256": _sha256_file(segmenter_path),
+        "source_sha256": relocated_original_sha256(
+            root, "layers/segmenter.py", "firewall/layer1/segmenter.py", segmenter_path
+        ),
         "defaults": _segmenter_defaults(segmenter_path),
         "held_eval_settings": SEGMENTER_SETTINGS,
     }
@@ -149,7 +163,7 @@ def verify_frozen_manifest(
 
 def sentence_count(text: str) -> int:
     """Count sentences with the project segmenter so dataset constraints match runtime."""
-    from layers.segmenter import split_sentences
+    from firewall.layer1.segmenter import split_sentences
     return len(split_sentences(text))
 
 
@@ -158,7 +172,7 @@ def normalized(value: str) -> str:
 
 
 def attack_sentences(labels: dict[str, Any]) -> list[tuple[str, str]]:
-    from layers.segmenter import split_sentences
+    from firewall.layer1.segmenter import split_sentences
     values = []
     for record in labels["documents"]:
         attack = record.get("attack_text")
@@ -170,7 +184,7 @@ def attack_sentences(labels: dict[str, Any]) -> list[tuple[str, str]]:
 def duplicate_overlap_hits(labels: dict[str, Any], threshold: float = DUPLICATE_SIMILARITY_THRESHOLD) -> list[dict[str, Any]]:
     """Compare each new attack sentence with prior labeled text and prompt examples."""
     import ast
-    from layers.segmenter import split_sentences
+    from firewall.layer1.segmenter import split_sentences
 
     baseline: list[tuple[str, str]] = []
     for folder in (ROOT / "data" / "labeled", ROOT / "data" / "labeled_legit"):
@@ -184,7 +198,7 @@ def duplicate_overlap_hits(labels: dict[str, Any], threshold: float = DUPLICATE_
                             for item in prior.get("documents", []) if item.get("attack_text"))
 
     # Extract static few-shot segment examples from the frozen system prompt.
-    judge_path = ROOT / "layers" / "judge.py"
+    judge_path = ROOT / "firewall" / "layer1" / "judge.py"
     tree = ast.parse(judge_path.read_text(encoding="utf-8"), filename=str(judge_path))
     system_prompt = ""
     for node in ast.walk(tree):
@@ -232,7 +246,7 @@ def duplicate_overlap_hits(labels: dict[str, Any], threshold: float = DUPLICATE_
 
 def rule_keyword_audit(labels: dict[str, Any]) -> dict[str, Any]:
     """Count attack documents containing a literal rule keyword/pattern."""
-    from layers.instruction_rules import ACTION_VERBS, ASSISTANT_PATTERNS
+    from firewall.layer1.instruction_rules import ACTION_VERBS, ASSISTANT_PATTERNS
 
     docs = [record for record in labels["documents"] if record.get("attack_text")]
     output = []
@@ -247,7 +261,7 @@ def rule_keyword_audit(labels: dict[str, Any]) -> dict[str, Any]:
 
 def validate_hard_dataset(labels: dict[str, Any], tasks: dict[str, Any]) -> list[str]:
     """Return human-readable dataset validation errors without editing data."""
-    from layers.segmenter import split_sentences
+    from firewall.layer1.segmenter import split_sentences
 
     errors = []
     docs = labels.get("documents", [])

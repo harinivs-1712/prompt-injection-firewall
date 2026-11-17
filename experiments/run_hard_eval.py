@@ -20,7 +20,7 @@ from experiments.hard_eval_common import (
     RUN_METADATA_PATH, SCORED_PATH, verify_frozen_manifest,
 )
 from experiments.run_judge import JUDGE_OUTPUT_FIELDS, JudgeCache, _to_cache_item, cache_key
-from layers.judge import GeminiJudge, build_judge_prompt
+from firewall.layer1.judge import GeminiJudge, build_judge_prompt
 
 
 class JudgeLike(Protocol):

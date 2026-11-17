@@ -15,7 +15,7 @@ if str(ROOT) not in sys.path:
 
 from config import judge_config as cfg
 from experiments.run_judge import JUDGE_OUTPUT_FIELDS, JudgeCache, load_tasks
-from layers.judge import GeminiJudge, ModelUnavailableError
+from firewall.layer1.judge import GeminiJudge, ModelUnavailableError
 
 
 def _overlaps(start: int, end: int, span: dict[str, Any] | None) -> bool:
