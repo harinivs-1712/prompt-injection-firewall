@@ -46,3 +46,11 @@ htmlcov/
 logs/
 .env
 var/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.cache/
+*.tsbuildinfo
+frontend/vite.config.d.ts
+frontend/vite.config.js
