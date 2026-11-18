@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-The `firewall_server` package provides a lightweight, localhost-only, read-only FastAPI service that serves as the backend for the Layer 3 security review dashboard. It exposes audit statistics, session event timelines, and reviewable evidence (flagged and held content) without ever exposing write capabilities, confidential arguments, or raw uninspected inputs.
+The `firewall_server` package provides a lightweight, localhost-only FastAPI service that serves as the backend for the Layer 3 security review dashboard and human approval broker. It exposes audit statistics, session event timelines, reviewable evidence (flagged and held content), and real-time approval queues without ever storing confidential argument values, raw uninspected inputs, or writing to the authoritative audit ledger.
 
 ## 2. Architecture
 
@@ -11,37 +11,45 @@ The `firewall_server` package provides a lightweight, localhost-only, read-only 
 |     Host App      | -----> |  Firewall (L1/L2)  | -----> |    Audit SQLite     |
 |  (AI Agent Run)   |        |  (Decision Engine) |        | (Append-Only/Hash)  |
 +-------------------+        +--------------------+        +---------------------+
-          |                             |
-          v                             v
+          |                            |
+          | (ApprovalCallback)         | (OutputResult)
+          v                            v
 +-------------------+        +--------------------+
-|  ReviewRecorder   | -----> |   Review SQLite    |
-| (Host-side Helper)|        | (Opt-in Temp Store)|
+|  Approval Broker  |        |   ReviewRecorder   |
+| (In-Memory Queue) |        | (Host-side Helper) |
 +-------------------+        +--------------------+
-                                        |
-                                        v
-                             +--------------------+
-                             |  firewall_server   | <----- Dashboard UI (React)
-                             | (FastAPI Read-Only)|
-                             +--------------------+
+          |                            |
+          |                            v
+          |                  +--------------------+
+          |                  |   Review SQLite    |
+          |                  | (Opt-in Temp Store)|
+          |                  +--------------------+
+          |                            |
+          +-------------+--------------+
+                        v
+             +--------------------+
+             |  firewall_server   | <----- Dashboard UI (React)
+             | (FastAPI Service)  |
+             +--------------------+
 ```
 
-- **Host App -> Firewall -> Audit SQLite DB**: The firewall logs decisions, rule IDs, reason codes, and suspicion levels into an append-only SQLite audit log guarded by SHA-256 hash chaining. It deliberately stores NO argument values and NO content text.
+- **Host App -> Firewall -> Audit SQLite DB**: The firewall logs decisions, rule IDs, reason codes, and suspicion levels into an append-only SQLite audit log guarded by SHA-256 hash chaining. It deliberately stores NO argument values and NO content text. The server maintains strictly read-only access to this database (`?mode=ro`, `PRAGMA query_only=ON`).
 - **Host App -> ReviewRecorder -> Review SQLite DB**: The audit log stores no text by design. For human operators to review held or masked content, `ReviewRecorder` writes metadata and opt-in truncated plain text to an isolated, short-lived review database.
-- **Dashboard -> firewall_server -> Read-Only SQLite connections**: The FastAPI server opens both databases strictly read-only (`?mode=ro`, `PRAGMA query_only=ON`) and exposes JSON endpoints to the dashboard.
+- **Host App -> Broker -> Dashboard**: When the firewall encounters an ASK decision requiring human intervention, `BrokerApprovalCallback` posts the ephemeral in-memory packet to `firewall_server/broker.py`. The reviewer inspects it on the dashboard and approves/denies with cryptographic hash binding.
 
 ## 3. Security Model
 
 - **Localhost-Only by Default**: Binds to `127.0.0.1`, `localhost`, or `::1`. Remote binding requires an explicit `--allow-remote` flag, along with TLS termination and a reverse proxy.
-- **Two Token Roles**:
-  - `viewer`: Can read summary, session timelines, verified audit records, policy summaries, and review items metadata.
-  - `reviewer`: Superset of viewer; reserved for Day 13 approval actions.
-  Tokens are passed via standard HTTP Bearer headers and verified using constant-time comparison (`hmac.compare_digest`).
-- **Read-Only Database Connections**: Opened with SQLite URI `mode=ro` and `PRAGMA query_only=ON`. The API process cannot modify, insert, or delete any records.
-- **Why the Review Store is Separate**: The audit database is an immutable security ledger that must remain free of untrusted attack strings or sensitive user data. The review store is short-lived, opt-in, purgeable, and isolated.
-- **Retention & Privacy Defaults**:
-  - `FIREWALL_REVIEW_STORE_TEXT=0` by default: No content text is stored unless explicitly opted-in.
-  - `FIREWALL_REVIEW_RETENTION_HOURS=24`: Expired items are ignored upon query and purged via the purge CLI.
-  - Argument values are NEVER stored in either database.
+- **Three Token Roles**:
+  - `viewer`: Read-only access to audit summaries, session timelines, policy configs, and review items.
+  - `reviewer`: Superset of viewer; authorizes decision making (`POST /api/v1/approvals/{id}/decision`) and viewing pending approval queues.
+  - `agent`: Host-process only token used by `BrokerApprovalCallback` to create requests, poll decisions, and issue timeouts/cancels. Agent endpoints strictly reject requests carrying an `Origin` header (they cannot be called from browsers).
+  Tokens are verified using constant-time comparison (`hmac.compare_digest`).
+- **In-Memory Volatile Argument Values**: Argument values in approval packets exist ONLY in volatile server memory while pending. They are NEVER written to disk, SQLite, logs, or error responses, and are immediately wiped (`None`) upon reaching any terminal state (`approved`, `denied`, `expired`, `cancelled`).
+- **Cryptographic Request Binding**: Every approval decision requires `request_hash = SHA-256(canonical JSON(id, session_id, tool, sorted reason_codes, values_preview))`. If the hash does not match, the decision is rejected (`409 HASH_MISMATCH`) and the request stays pending.
+- **Explicit Confirmation**: Approvals require `confirm: true`. A submission of `decision: "approve"` with `confirm: false` fails with `422 Unprocessable Entity`.
+- **Fail Closed Everywhere**: Any timeout, client disconnection, server error, or queue saturation defaults to `DENIED` on the host side.
+- **Sanitized Comparison View**: `GET /api/v1/review/items/{id}/view` delivers pre-split `original_pieces` and `masked_pieces` split at merged span boundaries so frontends do not perform UTF-16 character arithmetic on emoji or astral characters.
 - **Hostile Data Scaffolding**: All external content is treated as untrusted and potentially hostile:
   - Text fields are capped at 50,000 characters.
   - Control characters (except tab and newline) are stripped.
@@ -52,11 +60,6 @@ The `firewall_server` package provides a lightweight, localhost-only, read-only 
   - `Content-Security-Policy: default-src 'none'; frame-ancestors 'none'`
   - `Referrer-Policy: no-referrer`
   - `Cross-Origin-Resource-Policy: same-origin`
-- **Rate Limiting & Anti-Brute-Force**: Over 5 authentication failures per minute per client IP triggers a `429 Too Many Requests` cooldown response.
-- **What is NOT Protected**:
-  - Root/system compromise of the hosting machine.
-  - Reverse-proxy or TLS misconfiguration if `--allow-remote` is used.
-  - In-memory approval argument values displayed to operators before approval/denial.
 
 ## 4. How to Seed the Demo Database
 
@@ -66,22 +69,31 @@ To generate a synthetic demo containing normal sessions, held outputs, masked ou
 python scripts/seed_demo_db.py --force --store-text
 ```
 
-The script runs completely offline using simulated policies and zero LLM calls.
+## 5. How to Run the Approval Flow Demo
 
-## 5. How to Run the Server
+To run an automated end-to-end demonstration where the agent executes tool calls against the firewall with `BrokerApprovalCallback` and an automated reviewer approves one action and denies another:
 
-Set minimum 24-character viewer and reviewer tokens in your environment, then start the server:
+```powershell
+python scripts/demo_approval_flow.py
+```
+
+To run in manual mode with curl instructions:
+
+```powershell
+python scripts/demo_approval_flow.py --manual
+```
+
+## 6. How to Run the Server
+
+Set minimum 24-character viewer, reviewer, and agent tokens in your environment, then start the server:
 
 ```powershell
 $env:FIREWALL_VIEWER_TOKEN = "replace-with-a-long-viewer-token-0001"
 $env:FIREWALL_REVIEWER_TOKEN = "replace-with-a-different-reviewer-token-0002"
+$env:FIREWALL_AGENT_TOKEN = "replace-with-a-different-agent-token-0003"
+$env:FIREWALL_ENABLE_BROKER = "1"
 
-python -m firewall_server --audit-db var/demo/audit.sqlite --review-db var/demo/review.sqlite --policy policies/example_agent.yaml
-```
-
-To purge expired review items:
-```powershell
-python -m firewall_server.purge --review-db var/demo/review.sqlite
+python -m firewall_server --audit-db var/demo/audit.sqlite --review-db var/demo/review.sqlite --policy policies/example_agent.yaml --enable-broker
 ```
 
 To run the smoke test against the running server:
@@ -89,7 +101,7 @@ To run the smoke test against the running server:
 python scripts/smoke_api.py
 ```
 
-## 6. Endpoints Overview
+## 7. Endpoints Overview
 
 | Endpoint | Method | Role | Description |
 |---|---|---|---|
@@ -98,18 +110,17 @@ python scripts/smoke_api.py
 | `/api/v1/sessions` | `GET` | Viewer | Paginated session metadata list |
 | `/api/v1/sessions/{session_id}` | `GET` | Viewer | Single session metadata and compact event timeline |
 | `/api/v1/sessions/{session_id}/events` | `GET` | Viewer | Filterable event stream (`event_type`, `action`, `tool`) |
-| `/api/v1/audit/verify` | `GET` | Viewer | Verifies cryptographic hash chain on audit log |
-| `/api/v1/review/items` | `GET` | Viewer | Metadata list of held/flagged items (no text) |
-| `/api/v1/review/items/{id}` | `GET` | Viewer | Review item detail (opt-in sanitized text only) |
-| `/api/v1/policy` | `GET` | Viewer | Sanitized policy rules, limits, and lint warnings |
-| `/api/v1/config` | `GET` | Viewer | Runtime configuration (judge mode, release info) |
-| `/api/v1/eval/results` | `GET` | Viewer | Day 10 offline evaluation benchmarks and gap reports |
-
-## 7. Frontend Rules
-
-Render every string from the API as plain text:
-- Always use React text nodes or standard text bindings.
-- NEVER use `dangerouslySetInnerHTML`.
-- Do NOT enable Markdown, HTML, or BBCode rendering for any fields.
-- Do NOT auto-link URLs in review items.
-- Do NOT load external images, stylesheets, or media referenced in review text.
+| `/api/v1/audit/verify` | `GET` | Viewer | Cryptographic verification of the append-only audit hash chain |
+| `/api/v1/review/items` | `GET` | Viewer | Paginated list of flagged, held, or approval metadata |
+| `/api/v1/review/items/{id}` | `GET` | Viewer | Detail of a single review item |
+| `/api/v1/review/items/{id}/view` | `GET` | Viewer | Sanitized view with pre-split original and masked pieces |
+| `/api/v1/broker/requests` | `POST` | Agent | Create in-memory approval request for an ASK decision |
+| `/api/v1/broker/requests/{id}/decision` | `GET` | Agent | Long-poll for human reviewer decision (max 20s) |
+| `/api/v1/broker/requests/{id}/cancel` | `POST` | Agent | Host-side cancel upon timeout |
+| `/api/v1/approvals` | `GET` | Reviewer | List pending or all approval requests (metadata only) |
+| `/api/v1/approvals/{id}` | `GET` | Reviewer | Review packet while pending; metadata only after terminal |
+| `/api/v1/approvals/{id}/decision` | `POST` | Reviewer | Submit human decision (`approve`/`deny`) with hash and confirm |
+| `/api/v1/approvals/stats` | `GET` | Viewer | Aggregated approval stats (median latency, outcomes, fatigue) |
+| `/api/v1/policy` | `GET` | Viewer | Active firewall policy rules, tools, and lint warnings |
+| `/api/v1/config` | `GET` | Viewer | Judge mode, release version, and startup verification state |
+| `/api/v1/eval/results` | `GET` | Viewer | Layer 2 evaluation benchmarks and gap documentation |
