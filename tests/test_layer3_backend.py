@@ -213,6 +213,17 @@ class TestAuthAndSecurity:
         })
         assert res.headers.get("access-control-allow-origin") == "http://localhost:5173"
 
+    def test_query_length_and_get_body_rejection(self, tmp_path):
+        client = _make_client(tmp_path)
+        long_query = "x=" + ("a" * 4100)
+        res_414 = client.get(f"/health?{long_query}")
+        assert res_414.status_code == 414
+        assert res_414.json()["code"] == "QUERY_TOO_LONG"
+
+        res_405 = client.request("GET", "/health", content=b"illegal-body")
+        assert res_405.status_code == 405
+        assert res_405.json()["code"] == "REQUEST_BODY_NOT_ALLOWED"
+
 
 # ==============================================================================
 # 3. Read Endpoints and Filters
@@ -469,3 +480,82 @@ class TestImportHygiene:
         modules = json.loads(res.stdout.strip().splitlines()[-1])
         forbidden = [m for m in modules if m.startswith(("fastapi", "starlette", "firewall_server"))]
         assert not forbidden, f"Forbidden modules imported by firewall: {forbidden}"
+
+    def test_server_never_creates_audit_db(self, tmp_path):
+        missing_db = tmp_path / "never_created.sqlite"
+        review_db = tmp_path / "rev.sqlite"
+        ReviewStore(review_db)
+        settings = Settings(
+            audit_db=missing_db,
+            review_db=review_db,
+            policy=ROOT / "policies" / "example_agent.yaml",
+            viewer_token=VIEWER_TOKEN,
+            reviewer_token=REVIEWER_TOKEN,
+            cors_origins=("http://localhost:5173",),
+        )
+        with pytest.raises(Exception):
+            create_app(settings)
+        assert not missing_db.exists()
+
+    def test_hostile_content_handling_full(self, tmp_path):
+        review_path = tmp_path / "hostile.sqlite"
+        review = ReviewStore(review_path, store_text=True)
+        hostile_text = "<script>alert(1)</script> [click](https://evil.example.com) \x00 " + ("A" * 1000) + " \u202eRLO"
+        item_id = review.add(session_id="s1", item_type="held_output", original_text=hostile_text)
+
+        audit_path = tmp_path / "audit.sqlite"
+        SQLiteAuditStore(audit_path).close()
+        settings = Settings(
+            audit_db=audit_path,
+            review_db=review_path,
+            policy=ROOT / "policies" / "example_agent.yaml",
+            viewer_token=VIEWER_TOKEN,
+            reviewer_token=REVIEWER_TOKEN,
+            cors_origins=("http://localhost:5173",),
+            store_text=True,
+            allowed_hosts=("localhost",),
+        )
+        client = TestClient(create_app(settings), base_url="http://localhost")
+        res = client.get(f"/api/v1/review/items/{item_id}", headers=AUTH_VIEWER)
+        assert res.status_code == 200
+        assert res.headers["content-type"].startswith("application/json")
+        assert res.headers["x-content-type-options"] == "nosniff"
+        data = res.json()
+        assert data["untrusted_content"] is True
+        assert data["render"] == "plain_text_only"
+        assert "\x00" not in data["original_text"]
+        assert "<script>alert(1)</script>" in data["original_text"]
+        assert "\u202eRLO" in data["original_text"]
+
+    def test_recorder_uses_only_public_firewall_apis(self, tmp_path):
+        class StrictPublicOnlyFirewall:
+            def get_original_output(self, session, output_id, reviewer=True):
+                return "Public output text"
+            def __getattr__(self, name):
+                if name.startswith("_"):
+                    raise AttributeError(f"Private access forbidden: {name}")
+                raise AttributeError(name)
+
+        review = ReviewStore(tmp_path / "pub_rev.sqlite", store_text=True)
+        recorder = ReviewRecorder(review)
+        mock_output = MagicMock()
+        mock_output.action = "HOLD"
+        mock_output.output_id = "out-1"
+        mock_output.max_level = "high"
+        mock_output.reason_codes = ["HELD"]
+        mock_output.segment_ids = ["s1"]
+        mock_output.level_counts = {}
+        mock_output.agent_view = "view"
+        mock_session = MagicMock()
+        mock_session.session_id = "s1"
+
+        res = recorder.record_output_result(StrictPublicOnlyFirewall(), mock_session, mock_output, "tool")
+        assert res["stored"] is True
+
+    def test_seeded_demo_databases_validity(self):
+        audit_file = ROOT / "var" / "demo" / "audit.sqlite"
+        assert audit_file.is_file()
+        store = SQLiteAuditStore(audit_file)
+        valid, detail = store.verify_chain()
+        store.close()
+        assert valid is True
