@@ -63,6 +63,12 @@ def guard_external_sockets(monkeypatch):
 
     def guarded_connect(self, address):
         host = address[0] if isinstance(address, tuple) else address
+        # Windows' Proactor event loop implements its private wake-up pipe with
+        # socket.socketpair().  Its address is bytes on some Python builds, so
+        # normalize that local-only form before applying the external-network
+        # guard used by these tests.
+        if isinstance(host, bytes):
+            host = host.decode("ascii", errors="ignore")
         if host not in ("127.0.0.1", "localhost", "::1", "testserver"):
             raise AssertionError(f"External network connection to {host} is blocked")
         return orig_connect(self, address)
@@ -253,6 +259,35 @@ class TestBrokerStateMachine:
         assert "\x01" not in cleaned["arg1"]
         assert len(cleaned["arg2"]) <= 4096
 
+    def test_background_sweeper_expires_and_wipes_values(self):
+        """Expiry is automatic; it must not wait for a later API request."""
+        fake_time = [1000.0]
+        broker = ApprovalBroker(max_pending=5, max_ttl_seconds=30.0, clock=lambda: fake_time[0])
+        request_id, _ = broker.create_request(
+            session_id="s",
+            tool="t",
+            reason_codes=["ASK"],
+            explanation="Review this action",
+            evidence_summary=[],
+            sensitivity_flags=[],
+            values_preview={"secret": "SECRET-TOKEN-0000"},
+            ttl_seconds=1.0,
+        )
+        broker.start_sweeper(interval_seconds=0.01)
+        try:
+            fake_time[0] += 2.0
+            deadline = time.monotonic() + 1.0
+            while time.monotonic() < deadline:
+                if broker.get_request_detail(request_id)["status"] == "expired":
+                    break
+                time.sleep(0.01)
+            detail = broker.get_request_detail(request_id)
+            assert detail["status"] == "expired"
+            assert "values_preview" not in detail
+            assert "explanation" not in detail
+        finally:
+            broker.stop_sweeper()
+
     def test_state_flow_approve_and_confirm(self, tmp_path):
         client = _make_client(tmp_path, enable_broker=True)
         create_res = client.post(
@@ -307,6 +342,9 @@ class TestBrokerStateMachine:
         assert after_detail["values_preview"] is None
         assert after_detail["request_hash"] is None
         assert after_detail["status"] == "approved"
+        assert after_detail["explanation"] is None
+        assert after_detail["evidence_summary"] is None
+        assert after_detail["sensitivity_flags"] is None
 
     def test_state_flow_deny_and_cancel(self, tmp_path):
         client = _make_client(tmp_path, enable_broker=True)

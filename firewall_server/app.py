@@ -72,6 +72,63 @@ class BrokerDecisionIn(BaseModel):
     confirm: bool = False
 
 
+class _StrictResponse(BaseModel):
+    """Base for broker responses exposed in the generated API schema."""
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class BrokerCreatedOut(_StrictResponse):
+    request_id: str
+    expires_at: str
+
+
+class BrokerStatusOut(_StrictResponse):
+    status: Literal["pending", "approved", "denied", "expired", "cancelled"]
+
+
+class ApprovalListItemOut(_StrictResponse):
+    id: str
+    session_id: str
+    tool: str
+    reason_codes: list[str]
+    created_at: str
+    expires_at: str
+    seconds_remaining: int
+    status: Literal["pending", "approved", "denied", "expired", "cancelled"]
+
+
+class ApprovalListOut(_StrictResponse):
+    items: list[ApprovalListItemOut]
+    total: int
+    limit: int
+    offset: int
+
+
+class ApprovalDetailOut(ApprovalListItemOut):
+    # Present only while pending. Terminal responses retain metadata only.
+    explanation: str | None = None
+    evidence_summary: list[dict[str, Any]] | None = None
+    sensitivity_flags: list[str] | None = None
+    values_preview: dict[str, str] | None = None
+    request_hash: str | None = None
+    decided_at: str | None = None
+    decided_by_role: str | None = None
+    time_to_decision_ms: int | None = None
+
+
+class ApprovalDecisionOut(_StrictResponse):
+    status: Literal["approved", "denied"]
+    request_id: str
+
+
+class ApprovalStatsOut(_StrictResponse):
+    counts_by_outcome: dict[str, int]
+    median_time_to_decision_ms: int | None
+    expired_count: int
+    total_requests: int
+
+
 def _ro(path: Path):
     db = sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True)
     db.execute("PRAGMA query_only=ON")
@@ -189,6 +246,15 @@ def create_app(
     app.state.rate_limiter = rate_limiter
     app.state.throttle = throttle
     app.state.audit_verified = _verify(settings.audit_db, settings.audit_verify_cap)["ok"]
+
+    if broker is not None:
+        @app.on_event("startup")
+        async def start_broker_expiry_sweeper() -> None:
+            broker.start_sweeper()
+
+        @app.on_event("shutdown")
+        async def stop_broker_expiry_sweeper() -> None:
+            broker.stop_sweeper()
 
     tokens = [settings.viewer_token, settings.reviewer_token]
     if settings.agent_token:
@@ -455,7 +521,7 @@ def create_app(
     # Mount Broker & Approval Routes only if broker is enabled
     if settings.enable_broker and broker is not None:
 
-        @app.post("/api/v1/broker/requests")
+        @app.post("/api/v1/broker/requests", response_model=BrokerCreatedOut)
         async def broker_create_request(request: Request, body: BrokerRequestIn, _role=Depends(require_agent)):
             ip = request.client.host if request.client else "unknown"
             rate_limiter.check(ip, "broker_create")
@@ -474,7 +540,7 @@ def create_app(
             except BrokerFullError:
                 raise HTTPException(503, {"error": "Broker queue is full.", "code": "BROKER_FULL"})
 
-        @app.get("/api/v1/broker/requests/{identifier}/decision")
+        @app.get("/api/v1/broker/requests/{identifier}/decision", response_model=BrokerStatusOut)
         async def broker_get_decision(
             identifier: str,
             wait_seconds: float = Query(0.0, ge=0.0, le=20.0),
@@ -486,7 +552,7 @@ def create_app(
             except RequestNotFoundError:
                 raise HTTPException(404, {"error": "Not found.", "code": "NOT_FOUND"})
 
-        @app.post("/api/v1/broker/requests/{identifier}/cancel")
+        @app.post("/api/v1/broker/requests/{identifier}/cancel", response_model=BrokerStatusOut)
         async def broker_cancel_request(identifier: str, _role=Depends(require_agent)):
             try:
                 status = broker.cancel_request(identifier)
@@ -494,7 +560,7 @@ def create_app(
             except RequestNotFoundError:
                 raise HTTPException(404, {"error": "Not found.", "code": "NOT_FOUND"})
 
-        @app.get("/api/v1/approvals")
+        @app.get("/api/v1/approvals", response_model=ApprovalListOut)
         def approvals_list(
             status: str = Query("pending"),
             page=Depends(_page),
@@ -506,18 +572,18 @@ def create_app(
             items, total = broker.list_requests(status=status, limit=limit, offset=offset)
             return {"items": items, "total": total, "limit": limit, "offset": offset}
 
-        @app.get("/api/v1/approvals/stats")
+        @app.get("/api/v1/approvals/stats", response_model=ApprovalStatsOut)
         def approvals_stats(_role=Depends(require_viewer)):
             return review.stats()
 
-        @app.get("/api/v1/approvals/{identifier}")
+        @app.get("/api/v1/approvals/{identifier}", response_model=ApprovalDetailOut)
         def approval_detail(identifier: str, _role=Depends(require_reviewer)):
             try:
                 return broker.get_request_detail(identifier)
             except RequestNotFoundError:
                 raise HTTPException(404, {"error": "Not found.", "code": "NOT_FOUND"})
 
-        @app.post("/api/v1/approvals/{identifier}/decision")
+        @app.post("/api/v1/approvals/{identifier}/decision", response_model=ApprovalDecisionOut)
         def approval_decision(
             identifier: str,
             body: BrokerDecisionIn,

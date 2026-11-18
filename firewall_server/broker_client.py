@@ -67,7 +67,10 @@ class BrokerApprovalCallback:
         }
 
         try:
-            with httpx.Client(timeout=self.request_timeout) as client:
+            # Never inherit proxy settings from the host environment.  A broker
+            # URL is loopback-only by default and an ambient proxy must not turn
+            # approval traffic into an external request.
+            with httpx.Client(timeout=self.request_timeout, trust_env=False) as client:
                 resp = client.post(
                     f"{self.base_url}/api/v1/broker/requests",
                     headers=headers,
@@ -107,7 +110,7 @@ class BrokerApprovalCallback:
             # Timeout elapsed without a terminal status
             if req_id:
                 try:
-                    with httpx.Client(timeout=self.request_timeout) as cancel_client:
+                    with httpx.Client(timeout=self.request_timeout, trust_env=False) as cancel_client:
                         cancel_client.post(
                             f"{self.base_url}/api/v1/broker/requests/{req_id}/cancel",
                             headers=headers,

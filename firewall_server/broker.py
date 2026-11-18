@@ -118,6 +118,44 @@ class ApprovalBroker:
         self.clock = clock
         self._lock = threading.RLock()
         self._requests: dict[str, PendingRequest] = {}
+        self._sweeper_stop = threading.Event()
+        self._sweeper_thread: threading.Thread | None = None
+
+    def start_sweeper(self, interval_seconds: float = 1.0) -> None:
+        """Start the service-owned expiry worker exactly once.
+
+        Expiration cannot depend on a later API request: the request preview is
+        sensitive and must be wiped as soon as its TTL elapses.  The worker is
+        deliberately daemonized, while ``stop_sweeper`` is called by the ASGI
+        shutdown hook for a clean server shutdown.
+        """
+        with self._lock:
+            if self._sweeper_thread and self._sweeper_thread.is_alive():
+                return
+            self._sweeper_stop.clear()
+
+            def _run() -> None:
+                while not self._sweeper_stop.wait(max(0.05, float(interval_seconds))):
+                    try:
+                        self.sweep_expired()
+                    except Exception:
+                        # A sweep must never take down the dashboard.  Individual
+                        # review-store failures are also already handled by sweep.
+                        logger.exception("Approval broker expiry sweep failed")
+
+            self._sweeper_thread = threading.Thread(
+                target=_run,
+                name="firewall-approval-expiry",
+                daemon=True,
+            )
+            self._sweeper_thread.start()
+
+    def stop_sweeper(self, timeout_seconds: float = 2.0) -> None:
+        """Stop the expiry worker without blocking server shutdown indefinitely."""
+        self._sweeper_stop.set()
+        thread = self._sweeper_thread
+        if thread and thread is not threading.current_thread():
+            thread.join(timeout=max(0.0, float(timeout_seconds)))
 
     def _now(self) -> float:
         return self.clock()
@@ -383,16 +421,14 @@ class ApprovalBroker:
                 "expires_at": req.expires_at_iso,
                 "seconds_remaining": sec_remaining,
                 "status": req.status,
-                "explanation": req.explanation,
-                "evidence_summary": list(req.evidence_summary),
-                "sensitivity_flags": list(req.sensitivity_flags),
             }
             if req.status == "pending":
+                detail["explanation"] = req.explanation
+                detail["evidence_summary"] = list(req.evidence_summary)
+                detail["sensitivity_flags"] = list(req.sensitivity_flags)
                 detail["values_preview"] = dict(req.values_preview or {})
                 detail["request_hash"] = req.request_hash
             else:
-                detail["values_preview"] = None
-                detail["request_hash"] = None
                 detail["decided_at"] = req.decided_at_iso
                 detail["decided_by_role"] = req.decided_by_role
                 detail["time_to_decision_ms"] = req.time_to_decision_ms

@@ -37,7 +37,7 @@ def auto_reviewer_worker(base_url: str, reviewer_token: str, stop_event: threadi
     decided_actions = ["approve", "deny"]
     decision_index = 0
 
-    with httpx.Client(timeout=5.0) as client:
+    with httpx.Client(timeout=5.0, trust_env=False) as client:
         while not stop_event.is_set() and decision_index < len(decided_actions):
             try:
                 res = client.get(f"{base_url}/api/v1/approvals?status=pending", headers=headers)
@@ -114,18 +114,22 @@ def main(argv=None) -> int:
 
         # Wait for server readiness
         ready = False
-        with httpx.Client(timeout=2.0) as client:
+        last_result = "no response"
+        with httpx.Client(timeout=2.0, trust_env=False) as client:
             for _ in range(50):
                 try:
                     r = client.get(f"{base_url}/health")
+                    last_result = f"HTTP {r.status_code}"
                     if r.status_code == 200:
                         ready = True
                         break
-                except Exception:
+                except Exception as exc:
+                    last_result = type(exc).__name__
                     time.sleep(0.1)
 
         if not ready:
-            print("Failed to start review server", file=sys.stderr)
+            server.should_exit = True
+            print(f"Failed to start review server ({last_result})", file=sys.stderr)
             return 1
 
         timeout_sec = 60.0 if args.manual else 10.0
