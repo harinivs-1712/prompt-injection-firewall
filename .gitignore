@@ -44,3 +44,5 @@ htmlcov/
 # Logs
 *.log
 logs/
+.env
+var/
