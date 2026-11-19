@@ -23,7 +23,7 @@ import { getToken, clearToken, resetIdleTimer } from './token';
 const DEFAULT_TIMEOUT_MS = 10_000;
 const MAX_BODY_BYTES = 5 * 1024 * 1024; // 5 MB
 
-let apiBaseUrl = 'http://127.0.0.1:8000';
+let apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
 
 export function setApiBaseUrl(url: string): void {
   // Validate base URL
@@ -52,9 +52,7 @@ function validateHost(hostname: string): void {
     import.meta.env.VITE_ALLOW_REMOTE_API === '1';
 
   if (!allowRemote && !isLoopbackHost(hostname)) {
-    throw new Error(
-      `Security violation: Refusing to connect to non-loopback host '${hostname}'. Only 127.0.0.1 or localhost is permitted.`
-    );
+    throw new Error('A non-loopback API URL is not permitted.');
   }
 }
 
@@ -74,12 +72,12 @@ export class ApiError extends Error {
 
 function validateShape<T extends object>(data: unknown, requiredKeys: (keyof T)[], context: string): T {
   if (!data || typeof data !== 'object' || Array.isArray(data)) {
-    throw new ApiError(`Malformed API response for ${context}: expected JSON object.`, 502, 'INVALID_SHAPE');
+    throw new ApiError(`Invalid ${context} response.`, 502, 'INVALID_SHAPE');
   }
   for (const key of requiredKeys) {
     if (!(String(key) in data)) {
       throw new ApiError(
-        `Malformed API response for ${context}: missing expected field '${String(key)}'.`,
+        `Invalid ${context} response.`,
         502,
         'INVALID_SHAPE'
       );
@@ -130,13 +128,9 @@ async function request<T>(
     });
   } catch (err: unknown) {
     if (err instanceof Error && err.name === 'AbortError') {
-      throw new ApiError(`Request to '${path}' timed out after ${timeoutMs}ms.`, 504, 'TIMEOUT');
+      throw new ApiError('Request timed out.', 504, 'TIMEOUT');
     }
-    throw new ApiError(
-      `Network error contacting server: ${err instanceof Error ? err.message : String(err)}`,
-      503,
-      'NETWORK_ERROR'
-    );
+    throw new ApiError('Cannot reach the server.', 503, 'NETWORK_ERROR');
   } finally {
     clearTimeout(timer);
   }
@@ -161,6 +155,10 @@ async function request<T>(
       'RESPONSE_TOO_LARGE',
       requestId
     );
+  }
+
+  if (!(response.headers.get('content-type') || '').toLowerCase().startsWith('application/json')) {
+    throw new ApiError('Server returned an invalid response.', 502, 'INVALID_CONTENT_TYPE', requestId);
   }
 
   // Read response text and check size
@@ -212,7 +210,7 @@ export const api = {
   },
 
   async getSession(sessionId: string): Promise<SessionDetailResponse> {
-    if (!sessionId || typeof sessionId !== 'string') {
+    if (!sessionId || typeof sessionId !== 'string' || !/^[A-Za-z0-9_-]{1,64}$/.test(sessionId)) {
       throw new ApiError('Invalid session ID parameter.', 400, 'BAD_PARAM');
     }
     const safeId = encodeURIComponent(sessionId.trim());
@@ -230,11 +228,16 @@ export const api = {
       offset?: number;
     }
   ): Promise<SessionEventsResponse> {
-    if (!sessionId || typeof sessionId !== 'string') {
+    if (!sessionId || typeof sessionId !== 'string' || !/^[A-Za-z0-9_-]{1,64}$/.test(sessionId)) {
       throw new ApiError('Invalid session ID parameter.', 400, 'BAD_PARAM');
     }
     const safeId = encodeURIComponent(sessionId.trim());
     const searchParams = new URLSearchParams();
+    const validEvents = new Set(['session_started', 'tool_check', 'tool_authorized', 'approval_requested', 'approval_outcome', 'output_inspected', 'tool_output_inspection', 'loop_guard_triggered', 'session_halted', 'session_resumed', 'audit_event_rejected']);
+    const validActions = new Set(['allow', 'ask', 'block', 'denied', 'pass', 'mask', 'hold', 'ALLOW', 'BLOCK', 'DENIED', 'PASS', 'MASK', 'HOLD']);
+    if (params?.event_type && !validEvents.has(params.event_type)) throw new ApiError('Invalid request parameters.', 400, 'BAD_PARAM');
+    if (params?.action && !validActions.has(params.action)) throw new ApiError('Invalid request parameters.', 400, 'BAD_PARAM');
+    if (params?.tool && !/^[A-Za-z0-9_.-]{1,64}$/.test(params.tool)) throw new ApiError('Invalid request parameters.', 400, 'BAD_PARAM');
     if (params?.event_type) searchParams.set('event_type', params.event_type);
     if (params?.action) searchParams.set('action', params.action);
     if (params?.tool) searchParams.set('tool', params.tool);

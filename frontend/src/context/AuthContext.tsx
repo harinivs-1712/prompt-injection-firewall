@@ -40,8 +40,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsAuthenticated(true);
     } catch (err: unknown) {
       clearToken();
-      const message = err instanceof Error ? err.message : 'Connection failed.';
-      setLoginError(message);
+      setLoginError(err instanceof Error && err.name === 'ApiError' && (err as { status?: number }).status === 401
+        ? 'Unable to sign in.' : 'Cannot reach the server.');
       setIsAuthenticated(false);
     } finally {
       setLoginPending(false);

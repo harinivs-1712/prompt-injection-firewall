@@ -22,7 +22,7 @@ export function Login() {
         <h1 id="login-heading" className="login-card__title">
           Firewall Dashboard
         </h1>
-        <p className="login-card__subtitle">Enter your reviewer token to connect.</p>
+        <p className="login-card__subtitle">Enter your viewer token to connect.</p>
 
         {loginError && <ErrorBanner message={loginError} />}
 

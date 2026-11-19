@@ -33,7 +33,7 @@ export function SessionsList() {
       })
       .catch((err: unknown) => {
         if (!cancelled) {
-          setError(err instanceof ApiError ? err.message : 'Failed to load sessions.');
+          setError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
           setLoading(false);
         }
       });
@@ -48,7 +48,7 @@ export function SessionsList() {
       setTotal(data.total);
       setOffset((prev) => prev + data.items.length);
     } catch (err: unknown) {
-      setError(err instanceof ApiError ? err.message : 'Failed to load more sessions.');
+      setError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
     } finally {
       setLoadingMore(false);
     }

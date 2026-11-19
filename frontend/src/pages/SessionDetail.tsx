@@ -53,7 +53,7 @@ export function SessionDetail() {
       })
       .catch((err: unknown) => {
         if (!cancelled) {
-          setError(err instanceof ApiError ? err.message : 'Failed to load session.');
+          setError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
           setLoading(false);
         }
       });
@@ -75,7 +75,7 @@ export function SessionDetail() {
         setEventsTotal(data.total);
         setEventsOffset(offset + data.items.length);
       } catch (err: unknown) {
-        setEventsError(err instanceof ApiError ? err.message : 'Failed to load events.');
+        setEventsError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
       } finally {
         setEventsLoading(false);
       }
@@ -222,7 +222,7 @@ function EventCard({ event }: { event: AuditEventItem }) {
 
   return (
     <article
-      className={`event-card event-card--${event.event_type.replace(/_/g, '-')}`}
+      className="event-card"
       role="listitem"
       aria-label={`Event ${event.event_type} at ${event.ts}`}
     >
@@ -253,7 +253,7 @@ function EventCard({ event }: { event: AuditEventItem }) {
       {isUnknownType && (
         <details className="event-card__raw">
           <summary>Raw event data</summary>
-          <pre>{JSON.stringify(event, null, 2)}</pre>
+          <pre><SafeText value={event} truncate={false} /></pre>
         </details>
       )}
     </article>
