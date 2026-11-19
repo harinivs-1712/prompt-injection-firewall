@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react';
-import { REASON_CODE_METADATA, REASON_CODE_CATEGORIES, getReasonCodeMeta } from '../data/reasonCodeDescriptions';
+import {
+  REASON_CODE_METADATA,
+  REASON_CODE_CATEGORIES,
+  getReasonCodeMeta,
+} from '../data/reasonCodeDescriptions';
 import reasonCodes from '../data/reason_codes.generated.json';
 import { ActionBadge } from '../components/ActionBadge';
 
@@ -15,7 +19,6 @@ export function Glossary() {
   const [categoryFilter, setCategoryFilter] = useState('');
 
   const allCodes: string[] = useMemo(() => {
-    // Ensure generated codes list is exhaustive
     const known = new Set(reasonCodes as string[]);
     const fromMetadata = new Set(Object.keys(REASON_CODE_METADATA));
     const union = new Set([...known, ...fromMetadata]);
@@ -27,7 +30,8 @@ export function Glossary() {
     return allCodes
       .map((code) => getReasonCodeMeta(code))
       .filter((meta) => {
-        const matchesSearch = !q ||
+        const matchesSearch =
+          !q ||
           meta.code.toLowerCase().includes(q) ||
           meta.plainDescription.toLowerCase().includes(q) ||
           meta.category.toLowerCase().includes(q);
@@ -38,47 +42,81 @@ export function Glossary() {
 
   return (
     <main className="glossary-page" aria-labelledby="glossary-heading">
-      <h1 id="glossary-heading">Reason Code Glossary</h1>
-      <p className="glossary-page__count">{allCodes.length} codes defined</p>
-
-      <div className="glossary-controls" role="search" aria-label="Filter reason codes">
-        <input
-          type="search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search codes or descriptions…"
-          aria-label="Search reason codes"
-          className="glossary-controls__search"
-        />
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-          aria-label="Filter by category"
-          className="glossary-controls__category"
-        >
-          <option value="">All categories</option>
-          {REASON_CODE_CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
+      <div className="page-header">
+        <div>
+          <h1 id="glossary-heading" className="page-title">
+            Reason Code Glossary
+          </h1>
+          <p className="page-subtitle">
+            Comprehensive reference of all 49 firewall decision codes and mitigation semantics
+          </p>
+        </div>
+        <div className="page-header__badge">
+          <span>{filtered.length} of {allCodes.length} codes</span>
+        </div>
       </div>
 
-      {filtered.length === 0 && (
-        <p className="empty-state">No matching reason codes.</p>
-      )}
+      <div className="glossary-controls" role="search" aria-label="Filter reason codes">
+        <div className="glossary-search-wrap">
+          <span className="search-icon" aria-hidden="true">🔎</span>
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search code name, category, or description…"
+            aria-label="Search reason codes"
+            className="glossary-controls__search"
+          />
+        </div>
 
-      <dl className="glossary-list">
-        {filtered.map((meta) => (
-          <div key={meta.code} className="glossary-item" id={`code-${meta.code}`}>
-            <dt className="glossary-item__term">
-              <code className="glossary-item__code">{meta.code}</code>
-              <span className="glossary-item__category">{meta.category}</span>
-              <ActionBadge action={ACTION_LABEL_MAP[meta.typicalAction] ?? meta.typicalAction.toLowerCase()} className="glossary-item__action" />
-            </dt>
-            <dd className="glossary-item__desc">{meta.plainDescription}</dd>
-          </div>
-        ))}
-      </dl>
+        <div className="glossary-category-wrap">
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            aria-label="Filter by category"
+            className="glossary-controls__category"
+          >
+            <option value="">All Categories ({REASON_CODE_CATEGORIES.length})</option>
+            {REASON_CODE_CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="empty-state-box">
+          <span className="empty-icon" aria-hidden="true">🔍</span>
+          <p className="empty-state">No matching reason codes found for "{search}".</p>
+        </div>
+      ) : (
+        <div className="glossary-grid" role="list">
+          {filtered.map((meta) => (
+            <article
+              key={meta.code}
+              className={`glossary-card glossary-card--${meta.typicalAction.toLowerCase()}`}
+              id={`code-${meta.code}`}
+              role="listitem"
+            >
+              <div className="glossary-card__header">
+                <code className="glossary-card__code">{meta.code}</code>
+                <ActionBadge
+                  action={
+                    ACTION_LABEL_MAP[meta.typicalAction] ?? meta.typicalAction.toLowerCase()
+                  }
+                  className="glossary-card__action"
+                />
+              </div>
+              <div className="glossary-card__category-wrap">
+                <span className="glossary-card__category">{meta.category}</span>
+              </div>
+              <p className="glossary-card__desc">{meta.plainDescription}</p>
+            </article>
+          ))}
+        </div>
+      )}
     </main>
   );
 }

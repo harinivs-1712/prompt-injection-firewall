@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api, ApiError } from '../api/client';
-import type { SessionDetailResponse, AuditEventItem, SessionEventsResponse, SecurityTraceResponse } from '../api/types';
+import type { SessionDetailResponse, AuditEventItem, SessionEventsResponse } from '../api/types';
 import { IdText } from '../components/IdText';
 import { SafeText } from '../components/SafeText';
 import { ActionBadge } from '../components/ActionBadge';
@@ -10,13 +10,32 @@ import { ErrorBanner } from '../components/ErrorBanner';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 
 const SAFE_EVENT_TYPES = [
-  'session_started', 'tool_check', 'tool_authorized', 'approval_requested',
-  'approval_outcome', 'output_inspected', 'tool_output_inspection',
-  'loop_guard_triggered', 'session_halted', 'session_resumed', 'audit_event_rejected',
+  'session_started',
+  'tool_check',
+  'tool_authorized',
+  'approval_requested',
+  'approval_outcome',
+  'output_inspected',
+  'tool_output_inspection',
+  'loop_guard_triggered',
+  'session_halted',
+  'session_resumed',
+  'audit_event_rejected',
 ];
 const SAFE_ACTIONS = [
-  'allow', 'ask', 'block', 'denied', 'pass', 'mask', 'hold',
-  'ALLOW', 'BLOCK', 'DENIED', 'PASS', 'MASK', 'HOLD',
+  'allow',
+  'ask',
+  'block',
+  'denied',
+  'pass',
+  'mask',
+  'hold',
+  'ALLOW',
+  'BLOCK',
+  'DENIED',
+  'PASS',
+  'MASK',
+  'HOLD',
 ];
 
 const PAGE_SIZE = 50;
@@ -38,7 +57,6 @@ export function SessionDetail() {
   const [eventsOffset, setEventsOffset] = useState(0);
   const [eventsLoading, setEventsLoading] = useState(false);
   const [eventsError, setEventsError] = useState<string | null>(null);
-  const [trace, setTrace] = useState<SecurityTraceResponse | null>(null);
 
   useEffect(() => {
     if (!sessionId) return;
@@ -49,17 +67,22 @@ export function SessionDetail() {
       .then((data) => {
         if (!cancelled) {
           setDetail(data);
-          api.getSecurityTrace(sessionId).then(setTrace).catch(() => setTrace(null));
           setLoading(false);
         }
       })
       .catch((err: unknown) => {
         if (!cancelled) {
-          setError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
+          setError(
+            err instanceof ApiError && err.status === 401
+              ? 'Please sign in.'
+              : 'Failed to load session.'
+          );
           setLoading(false);
         }
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [sessionId]);
 
   const loadEvents = useCallback(
@@ -73,11 +96,15 @@ export function SessionDetail() {
         if (action) params.action = action;
         if (tool) params.tool = tool;
         const data: SessionEventsResponse = await api.getSessionEvents(sessionId, params);
-        setEvents((prev) => replace ? data.items : [...prev, ...data.items]);
+        setEvents((prev) => (replace ? data.items : [...prev, ...data.items]));
         setEventsTotal(data.total);
         setEventsOffset(offset + data.items.length);
       } catch (err: unknown) {
-        setEventsError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
+        setEventsError(
+          err instanceof ApiError && err.status === 401
+            ? 'Please sign in.'
+            : 'Failed to load events.'
+        );
       } finally {
         setEventsLoading(false);
       }
@@ -92,7 +119,7 @@ export function SessionDetail() {
       setEventsOffset(0);
       loadEvents(filterEventType, filterAction, filterTool, 0, true);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detail]);
 
   const handleFilterApply = () => {
@@ -105,7 +132,7 @@ export function SessionDetail() {
     loadEvents(filterEventType, filterAction, filterTool, eventsOffset, false);
   };
 
-  if (loading) return <LoadingSpinner label="Loading session…" />;
+  if (loading) return <LoadingSpinner label="Loading session telemetry…" />;
   if (error) return <ErrorBanner message={error} />;
   if (!detail) return null;
 
@@ -114,87 +141,143 @@ export function SessionDetail() {
   return (
     <main className="session-detail-page" aria-labelledby="session-detail-heading">
       <nav className="breadcrumb" aria-label="Breadcrumb">
-        <Link to="/sessions">← Sessions</Link>
+        <Link to="/sessions" className="breadcrumb__link">
+          <span aria-hidden="true">←</span> Back to Sessions
+        </Link>
       </nav>
 
-      <h1 id="session-detail-heading">
-        Session <IdText id={session.session_id} maxLen={30} />
-      </h1>
+      <div className="page-header">
+        <div>
+          <h1 id="session-detail-heading" className="page-title">
+            Session <IdText id={session.session_id} maxLen={28} />
+          </h1>
+          <p className="page-subtitle">
+            Timeline of monitored actions, tool calls, and firewall verdicts
+          </p>
+        </div>
+        <div className="page-header__badge">
+          <span>{detail.event_count} total events</span>
+        </div>
+      </div>
 
-      <section className="session-meta" aria-label="Session metadata">
-        <dl className="meta-list">
-          <dt>Agent</dt>
-          <dd><SafeText value={session.agent_name} /></dd>
-          <dt>Policy</dt>
-          <dd><SafeText value={session.policy_version} /></dd>
-          <dt>Started At</dt>
-          <dd>
-            <time dateTime={session.started_at} title={session.started_at}>
-              {session.started_at ? new Date(session.started_at).toLocaleString() : '—'}
-            </time>
-          </dd>
-          <dt>Task Length</dt>
-          <dd>{session.user_task_length ?? '—'}</dd>
-          <dt>Total Events</dt>
-          <dd>{detail.event_count}</dd>
-        </dl>
+      <section className="session-meta-panel" aria-label="Session metadata">
+        <div className="meta-grid">
+          <div className="meta-item">
+            <span className="meta-label">Agent Harness</span>
+            <span className="meta-value">
+              <SafeText value={session.agent_name} />
+            </span>
+          </div>
+
+          <div className="meta-item">
+            <span className="meta-label">Policy Specification</span>
+            <span className="meta-value">
+              <SafeText value={session.policy_version} />
+            </span>
+          </div>
+
+          <div className="meta-item">
+            <span className="meta-label">Execution Started</span>
+            <span className="meta-value">
+              <time dateTime={session.started_at} title={session.started_at}>
+                {session.started_at
+                  ? new Date(session.started_at).toLocaleString(undefined, {
+                      dateStyle: 'medium',
+                      timeStyle: 'medium',
+                    })
+                  : '—'}
+              </time>
+            </span>
+          </div>
+
+          <div className="meta-item">
+            <span className="meta-label">User Task Length</span>
+            <span className="meta-value">
+              {session.user_task_length != null ? `${session.user_task_length} characters` : '—'}
+            </span>
+          </div>
+        </div>
       </section>
 
-      <SecurityTrace trace={trace} />
-
       <section className="events-section" aria-label="Events">
-        <h2>Events</h2>
+        <div className="events-header">
+          <div>
+            <h2 className="events-title">Audit Event Stream</h2>
+            <p className="events-subtitle">Sequential record of evaluated tool interactions</p>
+          </div>
+        </div>
 
         <div className="event-filters" role="search" aria-label="Filter events">
-          <select
-            value={filterEventType}
-            onChange={(e) => setFilterEventType(e.target.value)}
-            aria-label="Filter by event type"
-          >
-            <option value="">All event types</option>
-            {SAFE_EVENT_TYPES.map((et) => (
-              <option key={et} value={et}>{et}</option>
-            ))}
-          </select>
+          <div className="filter-field">
+            <label htmlFor="filter-event-type" className="filter-label">Event Type</label>
+            <select
+              id="filter-event-type"
+              value={filterEventType}
+              onChange={(e) => setFilterEventType(e.target.value)}
+              aria-label="Filter by event type"
+              className="filter-select"
+            >
+              <option value="">All Event Types</option>
+              {SAFE_EVENT_TYPES.map((et) => (
+                <option key={et} value={et}>
+                  {et}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <select
-            value={filterAction}
-            onChange={(e) => setFilterAction(e.target.value)}
-            aria-label="Filter by action"
-          >
-            <option value="">All actions</option>
-            {[...new Set(SAFE_ACTIONS.map(a => a.toLowerCase()))].map((a) => (
-              <option key={a} value={a}>{a.toUpperCase()}</option>
-            ))}
-          </select>
+          <div className="filter-field">
+            <label htmlFor="filter-action" className="filter-label">Action Outcome</label>
+            <select
+              id="filter-action"
+              value={filterAction}
+              onChange={(e) => setFilterAction(e.target.value)}
+              aria-label="Filter by action"
+              className="filter-select"
+            >
+              <option value="">All Actions</option>
+              {[...new Set(SAFE_ACTIONS.map((a) => a.toLowerCase()))].map((a) => (
+                <option key={a} value={a}>
+                  {a.toUpperCase()}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <input
-            type="text"
-            value={filterTool}
-            onChange={(e) => setFilterTool(e.target.value.slice(0, 200))}
-            placeholder="Filter by tool name"
-            aria-label="Filter by tool name"
-            className="event-filters__tool-input"
-          />
+          <div className="filter-field filter-field--grow">
+            <label htmlFor="filter-tool" className="filter-label">Tool Name</label>
+            <input
+              id="filter-tool"
+              type="text"
+              value={filterTool}
+              onChange={(e) => setFilterTool(e.target.value.slice(0, 200))}
+              placeholder="e.g. send_email, bash, sql"
+              aria-label="Filter by tool name"
+              className="event-filters__tool-input"
+            />
+          </div>
 
           <button
             onClick={handleFilterApply}
             className="event-filters__apply"
             disabled={eventsLoading}
           >
-            Apply
+            Filter
           </button>
         </div>
 
         {eventsError && <ErrorBanner message={eventsError} onDismiss={() => setEventsError(null)} />}
-        {eventsLoading && events.length === 0 && <LoadingSpinner label="Loading events…" />}
+        {eventsLoading && events.length === 0 && <LoadingSpinner label="Querying event log…" />}
 
         <div className="timeline" role="list" aria-label="Event timeline">
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
+          {events.map((event, idx) => (
+            <EventCard key={event.id} event={event} index={idx + 1} />
           ))}
           {events.length === 0 && !eventsLoading && (
-            <p className="empty-state">No events match the current filters.</p>
+            <div className="empty-state-box">
+              <span className="empty-icon" aria-hidden="true">🔍</span>
+              <p className="empty-state">No audit events match the current filter criteria.</p>
+            </div>
           )}
         </div>
 
@@ -206,9 +289,14 @@ export function SessionDetail() {
               disabled={eventsLoading}
               aria-busy={eventsLoading}
             >
-              {eventsLoading
-                ? <LoadingSpinner label="Loading…" />
-                : `Load more events (${eventsTotal - events.length} remaining)`}
+              {eventsLoading ? (
+                <LoadingSpinner label="Fetching events…" />
+              ) : (
+                <>
+                  <span>Load More Events</span>
+                  <span className="load-more-count">({eventsTotal - events.length} remaining)</span>
+                </>
+              )}
             </button>
           </div>
         )}
@@ -217,77 +305,77 @@ export function SessionDetail() {
   );
 }
 
-function SecurityTrace({ trace }: { trace: SecurityTraceResponse | null }) {
-  return <section className="security-trace" aria-label="Security scan trace">
-    <div className="security-trace__heading"><div><p className="eyebrow">Layer 1 + Layer 2</p><h2>Security trace</h2></div><p>Content analysis and the resulting tool decisions.</p></div>
-    {!trace && <p className="empty-state">No Layer 1 scan record is available for this session.</p>}
-    {trace?.scans.map((scan, index) => <article key={scan.id} className="scan-card">
-      <header className="scan-card__header"><div><p className="eyebrow">Source {index + 1}</p><h3><SafeText value={`${scan.source_type} · ${scan.doc_id}`} /></h3></div><div className="scan-card__metrics"><span>{scan.segment_count} segments</span><span>{scan.judge_calls_made} Gemini checks</span><span>{Math.round(scan.coverage_fraction * 100)}% coverage</span></div></header>
-      {trace.text_stored && scan.original_text !== null ? <details className="source-text"><summary>View received text{scan.text_truncated ? ' (truncated)' : ''}</summary><SafeText value={scan.original_text} /></details> : <p className="storage-notice">Original text was not retained. Detector metadata remains available.</p>}
-      <div className="table-wrapper"><table className="security-table"><thead><tr><th>Segment</th><th>Segment text</th><th>Rule detector</th><th>PIGuard</th><th>Gemini judge</th><th>Final level</th></tr></thead><tbody>
-        {scan.segments.map((segment) => <tr key={segment.segment_id}>
-          <td><IdText id={segment.segment_id} /></td>
-          <td className="security-table__text">{scan.original_text !== null ? <SafeText value={scan.original_text.slice(segment.start, segment.end)} /> : <span className="muted">Text not retained</span>}</td>
-          <td><DetectorCell flagged={segment.instruction_detected} detail={segment.instruction_reasons.join(', ')} yes="Instruction found" no="No instruction" /></td>
-          <td><DetectorCell flagged={Boolean(segment.piguard_flag)} detail={segment.piguard_score === null ? 'Not available' : `${segment.piguard_label ?? 'unknown'} · ${segment.piguard_score.toFixed(3)}`} yes="Injection signal" no="No injection signal" /></td>
-          <td><DetectorCell flagged={Boolean(segment.judge_flag)} detail={!segment.judge_ran ? 'Not sent to Gemini' : segment.judge_reason ?? 'No explanation'} yes="Flagged" no={segment.judge_ran ? 'Not flagged' : 'Not judged'} /></td>
-          <td><span className={`level-chip level-chip--${segment.suspicion_level}`}><SafeText value={segment.suspicion_level.replace('_', ' ')} /></span></td>
-        </tr>)}
-      </tbody></table></div>
-    </article>)}
-    {trace && <article className="tool-trace"><header><p className="eyebrow">Layer 2</p><h3>Tool decisions</h3></header><div className="table-wrapper"><table className="security-table"><thead><tr><th>Time</th><th>Tool</th><th>Decision</th><th>Reason codes</th><th>Influencing segments</th></tr></thead><tbody>
-      {trace.tool_decisions.length === 0 ? <tr><td colSpan={5} className="muted">No protected tool calls have been recorded.</td></tr> : trace.tool_decisions.map((event) => <tr key={event.id}><td><time title={event.ts}>{new Date(event.ts).toLocaleTimeString()}</time></td><td><SafeText value={event.tool} /></td><td><ActionBadge action={event.action ?? 'unknown'} /></td><td>{event.reason_codes.map((code) => <ReasonCodeBadge key={code} code={code} />)}</td><td><SafeText value={(event.evidence as Array<{ segment_id?: string }>).map((x) => x.segment_id).filter(Boolean).join(', ') || '—'} /></td></tr>)}
-    </tbody></table></div></article>}
-  </section>;
-}
-
-function DetectorCell({ flagged, detail, yes, no }: { flagged: boolean; detail: string; yes: string; no: string }) {
-  return <div className="detector-cell"><span className={flagged ? 'status-dot status-dot--alert' : 'status-dot status-dot--clear'}>{flagged ? yes : no}</span><SafeText value={detail || '—'} /></div>;
-}
-
-function EventCard({ event }: { event: AuditEventItem }) {
+function EventCard({ event, index }: { event: AuditEventItem; index: number }) {
   const isUnknownType = ![
-    'session_started', 'tool_check', 'tool_authorized', 'approval_requested',
-    'approval_outcome', 'output_inspected', 'tool_output_inspection',
-    'loop_guard_triggered', 'session_halted', 'session_resumed', 'audit_event_rejected',
+    'session_started',
+    'tool_check',
+    'tool_authorized',
+    'approval_requested',
+    'approval_outcome',
+    'output_inspected',
+    'tool_output_inspection',
+    'loop_guard_triggered',
+    'session_halted',
+    'session_resumed',
+    'audit_event_rejected',
   ].includes(event.event_type);
 
   return (
     <article
-      className="event-card"
+      className={`event-card event-card--${event.event_type.replace(/_/g, '-')}`}
       role="listitem"
       aria-label={`Event ${event.event_type} at ${event.ts}`}
     >
-      <div className="event-card__header">
-        <span className="event-card__type">
-          <SafeText value={event.event_type} truncate={false} />
-        </span>
-        <time className="event-card__ts" dateTime={event.ts} title={event.ts}>
-          {event.ts ? new Date(event.ts).toLocaleString() : '—'}
-        </time>
-        {event.action && <ActionBadge action={event.action} />}
+      <div className="event-card__node" aria-hidden="true">
+        <span className="event-card__index">{index}</span>
       </div>
 
-      {event.tool && (
-        <div className="event-card__tool">
-          Tool: <SafeText value={event.tool} truncate={false} />
+      <div className="event-card__body">
+        <div className="event-card__header">
+          <div className="event-card__type-wrap">
+            <span className="event-card__type">
+              <SafeText value={event.event_type} truncate={false} />
+            </span>
+            {event.action && <ActionBadge action={event.action} />}
+          </div>
+          <time className="event-card__ts" dateTime={event.ts} title={event.ts}>
+            {event.ts ? new Date(event.ts).toLocaleTimeString() : '—'}
+          </time>
         </div>
-      )}
 
-      {event.reason_codes && event.reason_codes.length > 0 && (
-        <div className="event-card__reasons" aria-label="Reason codes">
-          {event.reason_codes.map((code) => (
-            <ReasonCodeBadge key={code} code={code} />
-          ))}
-        </div>
-      )}
+        {event.tool && (
+          <div className="event-card__tool">
+            <span className="tool-label">TOOL:</span>
+            <code className="tool-name">
+              <SafeText value={event.tool} truncate={false} />
+            </code>
+          </div>
+        )}
 
-      {isUnknownType && (
-        <details className="event-card__raw">
-          <summary>Raw event data</summary>
-          <pre><SafeText value={event} truncate={false} /></pre>
-        </details>
-      )}
+        {event.reason_codes && event.reason_codes.length > 0 && (
+          <div className="event-card__reasons" aria-label="Reason codes">
+            {event.reason_codes.map((code) => (
+              <ReasonCodeBadge key={code} code={code} />
+            ))}
+          </div>
+        )}
+
+        {event.evidence && event.evidence.length > 0 && (
+          <div className="event-card__evidence">
+            <span className="evidence-label">EVIDENCE:</span>
+            <span className="evidence-content">
+              <SafeText value={event.evidence} />
+            </span>
+          </div>
+        )}
+
+        {isUnknownType && (
+          <details className="event-card__raw">
+            <summary>Raw Audit Payload</summary>
+            <pre>{JSON.stringify(event, null, 2)}</pre>
+          </details>
+        )}
+      </div>
     </article>
   );
 }
