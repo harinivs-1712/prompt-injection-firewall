@@ -127,4 +127,19 @@ describe('Source code security audit', () => {
     }
     expect(violations, `Found outerHTML= in: ${violations.join(', ')}`).toHaveLength(0);
   });
+
+  it('does not use prohibited browser sinks or persistent token storage', () => {
+    const violations: string[] = [];
+    const prohibited = [
+      /\.insertAdjacentHTML\s*\(/, /\bdocument\.cookie\b/, /\bindexedDB\b/,
+      /\bwindow\.open\s*\(/, /\bpostMessage\s*\(/,
+      /<(?:iframe|img|script|object|embed)\b/i,
+      /\bset(?:Timeout|Interval)\s*\(\s*['"`]/,
+    ];
+    for (const file of SOURCE_FILES) {
+      const src = stripComments(readFileSync(file, 'utf-8'));
+      if (prohibited.some((pattern) => pattern.test(src))) violations.push(file.replace(SRC_DIR, ''));
+    }
+    expect(violations, `Found prohibited browser sink in: ${violations.join(', ')}`).toHaveLength(0);
+  });
 });

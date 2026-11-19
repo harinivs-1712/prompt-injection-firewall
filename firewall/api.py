@@ -34,7 +34,7 @@ class Firewall:
     def __init__(self, policy: Policy | Mapping[str, Any] | str | Path, scanner: Scanner | None = None,
                  approval_callback: ApprovalCallback | None = None, audit_sink: AuditSink | None = None,
                  linking_enabled: bool = True, task_fit_checker: TaskFitChecker | None = None,
-                 on_halt=None) -> None:
+                 on_halt=None, scan_recorder=None) -> None:
         if isinstance(policy, Policy):
             self.policy = policy
         elif isinstance(policy, (str, Path)):
@@ -49,6 +49,7 @@ class Firewall:
         self.linking_enabled = linking_enabled
         self.task_fit_checker = task_fit_checker
         self.on_halt = on_halt
+        self.scan_recorder = scan_recorder
 
     def start_session(self, user_task: str, allowed_tools=None) -> Session:
         if not isinstance(user_task, str):
@@ -93,6 +94,14 @@ class Firewall:
                 raise ValueError
             self._store_segments(session, result, tool_name=None, output_id=None, unit_path=None)
             session.judge_calls_used += result.judge_calls_made
+            if self.scan_recorder is not None:
+                try:
+                    self.scan_recorder.record_scan(session=session, content=content, source_type=source_type,
+                                                   doc_id=doc_id, outcome=result)
+                except Exception:
+                    # Review display storage is best effort and must never make a
+                    # completed security scan look safe or unsafe.
+                    pass
             return result
         except Exception:
             raise ScannerUnavailable("Content scan failed; the content was not cleared for the agent.") from None
@@ -311,10 +320,15 @@ class Firewall:
                     if record.end > len(unit_text) or unit_text[record.start:record.end] != record.text:
                         raise ValueError("scanner offsets do not match input")
                 absolute_records = tuple(SegmentRecord(
-                    record.segment_id, record.doc_id, record.source_type,
-                    record.start + local_base, record.end + local_base, record.text,
-                    record.suspicion_level, record.judge_ran, record.coverage_reason,
-                    record.rules_flag, record.piguard_flag,
+                    segment_id=record.segment_id, doc_id=record.doc_id, source_type=record.source_type,
+                    start=record.start + local_base, end=record.end + local_base, text=record.text,
+                    suspicion_level=record.suspicion_level, judge_ran=record.judge_ran,
+                    coverage_reason=record.coverage_reason, rules_flag=record.rules_flag,
+                    piguard_flag=record.piguard_flag, instruction_reasons=record.instruction_reasons,
+                    piguard_label=record.piguard_label, piguard_score=record.piguard_score,
+                    judge_is_instruction=record.judge_is_instruction,
+                    judge_needed_for_task=record.judge_needed_for_task, judge_flag=record.judge_flag,
+                    judge_reason=record.judge_reason,
                 ) for record in outcome.segments)
                 stored_outcome = ScanOutcome(absolute_records, outcome.judge_calls_made, outcome.coverage_fraction)
                 self._store_segments(session, stored_outcome, tool_name=tool_name, output_id=output_id,

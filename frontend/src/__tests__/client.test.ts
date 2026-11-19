@@ -102,5 +102,21 @@ describe('API client security', () => {
       expect((options as RequestInit).cache).toBe('no-store');
       expect((options as RequestInit).referrerPolicy).toBe('no-referrer');
     });
+
+    it('rejects a successful non-JSON response', async () => {
+      const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+        new Response('<html>', { status: 200, headers: { 'Content-Type': 'text/html' } })
+      );
+      const { api } = await import('../api/client');
+      await expect(api.getHealth()).rejects.toMatchObject({ code: 'INVALID_CONTENT_TYPE' });
+      expect(fetchSpy).toHaveBeenCalledOnce();
+    });
+
+    it('rejects invalid event parameters before fetch', async () => {
+      const fetchSpy = vi.spyOn(globalThis, 'fetch');
+      const { api } = await import('../api/client');
+      await expect(api.getSessionEvents('valid_id', { tool: 'bad tool!' })).rejects.toMatchObject({ code: 'BAD_PARAM' });
+      expect(fetchSpy).not.toHaveBeenCalled();
+    });
   });
 });

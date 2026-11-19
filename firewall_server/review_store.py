@@ -44,6 +44,12 @@ class ReviewStore:
                 spans TEXT DEFAULT '[]', decided_at TEXT, decided_by_role TEXT, time_to_decision_ms INTEGER,
                 explanation TEXT, evidence_summary TEXT DEFAULT '[]', sensitivity_flags TEXT DEFAULT '[]')""")
                 self._migrate(db)
+                db.execute("""CREATE TABLE IF NOT EXISTS scan_records(
+                    id TEXT PRIMARY KEY, created_at TEXT NOT NULL, session_id TEXT NOT NULL,
+                    source_type TEXT NOT NULL, doc_id TEXT NOT NULL, review_item_id TEXT,
+                    segment_count INTEGER NOT NULL, judge_calls_made INTEGER NOT NULL,
+                    coverage_fraction REAL NOT NULL, segments_json TEXT NOT NULL
+                )""")
                 db.commit()
 
     def _connect(self):
@@ -201,6 +207,78 @@ class ReviewStore:
             "expired_count": counts.get("expired", 0),
             "total_requests": len(rows),
         }
+
+    def record_scan(self, *, session, content: str, source_type: str, doc_id: str, outcome) -> str:
+        """Persist a dashboard-safe Layer 1 trace.
+
+        Segment detector metadata is retained for every scan. Segment text is
+        deliberately not duplicated into this table: it can be reconstructed
+        from the separately opt-in review item using offsets when text storage
+        is enabled.
+        """
+        if self.readonly:
+            raise RuntimeError("review store is read-only")
+        records = []
+        for record in getattr(outcome, "segments", ()):
+            records.append({
+                "segment_id": str(record.segment_id), "start": int(record.start), "end": int(record.end),
+                "suspicion_level": str(record.suspicion_level), "instruction_detected": bool(record.rules_flag),
+                "instruction_reasons": list(record.instruction_reasons), "piguard_label": record.piguard_label,
+                "piguard_score": record.piguard_score, "piguard_flag": record.piguard_flag,
+                "judge_ran": bool(record.judge_ran), "judge_is_instruction": record.judge_is_instruction,
+                "judge_needed_for_task": record.judge_needed_for_task, "judge_flag": record.judge_flag,
+                "judge_reason": record.judge_reason, "judge_coverage_reason": record.coverage_reason,
+            })
+        review_item_id = self.add(
+            session_id=str(session.session_id), item_type="flagged_content", tool=None,
+            output_id=str(doc_id), max_level=max((x["suspicion_level"] for x in records), default="none"),
+            segment_ids=[x["segment_id"] for x in records],
+            level_counts=dict(getattr(session, "level_counts", {})), original_text=content,
+            spans=[{"start": x["start"], "end": x["end"], "level": x["suspicion_level"], "segment_id": x["segment_id"]} for x in records],
+        )
+        identifier = str(uuid.uuid4())
+        with self._lock, closing(self._connect()) as db:
+            db.execute("""CREATE TABLE IF NOT EXISTS scan_records(
+                id TEXT PRIMARY KEY, created_at TEXT NOT NULL, session_id TEXT NOT NULL,
+                source_type TEXT NOT NULL, doc_id TEXT NOT NULL, review_item_id TEXT,
+                segment_count INTEGER NOT NULL, judge_calls_made INTEGER NOT NULL,
+                coverage_fraction REAL NOT NULL, segments_json TEXT NOT NULL)""")
+            db.execute("INSERT INTO scan_records VALUES(?,?,?,?,?,?,?,?,?,?)", (
+                identifier, _now().isoformat(), str(session.session_id), str(source_type), str(doc_id), review_item_id,
+                len(records), int(getattr(outcome, "judge_calls_made", 0)),
+                float(getattr(outcome, "coverage_fraction", 0)), json.dumps(records),
+            ))
+            db.commit()
+        return identifier
+
+    def list_scans(self, session_id: str) -> list[dict[str, Any]]:
+        try:
+            with self._lock, closing(self._connect()) as db:
+                rows = db.execute("SELECT * FROM scan_records WHERE session_id=? ORDER BY created_at", (session_id,)).fetchall()
+        except sqlite3.OperationalError:
+            return []
+        result = []
+        for row in rows:
+            item = dict(row)
+            try:
+                item["segments"] = json.loads(item.pop("segments_json"))
+            except Exception:
+                item["segments"] = []
+            review_id = item.get("review_item_id")
+            review = self.get(review_id, include_text=True) if review_id else None
+            item["original_text"] = review.get("original_text") if review and self.store_text else None
+            item["text_truncated"] = bool(review and review.get("text_truncated"))
+            result.append(item)
+        return result
+
+
+class ScanRecorder:
+    """Public best-effort recorder passed to ``Firewall(scan_recorder=...)``."""
+    def __init__(self, store: ReviewStore):
+        self.store = store
+
+    def record_scan(self, **kwargs) -> None:
+        self.store.record_scan(**kwargs)
 
 
 class ReviewRecorder:

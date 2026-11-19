@@ -31,7 +31,7 @@ export function Overview() {
       })
       .catch((err: unknown) => {
         if (!cancelled) {
-          setError(err instanceof ApiError ? err.message : 'Failed to load summary.');
+          setError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
           setLoading(false);
         }
       });
@@ -47,7 +47,7 @@ export function Overview() {
       setVerifyResult(result);
       setVerifyState('done');
     } catch (err: unknown) {
-      setVerifyError(err instanceof ApiError ? err.message : 'Verification failed.');
+      setVerifyError(err instanceof ApiError && err.status === 401 ? 'Please sign in.' : 'Cannot reach the server.');
       setVerifyState('idle');
     }
   }, []);
@@ -145,7 +145,7 @@ export function Overview() {
             role="status"
           >
             <span className="verify-result__icon">{verifyResult.ok ? '✓' : '✕'}</span>
-            <span className="verify-result__message">{verifyResult.message}</span>
+            <span className="verify-result__message"><SafeText value={verifyResult.message} /></span>
             <span className="verify-result__detail">({verifyResult.checked} rows checked)</span>
           </div>
         )}

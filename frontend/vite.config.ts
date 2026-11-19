@@ -1,7 +1,7 @@
-import { defineConfig, Plugin } from 'vite';
+import { defineConfig, loadEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
-function strictCspPlugin(): Plugin {
+function strictCspPlugin(apiOrigin: string): Plugin {
   return {
     name: 'html-strict-csp',
     transformIndexHtml(html, ctx) {
@@ -10,15 +10,18 @@ function strictCspPlugin(): Plugin {
         return html;
       }
       // Production build CSP: no 'unsafe-inline', no 'unsafe-eval'
-      const cspMeta = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' http://127.0.0.1:* http://localhost:*; frame-ancestors 'none'; base-uri 'none'; form-action 'none';">`;
+      const cspMeta = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' ${apiOrigin}; frame-ancestors 'none'; base-uri 'none'; form-action 'none';">`;
       return html.replace('<head>', `<head>\n    ${cspMeta}`);
     },
   };
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), strictCspPlugin()],
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const apiOrigin = new URL(env.VITE_API_BASE_URL || 'http://127.0.0.1:8000').origin;
+  return {
+  plugins: [react(), strictCspPlugin(apiOrigin)],
   server: {
     host: '127.0.0.1',
     port: 5173,
@@ -32,4 +35,5 @@ export default defineConfig({
       provider: 'v8',
     },
   },
-} as any);
+  } as any;
+});
