@@ -140,29 +140,7 @@ export function SessionDetail() {
         </dl>
       </section>
 
-      <section className="events-section" aria-label="Security scan trace">
-        <h2>Security Scan Trace</h2>
-        {!trace && <p className="empty-state">No Layer 1 scan record is available for this session.</p>}
-        {trace?.scans.map((scan) => (
-          <details key={scan.id} className="event-card" open>
-            <summary><SafeText value={`${scan.source_type}: ${scan.doc_id} (${scan.segment_count} segments)`} /></summary>
-            {trace.text_stored && scan.original_text !== null ? <SafeText value={scan.original_text} /> : <p>Original text was not stored.</p>}
-            <div className="table-wrapper"><table className="sessions-table"><thead><tr><th>Segment</th><th>Text</th><th>Instruction</th><th>PIGuard</th><th>Gemini judge</th><th>Final level</th></tr></thead><tbody>
-              {scan.segments.map((segment) => <tr key={segment.segment_id}>
-                <td><IdText id={segment.segment_id} /></td>
-                <td>{scan.original_text !== null ? <SafeText value={scan.original_text.slice(segment.start, segment.end)} /> : <span>Stored text disabled</span>}</td>
-                <td><SafeText value={segment.instruction_detected ? `Yes — ${segment.instruction_reasons.join(', ') || 'rule matched'}` : 'No'} /></td>
-                <td><SafeText value={segment.piguard_score === null ? 'Not available' : `${segment.piguard_label ?? 'unknown'} (${segment.piguard_score.toFixed(4)})`} /></td>
-                <td><SafeText value={!segment.judge_ran ? 'Not judged' : segment.judge_flag ? `Flagged — ${segment.judge_reason ?? ''}` : `Not flagged — ${segment.judge_reason ?? ''}`} /></td>
-                <td><SafeText value={segment.suspicion_level} /></td>
-              </tr>)}
-            </tbody></table></div>
-          </details>
-        ))}
-        {trace && <><h3>Tool decisions</h3><div className="table-wrapper"><table className="sessions-table"><thead><tr><th>Time</th><th>Tool</th><th>Decision</th><th>Reason codes</th><th>Linked segments</th></tr></thead><tbody>
-          {trace.tool_decisions.map((event) => <tr key={event.id}><td><SafeText value={event.ts} /></td><td><SafeText value={event.tool} /></td><td><ActionBadge action={event.action ?? 'unknown'} /></td><td><SafeText value={event.reason_codes.join(', ')} /></td><td><SafeText value={(event.evidence as Array<{segment_id?: string}>).map((x) => x.segment_id).filter(Boolean).join(', ') || '—'} /></td></tr>)}
-        </tbody></table></div></>}
-      </section>
+      <SecurityTrace trace={trace} />
 
       <section className="events-section" aria-label="Events">
         <h2>Events</h2>
@@ -237,6 +215,34 @@ export function SessionDetail() {
       </section>
     </main>
   );
+}
+
+function SecurityTrace({ trace }: { trace: SecurityTraceResponse | null }) {
+  return <section className="security-trace" aria-label="Security scan trace">
+    <div className="security-trace__heading"><div><p className="eyebrow">Layer 1 + Layer 2</p><h2>Security trace</h2></div><p>Content analysis and the resulting tool decisions.</p></div>
+    {!trace && <p className="empty-state">No Layer 1 scan record is available for this session.</p>}
+    {trace?.scans.map((scan, index) => <article key={scan.id} className="scan-card">
+      <header className="scan-card__header"><div><p className="eyebrow">Source {index + 1}</p><h3><SafeText value={`${scan.source_type} · ${scan.doc_id}`} /></h3></div><div className="scan-card__metrics"><span>{scan.segment_count} segments</span><span>{scan.judge_calls_made} Gemini checks</span><span>{Math.round(scan.coverage_fraction * 100)}% coverage</span></div></header>
+      {trace.text_stored && scan.original_text !== null ? <details className="source-text"><summary>View received text{scan.text_truncated ? ' (truncated)' : ''}</summary><SafeText value={scan.original_text} /></details> : <p className="storage-notice">Original text was not retained. Detector metadata remains available.</p>}
+      <div className="table-wrapper"><table className="security-table"><thead><tr><th>Segment</th><th>Segment text</th><th>Rule detector</th><th>PIGuard</th><th>Gemini judge</th><th>Final level</th></tr></thead><tbody>
+        {scan.segments.map((segment) => <tr key={segment.segment_id}>
+          <td><IdText id={segment.segment_id} /></td>
+          <td className="security-table__text">{scan.original_text !== null ? <SafeText value={scan.original_text.slice(segment.start, segment.end)} /> : <span className="muted">Text not retained</span>}</td>
+          <td><DetectorCell flagged={segment.instruction_detected} detail={segment.instruction_reasons.join(', ')} yes="Instruction found" no="No instruction" /></td>
+          <td><DetectorCell flagged={Boolean(segment.piguard_flag)} detail={segment.piguard_score === null ? 'Not available' : `${segment.piguard_label ?? 'unknown'} · ${segment.piguard_score.toFixed(3)}`} yes="Injection signal" no="No injection signal" /></td>
+          <td><DetectorCell flagged={Boolean(segment.judge_flag)} detail={!segment.judge_ran ? 'Not sent to Gemini' : segment.judge_reason ?? 'No explanation'} yes="Flagged" no={segment.judge_ran ? 'Not flagged' : 'Not judged'} /></td>
+          <td><span className={`level-chip level-chip--${segment.suspicion_level}`}><SafeText value={segment.suspicion_level.replace('_', ' ')} /></span></td>
+        </tr>)}
+      </tbody></table></div>
+    </article>)}
+    {trace && <article className="tool-trace"><header><p className="eyebrow">Layer 2</p><h3>Tool decisions</h3></header><div className="table-wrapper"><table className="security-table"><thead><tr><th>Time</th><th>Tool</th><th>Decision</th><th>Reason codes</th><th>Influencing segments</th></tr></thead><tbody>
+      {trace.tool_decisions.length === 0 ? <tr><td colSpan={5} className="muted">No protected tool calls have been recorded.</td></tr> : trace.tool_decisions.map((event) => <tr key={event.id}><td><time title={event.ts}>{new Date(event.ts).toLocaleTimeString()}</time></td><td><SafeText value={event.tool} /></td><td><ActionBadge action={event.action ?? 'unknown'} /></td><td>{event.reason_codes.map((code) => <ReasonCodeBadge key={code} code={code} />)}</td><td><SafeText value={(event.evidence as Array<{ segment_id?: string }>).map((x) => x.segment_id).filter(Boolean).join(', ') || '—'} /></td></tr>)}
+    </tbody></table></div></article>}
+  </section>;
+}
+
+function DetectorCell({ flagged, detail, yes, no }: { flagged: boolean; detail: string; yes: string; no: string }) {
+  return <div className="detector-cell"><span className={flagged ? 'status-dot status-dot--alert' : 'status-dot status-dot--clear'}>{flagged ? yes : no}</span><SafeText value={detail || '—'} /></div>;
 }
 
 function EventCard({ event }: { event: AuditEventItem }) {
