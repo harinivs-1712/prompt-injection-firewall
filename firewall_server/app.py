@@ -397,6 +397,25 @@ def create_app(
         rows = _rows(settings.audit_db, "SELECT * FROM audit_events" + where + " ORDER BY id LIMIT ? OFFSET ?", (*values, limit, offset))
         return {"items": [_clean_event(row) for row in rows], "limit": limit, "offset": offset, "total": _count(settings.audit_db, "audit_events", where, values)}
 
+    @app.get("/api/v1/sessions/{session_id}/security-trace")
+    def session_security_trace(session_id: str, _role=Depends(require_viewer)):
+        """Layer 1 scan rows plus Layer 2 decisions for one session.
+
+        Original content is returned only when the server was explicitly started
+        with ``--store-text``; detector metadata remains available either way.
+        """
+        if not _rows(settings.audit_db, "SELECT session_id FROM sessions WHERE session_id=?", (session_id,)):
+            raise HTTPException(404, {"error": "Not found.", "code": "NOT_FOUND"})
+        scans = review.list_scans(session_id)
+        decisions = _rows(settings.audit_db, "SELECT id,ts,tool,action,reason_codes,rule_ids,link_level,evidence,approval_outcome FROM audit_events WHERE session_id=? AND event_type IN ('tool_check','tool_authorized','approval_requested','approval_outcome') ORDER BY id", (session_id,))
+        for item in decisions:
+            for key, fallback in (("reason_codes", []), ("rule_ids", []), ("evidence", [])):
+                try:
+                    item[key] = json.loads(item[key])
+                except Exception:
+                    item[key] = fallback
+        return {"scans": scans, "tool_decisions": decisions, "text_stored": settings.store_text}
+
     @app.get("/api/v1/audit/verify")
     def audit_verify(max_rows: int = Query(100_000, ge=1, le=1_000_000), _role=Depends(require_viewer)):
         return _verify(settings.audit_db, max_rows)

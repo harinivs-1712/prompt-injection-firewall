@@ -52,6 +52,11 @@ class Layer1Scanner:
                 judge_ran=bool(row.get("judge_ran", False)),
                 coverage_reason=row.get("judge_coverage_reason"),
                 rules_flag=row.get("rules_flag"), piguard_flag=row.get("piguard_flag"),
+                instruction_reasons=tuple(str(x) for x in row.get("instruction_reasons", ())),
+                piguard_label=row.get("piguard_label"), piguard_score=row.get("piguard_score"),
+                judge_is_instruction=row.get("judge_is_instruction"),
+                judge_needed_for_task=row.get("judge_needed_for_task"),
+                judge_flag=row.get("judge_flag"), judge_reason=row.get("judge_reason"),
             ) for row in rows)
             return ScanOutcome(segments, int(summary.get("judge_calls_made", 0)),
                                float(summary.get("coverage_fraction", 1.0)))

@@ -132,6 +132,17 @@ export interface AuditVerifyResponse {
 
 export const AUDIT_VERIFY_KEYS: (keyof AuditVerifyResponse)[] = ['ok', 'checked', 'first_bad_id', 'message'];
 
+export interface ScanSegment {
+  segment_id: string; start: number; end: number; suspicion_level: string;
+  instruction_detected: boolean; instruction_reasons: string[];
+  piguard_label: string | null; piguard_score: number | null; piguard_flag: boolean | null;
+  judge_ran: boolean; judge_is_instruction: boolean | null; judge_needed_for_task: boolean | null;
+  judge_flag: boolean | null; judge_reason: string | null; judge_coverage_reason: string | null;
+}
+export interface ScanTrace { id: string; source_type: string; doc_id: string; segment_count: number; judge_calls_made: number; coverage_fraction: number; original_text: string | null; text_truncated: boolean; segments: ScanSegment[]; }
+export interface SecurityTraceResponse { scans: ScanTrace[]; tool_decisions: AuditEventItem[]; text_stored: boolean; }
+export const SECURITY_TRACE_KEYS: (keyof SecurityTraceResponse)[] = ['scans', 'tool_decisions', 'text_stored'];
+
 export interface ApiErrorResponse {
   error: string;
   code: string;

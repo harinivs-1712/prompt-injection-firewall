@@ -22,6 +22,13 @@ class SegmentRecord:
     coverage_reason: str | None = None
     rules_flag: bool | None = None
     piguard_flag: bool | None = None
+    instruction_reasons: tuple[str, ...] = ()
+    piguard_label: str | None = None
+    piguard_score: float | None = None
+    judge_is_instruction: bool | None = None
+    judge_needed_for_task: bool | None = None
+    judge_flag: bool | None = None
+    judge_reason: str | None = None
 
     def __post_init__(self):
         if self.suspicion_level not in LEVELS:
@@ -30,6 +37,8 @@ class SegmentRecord:
             raise ValueError("invalid segment offsets")
         if not isinstance(self.text, str) or type(self.judge_ran) is not bool:
             raise ValueError("invalid segment record")
+        if self.piguard_score is not None and not isinstance(self.piguard_score, (int, float)):
+            raise ValueError("invalid PIGuard score")
 
 
 @dataclass(frozen=True)

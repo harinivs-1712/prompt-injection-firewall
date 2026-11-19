@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api, ApiError } from '../api/client';
-import type { SessionDetailResponse, AuditEventItem, SessionEventsResponse } from '../api/types';
+import type { SessionDetailResponse, AuditEventItem, SessionEventsResponse, SecurityTraceResponse } from '../api/types';
 import { IdText } from '../components/IdText';
 import { SafeText } from '../components/SafeText';
 import { ActionBadge } from '../components/ActionBadge';
@@ -38,6 +38,7 @@ export function SessionDetail() {
   const [eventsOffset, setEventsOffset] = useState(0);
   const [eventsLoading, setEventsLoading] = useState(false);
   const [eventsError, setEventsError] = useState<string | null>(null);
+  const [trace, setTrace] = useState<SecurityTraceResponse | null>(null);
 
   useEffect(() => {
     if (!sessionId) return;
@@ -48,6 +49,7 @@ export function SessionDetail() {
       .then((data) => {
         if (!cancelled) {
           setDetail(data);
+          api.getSecurityTrace(sessionId).then(setTrace).catch(() => setTrace(null));
           setLoading(false);
         }
       })
@@ -136,6 +138,30 @@ export function SessionDetail() {
           <dt>Total Events</dt>
           <dd>{detail.event_count}</dd>
         </dl>
+      </section>
+
+      <section className="events-section" aria-label="Security scan trace">
+        <h2>Security Scan Trace</h2>
+        {!trace && <p className="empty-state">No Layer 1 scan record is available for this session.</p>}
+        {trace?.scans.map((scan) => (
+          <details key={scan.id} className="event-card" open>
+            <summary><SafeText value={`${scan.source_type}: ${scan.doc_id} (${scan.segment_count} segments)`} /></summary>
+            {trace.text_stored && scan.original_text !== null ? <SafeText value={scan.original_text} /> : <p>Original text was not stored.</p>}
+            <div className="table-wrapper"><table className="sessions-table"><thead><tr><th>Segment</th><th>Text</th><th>Instruction</th><th>PIGuard</th><th>Gemini judge</th><th>Final level</th></tr></thead><tbody>
+              {scan.segments.map((segment) => <tr key={segment.segment_id}>
+                <td><IdText id={segment.segment_id} /></td>
+                <td>{scan.original_text !== null ? <SafeText value={scan.original_text.slice(segment.start, segment.end)} /> : <span>Stored text disabled</span>}</td>
+                <td><SafeText value={segment.instruction_detected ? `Yes — ${segment.instruction_reasons.join(', ') || 'rule matched'}` : 'No'} /></td>
+                <td><SafeText value={segment.piguard_score === null ? 'Not available' : `${segment.piguard_label ?? 'unknown'} (${segment.piguard_score.toFixed(4)})`} /></td>
+                <td><SafeText value={!segment.judge_ran ? 'Not judged' : segment.judge_flag ? `Flagged — ${segment.judge_reason ?? ''}` : `Not flagged — ${segment.judge_reason ?? ''}`} /></td>
+                <td><SafeText value={segment.suspicion_level} /></td>
+              </tr>)}
+            </tbody></table></div>
+          </details>
+        ))}
+        {trace && <><h3>Tool decisions</h3><div className="table-wrapper"><table className="sessions-table"><thead><tr><th>Time</th><th>Tool</th><th>Decision</th><th>Reason codes</th><th>Linked segments</th></tr></thead><tbody>
+          {trace.tool_decisions.map((event) => <tr key={event.id}><td><SafeText value={event.ts} /></td><td><SafeText value={event.tool} /></td><td><ActionBadge action={event.action ?? 'unknown'} /></td><td><SafeText value={event.reason_codes.join(', ')} /></td><td><SafeText value={(event.evidence as Array<{segment_id?: string}>).map((x) => x.segment_id).filter(Boolean).join(', ') || '—'} /></td></tr>)}
+        </tbody></table></div></>}
       </section>
 
       <section className="events-section" aria-label="Events">

@@ -17,6 +17,8 @@ import {
   AuditVerifyResponse,
   AUDIT_VERIFY_KEYS,
   ApiErrorResponse,
+  SecurityTraceResponse,
+  SECURITY_TRACE_KEYS,
 } from './types';
 import { getToken, clearToken, resetIdleTimer } from './token';
 
@@ -259,5 +261,10 @@ export const api = {
     });
     const raw = await request<AuditVerifyResponse>(`/api/v1/audit/verify?${params.toString()}`);
     return validateShape<AuditVerifyResponse>(raw, AUDIT_VERIFY_KEYS, 'audit verify');
+  },
+  async getSecurityTrace(sessionId: string): Promise<SecurityTraceResponse> {
+    if (!sessionId || !/^[A-Za-z0-9_-]{1,64}$/.test(sessionId)) throw new ApiError('Invalid session ID parameter.', 400, 'BAD_PARAM');
+    const raw = await request<SecurityTraceResponse>(`/api/v1/sessions/${encodeURIComponent(sessionId)}/security-trace`);
+    return validateShape<SecurityTraceResponse>(raw, SECURITY_TRACE_KEYS, 'security trace');
   },
 };
